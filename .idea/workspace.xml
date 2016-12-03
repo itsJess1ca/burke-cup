@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c7cb616-975a-4064-8b8c-99db10a25956" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/images/background.png" afterPath="$PROJECT_DIR$/assets/images/background.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/images/foreground.png" afterPath="$PROJECT_DIR$/assets/images/foreground.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="4c7cb616-975a-4064-8b8c-99db10a25956" name="Default" comment="add chest img" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -324,7 +320,7 @@
       <updated>1480786489599</updated>
       <workItem from="1480786490959" duration="5814000" />
       <workItem from="1480794259489" duration="3397000" />
-      <workItem from="1480802298389" duration="1075000" />
+      <workItem from="1480802298389" duration="1093000" />
     </task>
     <task id="LOCAL-00001" summary="add beginning of pixel class and utils">
       <created>1480794276050</created>
@@ -386,7 +382,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14641000" />
+    <option name="totallyTimeSpent" value="14659000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />

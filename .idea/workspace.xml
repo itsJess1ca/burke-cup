@@ -2,27 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c7cb616-975a-4064-8b8c-99db10a25956" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/lib/jquery-3.1.1.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/lib/p2.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/lib/pixi.min.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/package.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/app/canvas.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/app/index.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/app/pixel.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/app/util.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/app/world.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/background.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/foreground.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/index.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/vendor.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tsconfig.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webpack.config.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/yarn.lock" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/cup.iml" afterPath="$PROJECT_DIR$/.idea/cup.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/package.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/bad.js" afterPath="$PROJECT_DIR$/bad.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/index.ejs" afterPath="$PROJECT_DIR$/index.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -44,11 +25,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="bad.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="bad.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bad.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="222">
-              <caret line="1052" column="17" lean-forward="true" selection-start-line="1052" selection-start-column="17" selection-end-line="1052" selection-end-column="17" />
+              <caret line="1052" column="17" lean-forward="false" selection-start-line="1052" selection-start-column="17" selection-end-line="1052" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="352">
+              <caret line="22" column="1" lean-forward="true" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -68,7 +59,7 @@
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="176">
-              <caret line="11" column="30" lean-forward="true" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
+              <caret line="11" column="30" lean-forward="false" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -100,7 +91,6 @@
         <option value="$PROJECT_DIR$/src/pixel.ts" />
         <option value="$PROJECT_DIR$/tsconfig.json" />
         <option value="$PROJECT_DIR$/src/index.ts" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/app/index.ts" />
         <option value="$PROJECT_DIR$/node_modules/phaser/package.json" />
         <option value="$PROJECT_DIR$/.gitignore" />
@@ -113,6 +103,7 @@
         <option value="$PROJECT_DIR$/assets/lib/pixi.min.js" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/bad.js" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -121,6 +112,9 @@
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
@@ -304,11 +298,18 @@
       <option name="project" value="LOCAL" />
       <updated>1480797173153</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="oldschool methods">
+      <created>1480800830143</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1480800830143</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12326000" />
+    <option name="totallyTimeSpent" value="12475000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -347,7 +348,8 @@
     <MESSAGE value="it shows" />
     <MESSAGE value="changed ordering of canvas addTexture" />
     <MESSAGE value="switch to phaser" />
-    <option name="LAST_COMMIT_MESSAGE" value="switch to phaser" />
+    <MESSAGE value="oldschool methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="oldschool methods" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -469,14 +471,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-474">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="8" column="93" lean-forward="false" selection-start-line="8" selection-start-column="93" selection-end-line="8" selection-end-column="93" />
           <folding />
         </state>
       </provider>
@@ -614,7 +608,7 @@
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
-          <caret line="11" column="30" lean-forward="true" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
+          <caret line="11" column="30" lean-forward="false" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
           <folding />
         </state>
       </provider>
@@ -622,7 +616,15 @@
     <entry file="file://$PROJECT_DIR$/bad.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="222">
-          <caret line="1052" column="17" lean-forward="true" selection-start-line="1052" selection-start-column="17" selection-end-line="1052" selection-end-column="17" />
+          <caret line="1052" column="17" lean-forward="false" selection-start-line="1052" selection-start-column="17" selection-end-line="1052" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="22" column="1" lean-forward="true" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
           <folding />
         </state>
       </provider>

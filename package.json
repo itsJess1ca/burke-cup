@@ -1,0 +1,23 @@
+{
+  "name": "cup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bad.js",
+  "scripts": {
+    "start": "http-server ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j3ddesign/burke-cup.git"
+  },
+  "keywords": [],
+  "author": "Streamshape <jed@streamshape.io> (http://streamshape.io)",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/j3ddesign/burke-cup/issues"
+  },
+  "homepage": "https://github.com/j3ddesign/burke-cup#readme",
+  "devDependencies": {
+    "http-server": "^0.9.0"
+  }
+}

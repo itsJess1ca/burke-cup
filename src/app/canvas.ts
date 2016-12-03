@@ -18,33 +18,39 @@ export class Canvas {
   }
 
   addImage() {
-    const backgroundTexture = './assets/background.jpg';
+    const textures = {
+      foreground: {
+        url: './assets/foreground.png',
+        width: 394,
+        height: 417
+      },
+      background: {
+        url: './assets/background.jpg',
+        width: 394,
+        height: 417
+      }
+    };
     const foregroundTexture = './assets/foreground.png';
 
-    const topChest = Sprite.fromImage(backgroundTexture);
-    const bottomChest = Sprite.fromImage(foregroundTexture);
+    const topChest = Sprite.fromImage(textures.foreground.url);
+    const bottomChest = Sprite.fromImage(textures.background.url);
+
+    bottomChest.position.x = textures.background.width;
+    bottomChest.position.y = textures.background.height;
+
+    topChest.position.x = textures.foreground.width;
+    topChest.position.y = textures.foreground.height;
 
     bottomChest.anchor.x = 0.5;
     bottomChest.anchor.y = 0.5;
-
-    bottomChest.position.x = 394;
-    bottomChest.position.y = 417;
-    bottomChest.height = 417;
-    bottomChest.width = 394;
-
     topChest.anchor.x = 0.5;
     topChest.anchor.y = 0.5;
-
-    topChest.position.x = 394;
-    topChest.position.y = 417;
-    topChest.height = 417;
-    bottomChest.width = 394;
 
     this.stage.addChild(bottomChest);
     this.stage.addChild(topChest);
 
     console.log(this.stage);
-    
 
-  }  
+
+  }
 }

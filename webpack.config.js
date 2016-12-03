@@ -1,21 +1,34 @@
-var path       = require('path');
-var webpack = require("webpack");
+const path       = require('path');
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 module.exports = {
   entry : {
-    main: './src/assets/index.js'
+    main: './src/index.ts'
   },
   output: {
-    path    : __dirname,
-    filename: 'dist/assets/js/[name].bundle.js'
+    path    : 'dist',
+    filename: '[name].bundle.js'
   },
   module: {
-    loaders: [
-      { test  : /\.js$/, loader: 'babel-loader', query : {
-        presets: ['es2015']
-      }}
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: "ts-loader"
+      }
     ]
   },
   plugins: [
+    new CopyWebpackPlugin([
+      {from: 'src/assets', to: 'assets'}
+    ]),
+    new HtmlWebpackPlugin({
+      title: 'cup-overlay',
+      template: 'src/index.ejs',
+      chunksSortMode: 'dependency',
+      inject: 'head'
+    }),
     new webpack.optimize.UglifyJsPlugin({minimize: true})
   ]
 };

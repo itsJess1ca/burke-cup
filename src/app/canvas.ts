@@ -1,5 +1,7 @@
 import { Container, autoDetectRenderer, Texture, Sprite } from 'pixi.js';
 
+
+
 export class Canvas {
   stage: any;
   renderer: any;

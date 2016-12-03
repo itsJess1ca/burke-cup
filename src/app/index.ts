@@ -1,7 +1,9 @@
 import { Canvas } from './canvas';
+import { World } from './world';
+
 export class Main {
   canvas = new Canvas();
-
+  world = new World();
   textures: any = {
     background: {
       url: './assets/background.jpg',
@@ -25,10 +27,22 @@ export class Main {
   }
 
   setupCanvas() {
+    // Create Canvas
     this.canvas.create();
+
+    // Add base images
     Object.keys(this.textures)
       .forEach(texture => this.canvas.addTexture(this.textures[texture]));
 
+    // Init P2
+    this.world.drawBounds();
+
+
+    // Add Sprite Img
+
+    // ???
+
+    // Animte Scene
     this.canvas.animateScene();
   }
 }

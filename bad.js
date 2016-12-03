@@ -479,14 +479,15 @@ $(function () {
 
           // Once it reaches the drop point, let physics happen.
           if (this.physical.position[0] < GEM_DROP_POINT && this.falling === false) {
-            this.physical.mass = Math.round(this.amount * Math.sqrt(this.tier));
+            //this.physical.mass = Math.round(this.amount * Math.sqrt(this.tier));
+            this.physical.mass = 1;
             this.physical.damping = 0.01;
             this.physical.angularDamping = 0.1;
             this.physical.type = p2.Body.DYNAMIC;
             this.physical.velocity = rotation(randomRange(10, 50), randomRange(0, Math.PI / 2) + Math.PI / 2);
             this.physical.updateMassProperties();
             this.falling = true;
-            if (this.physical.amount >= 10000) {
+            if (this.physical.amount >= 999) {
               this.physical.mass = this.physical.mass * 100;
               this.physical.updateMassProperties();
             }
@@ -547,7 +548,7 @@ $(function () {
     var body = new p2.Body({
       mass: 0,
       position: [x, y - GEM_RADIUS],
-      angularVelocity: randomRange(-1 / 2, 1 / 2)
+      angularVelocity: -1
     });
 
     world.addBody(body);
@@ -821,15 +822,15 @@ $(function () {
   }
 
   function init() {
-    var cupWidth = 176;
-    var cupBottomWidth = 112;
-    var cupHeight = 249;
+    var cupWidth = 406;
+    var cupBottomWidth = 363;
+    var cupHeight = 422;
 
     var cupPosition = [width / 2, 0]; // Center,Bottom of the cup physically.
     var cupRadiusAdjust = 10; // Since the gems are larger than their collision bounds, this forces the sides of the cup inwards so gems don't poke out.
     var cupRightAdjust = 5; // The right needs a bit more adjustment inwards.
-    var cupBottomHeight = 40; // The height of the solid glass at the bottom of the cup.
-    var cupSideLength = 220;
+    var cupBottomHeight = 120; // The height of the solid glass at the bottom of the cup.
+    var cupSideLength = 183;
     var cupSideThickness = 10;
 
     // Graphical coordinate system
@@ -882,7 +883,7 @@ $(function () {
     stage = new PIXI.Container();
 
     // Add this before the container so that it's behind the gems
-    var cupBack = new PIXI.Sprite.fromImage('assets/images/point-sprites/cup2-back.png');
+    var cupBack = new PIXI.Sprite.fromImage('assets/images/background.png');
     cupBack.position.x = cupPosition[0] - cupWidth / 2;
     cupBack.position.y = height - cupPosition[1] - cupHeight;
 

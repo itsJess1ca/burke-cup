@@ -1,1 +1,1 @@
-import 'pixi.js';
+

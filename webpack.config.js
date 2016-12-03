@@ -5,11 +5,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry : {
-    main: './src/index.ts'
+    main: './src/index.ts',
+    vendor: "./src/vendor.ts"
   },
   output: {
     path    : 'dist',
-    filename: '[name].bundle.js'
+    filename: '[name].[chunkhash].bundle.js'
   },
   module: {
     rules: [
@@ -28,7 +29,6 @@ module.exports = {
       template: 'src/index.ejs',
       chunksSortMode: 'dependency',
       inject: 'head'
-    }),
-    new webpack.optimize.UglifyJsPlugin({minimize: true})
+    })
   ]
 };

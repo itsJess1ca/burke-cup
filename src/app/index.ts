@@ -6,8 +6,6 @@ export class Main {
     this.canvas.create();
     this.canvas.addImage();
 
-
-   
-    this.canvas.renderScene();
+    this.canvas.animateScene();
   }
 }

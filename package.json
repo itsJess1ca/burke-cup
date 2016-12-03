@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "webpack",
-    "start": "npm run clean && npm run build && webpack-dev-server --content-base dist/"
+    "start": "npm run clean && npm run build && webpack-dev-server --content-base dist/ --hot"
   },
   "repository": {
     "url": "git+https://github.com/j3ddesign/experiment-starter.git",

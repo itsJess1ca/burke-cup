@@ -10,7 +10,7 @@ module.exports = {
   },
   output: {
     path    : 'dist',
-    filename: '[name].[chunkhash].bundle.js'
+    filename: '[name].[hash].bundle.js'
   },
   resolve: {
     extensions: ['', '.js', '.ts']

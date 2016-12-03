@@ -33,5 +33,8 @@ module.exports = {
       chunksSortMode: 'dependency',
       inject: 'head'
     })
-  ]
+  ],
+  devServer: {
+    inline: true
+  }
 };

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
-    "start": "npm run clean && webpack"
+    "build": "webpack",
+    "start": "npm run clean && npm run build && webpack-dev-server --content-base dist/"
   },
   "repository": {
     "url": "git+https://github.com/j3ddesign/experiment-starter.git",
@@ -23,10 +24,12 @@
     "webpack": "latest"
   },
   "devDependencies": {
+    "@types/pixi.js": "^4.1.0",
     "copy-webpack-plugin": "^4.0.1",
     "html-webpack-plugin": "^2.24.1",
     "rimraf": "^2.5.4",
     "ts-loader": "^1.2.2",
-    "typescript": "latest"
+    "typescript": "latest",
+    "webpack-dev-server": "^1.16.2"
   }
 }

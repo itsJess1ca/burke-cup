@@ -12,11 +12,14 @@ module.exports = {
     path    : 'dist',
     filename: '[name].[chunkhash].bundle.js'
   },
+  resolve: {
+    extensions: ['', '.js', '.ts']
+  },
   module: {
-    rules: [
+    loaders: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader"
+        loader: "ts-loader"
       }
     ]
   },

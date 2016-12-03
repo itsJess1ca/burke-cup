@@ -19,12 +19,10 @@
   },
   "homepage": "https://github.com/j3ddesign/experiment-starter#readme",
   "dependencies": {
-    "@types/pixi.js": "^4.1.0",
-    "pixi.js": "^4.2.3",
+    "phaser": "^2.6.2",
     "webpack": "latest"
   },
   "devDependencies": {
-    "@types/pixi.js": "^4.1.0",
     "copy-webpack-plugin": "^4.0.1",
     "html-webpack-plugin": "^2.24.1",
     "rimraf": "^2.5.4",

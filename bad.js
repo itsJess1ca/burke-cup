@@ -829,7 +829,7 @@ $(function () {
     var cupPosition = [width / 2, 0]; // Center,Bottom of the cup physically.
     var cupRadiusAdjust = 10; // Since the gems are larger than their collision bounds, this forces the sides of the cup inwards so gems don't poke out.
     var cupRightAdjust = 5; // The right needs a bit more adjustment inwards.
-    var cupBottomHeight = 120; // The height of the solid glass at the bottom of the cup.
+    var cupBottomHeight = 25; // The height of the solid glass at the bottom of the cup.
     var cupSideLength = 183;
     var cupSideThickness = 10;
 
@@ -883,7 +883,7 @@ $(function () {
     stage = new PIXI.Container();
 
     // Add this before the container so that it's behind the gems
-    var cupBack = new PIXI.Sprite.fromImage('assets/images/background.png');
+    var cupBack = new PIXI.Sprite.fromImage('assets/images/trans_background.png');
     cupBack.position.x = cupPosition[0] - cupWidth / 2;
     cupBack.position.y = height - cupPosition[1] - cupHeight;
 

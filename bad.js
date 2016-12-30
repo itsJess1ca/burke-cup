@@ -274,7 +274,7 @@ $(function () {
   var height = $("body").height();
   var MAXIMUM_TEXT_DISPLAY = 5;
   var TEXT_DISPLAY_START = height;
-  var GEM_DROP_POINT = width / 2 + 45;
+  var GEM_DROP_POINT = width / 5 + 45;
   var GEM_RADIUS = 12;
 
   function debugRenderWorld(world, renderer) {
@@ -826,7 +826,7 @@ $(function () {
     var cupBottomWidth = 363;
     var cupHeight = 422;
 
-    var cupPosition = [width / 2, 0]; // Center,Bottom of the cup physically.
+    var cupPosition = [width / 5, 0]; // Center,Bottom of the cup physically.
     var cupRadiusAdjust = 10; // Since the gems are larger than their collision bounds, this forces the sides of the cup inwards so gems don't poke out.
     var cupRightAdjust = 5; // The right needs a bit more adjustment inwards.
     var cupBottomHeight = 25; // The height of the solid glass at the bottom of the cup.
@@ -885,9 +885,21 @@ $(function () {
     // Add this before the container so that it's behind the gems
     var cupBack = new PIXI.Sprite.fromImage('assets/images/trans_background.png');
     cupBack.position.x = cupPosition[0] - cupWidth / 2;
-    cupBack.position.y = height - cupPosition[1] - cupHeight;
-
+    cupBack.position.y = height - cupPosition[1] - cupHeight + 40;
+      cupBack.scale.x -= 0.5;
+      cupBack.scale.y -= 0.5;
     stage.addChild(cupBack);
+
+    var cannon = new PIXI.Sprite.fromImage('assets/images/cannon.png');
+    cannon.position.x = cupPosition[0] + (cupWidth * 2);
+    cannon.position.y = height - cupPosition[1] - (cupHeight / 2) + 20;
+    cannon.scale.x -= 0.5;
+    cannon.scale.y -= 0.5;
+
+    cannon.rotation = -1.3
+
+   stage.addChild(cannon)
+
 
     container = new PIXI.Container(), container.scale.y = -1; // Flip container to match coordinate space
     stage.addChild(container);
@@ -902,6 +914,8 @@ $(function () {
     var cupFront = new PIXI.Sprite.fromImage(window.cupFrontURL, true);
     cupFront.position.x = cupPosition[0] - cupWidth / 2;
     cupFront.position.y = height - cupPosition[1] - cupHeight;
+    cupFront.scale.x -= 0.5;
+    cupFront.scale.y -= 0.5;
     stage.addChild(cupFront);
 
     debugDrawGraphics = new PIXI.Graphics();
@@ -1098,7 +1112,7 @@ $(function () {
           return;
       }
 
-      addText("demo", "Here you go cheer" + val, "", val);
+      addText("SomeUserName", "Here you go cheer" + val, "", val);
     });
 
     // Background debugging.

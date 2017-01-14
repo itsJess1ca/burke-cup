@@ -167,7 +167,7 @@ $(function () {
         cannon.scale.y *= -1;
         cannon.position.y = height - chestPosition[1] - (chestHeight / 2) + 20;
 
-        cannon.rotation = -1.8
+        cannon.rotation = -2.3
 
         stage.addChild(cannon);
     }
@@ -315,11 +315,9 @@ $(function () {
                         this.falling = true;
                         console.log(this.physical.amount);
                         if (this.physical.amount >= 999) {
-                            console.log('changing mass');
                             this.physical.mass = this.physical.mass * 100;
                             this.physical.updateMassProperties();
                         }
-                        console.log(this.physical.mass);
                     }
                 }
             }
@@ -392,17 +390,20 @@ $(function () {
 
          */
 
-        fireQ.push(1);
-        let xVel = 250;
-        let yVel = 300
+        let xVel, yVel;
+
+        xVel = 250;
+        yVel = 300
         cannon.rotation = -2.3;
 
+        //Push new bullet into cannon
+        fireQ.push(1);
 
         let body = new p2.Body({
-          mass: Math.floor(Math.random() * amount + amount),
+          mass: Math.floor(Math.random() * tier + amount),
           damping: 0.01,
           type: p2.Body.DYNAMIC,
-          angularDamping: 0.1,
+          angularDamping: 0.7,
           position: [x, y - GEM_RADIUS],
           velocity: [xVel, yVel],
           angularVelocity: -1

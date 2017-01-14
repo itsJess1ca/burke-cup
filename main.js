@@ -32,7 +32,8 @@ $(function () {
   //Play first alert on load
   const debug = true;
 
-  let muted = true;
+  let muted = false;
+  let muteLessThan = 0;
 
   // PIXI and P2
   let renderer, stage, container, world, debugDrawGraphics;
@@ -233,7 +234,6 @@ $(function () {
       // Set to true when the gem begins falling under the influence of gravity.
       this.falling = false;
 
-      this.inChest = false;
       // This is roughly how many game frames it takes the gem animation to complete.
       this.startingGemAnimationGameFrames = animationFrames;
 
@@ -283,8 +283,6 @@ $(function () {
 
         if (this.falling) {
 
-
-          //this.physical.velocity =  rotation(0.5 * dt), rotation(0.5 * dt)
           // Die when the gem falls out of bounds.
           if (this.physical.position[0] < 0 - GEM_RADIUS || this.physical.position[0] > width + GEM_RADIUS || this.physical.position[1] < 0 - GEM_RADIUS) {
             this.dead = true;
@@ -294,10 +292,13 @@ $(function () {
             var gemShape = new p2.Circle({radius: GEM_RADIUS, material: gemMaterial});
             this.physical.addShape(gemShape);
             this.hasRenderBody = true;
+
+
             setTimeout(function () {
               fireQ.pop();
             }, 2000);
           }
+
           if (this.physical.mass >= this.tier && this.physical.mass > 0) {
             this.physical.mass = this.physical.mass - dt * this.tier;
             this.physical.updateMassProperties();
@@ -421,6 +422,15 @@ $(function () {
       if (origY !== cannon.position.y) {
         return;
       }
+      //Play sound
+      var sfx = $('.js-cannon').clone()[0];
+      if (this.amount < 100) {
+        sfx.volume = 0.02;
+      } else {
+        sfx.volume = 0.02;
+      }
+      sfx.play();
+
       cannon.position.y = cannon.position.y + 10;
       cannon.position.x = cannon.position.x - 5;
       setTimeout(function () {
@@ -1041,6 +1051,12 @@ $(function () {
 
   }
 
+
+  if (getQueryParameter("mute") === true) {
+    muted = true;
+  } else if (parseInt(getQueryParameter("mute")) > 0) {
+    muteLessThan = parseInt(getQueryParameter("mute"));
+  }
 
   init();
 }); // End

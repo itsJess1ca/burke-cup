@@ -403,15 +403,18 @@ $(function () {
 
     if (amount > 4999) {
       xVel = randomRange(250, 260);
+      yVel = randomRange(295, 305);
     } else if (amount > 999) {
       xVel = randomRange(245, 265);
+      yVel = randomRange(290, 310);
     } else if (amount > 99) {
       xVel = randomRange(245, 270);
+      yVel = randomRange(285, 315);
     } else {
       xVel = randomRange(240, 280);
+      yVel = randomRange(280, 325);
     }
 
-    yVel = 300
     cannon.rotation = -2.3;
     let origY = height - chestPosition[1] - (chestHeight / 2) + 20;
     setTimeout(function () {

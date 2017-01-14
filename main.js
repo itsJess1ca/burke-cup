@@ -54,7 +54,7 @@ $(function () {
     let chestRightAdjust = 5;
     let chestBottomHeight = 5;
     let chestSideLength = 9;
-    let chestSideThickness = 200;
+    let chestSideThickness = 215;
 
     let cannon,
         cannonIsMoving = false,
@@ -385,7 +385,15 @@ $(function () {
         xVel = 250;
         yVel = 300
         cannon.rotation = -2.3;
+        setTimeout(function() {
 
+            cannon.position.y = cannon.position.y + 10;
+            cannon.position.x = cannon.position.x - 5;
+            setTimeout(function() {
+              cannon.position.y = cannon.position.y - 10;
+              cannon.position.x = cannon.position.x + 5;
+            },250)
+        },50)
         //Push new bullet into cannon
         fireQ.push(1);
 
@@ -611,7 +619,7 @@ $(function () {
             if (msg.emote.id === '-1') {
                 // If the emote is a gem, add a gem.
                 let tier = getPointsThreshold(msg.amount);
-                addGem(225, 150, tier, messageID * 10000 + tier + i, msg.amount);
+                addGem(225, 130, tier, messageID * 10000 + tier + i, msg.amount);
                 currentOffset += GEM_RADIUS * 2 + 10;
             } else if (msg.emote.id === '0') {
                 // Do nothing.

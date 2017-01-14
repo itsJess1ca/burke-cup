@@ -31,6 +31,7 @@ $(function () {
 
   //Play first alert on load
   const debug = true;
+  let freeShot = false;
 
   let muted = false;
   let muteLessThan = 0;
@@ -633,10 +634,10 @@ $(function () {
     }
 
     // Prepend the username.
-    if (!debug) {
+    if(!freeShot){
       messageTable[0].prefix = text.user + ': ' + messageTable[0].prefix;
-    } else {
-      messageTable[0].prefix = text.user + ' ' + messageTable[0].prefix;
+    }else {
+      messageTable[0].prefix = ' ';
     }
 
 
@@ -1008,32 +1009,47 @@ $(function () {
   if (getQueryParameter('debug')) {
     console.log('%c' + ` ################ Debug Mode Started ################## `, 'color:white;background:#1976d2;font-weight:bold;')
     console.log(`
-1. Keys 1 - 5 will activate the different gem drops
-2. Keys 6 - 0 will activate the different emote drops
-3. Space key will erase all bits active
+1. Key 1 - Single cheer1    
+2. Key 2 - Multiple cheer1
+3. Key 3 - Single cheer100 cheer1
+4. Key 4 - Multiple cheer100 cheer500 cheer1
+5. Key 5 - Single cheer10000
+6. Space key will erase all bits active
          `);
     console.log('%c' + ` ###################################################### `, 'color:white;background:#1976d2;font-weight:bold;')
     $('body').on('keypress', function (k) {
       let charCode = k.which ? k.which : k.keyCode;
       let val = 0;
-      let msg = 'cheer';
       let usr = '';
+      let message = '';
+      let emote = '';
 
       switch (String.fromCharCode(charCode)) {
         case '1':
           val = 1;
+          message = 'Amazing Kappa cheer1'
+
+          usr = 'TestCheer1'
           break;
         case '2':
-          val = 101;
+          val = 20;
+          message = 'Look cheer1 at cheer1 what cheer1 I cheer1 can cheer1 do cheer1 for cheer1 you cheer1 cheer1 cheer1 cheer1 cheer1 cheer1 cheer1 cheer1 cheer1 cheer1 cheer1 cheer1 cheer1 #FillTheCup'
+          usr = 'TestCheer2'
           break;
         case '3':
           val = 1001;
+          message = 'Amazing cheer100 cheer1'
+          usr = 'TestCheer3'
           break;
         case '4':
           val = 5240;
+          message = 'Amazing cheer100 cheer100 cheer100 cheer100 cheer100 cheer500 cheer1';
+          usr = 'TestCheer4'
           break;
         case '5':
           val = 10000;
+          message = 'Damn son cheer10000'
+          usr = 'TestCheer5'
           break;
         case ' ':
           clearAllGems();
@@ -1041,10 +1057,13 @@ $(function () {
         default:
           return;
       }
+
+      // Trigger cannon if needed
       cannonVisible = true;
       cannonIsMoving = true;
-      //addGem(250, 150, val, Math.floor((Math.random() * 9999) + 100000) + '1' + 1, val);
-      addAlert(usr, `${msg}${val}`, '', val);
+
+      // Add message to alert queue (hook here)
+      addAlert(usr, message, emote, val);
 
 
     });
@@ -1056,6 +1075,10 @@ $(function () {
     muted = true;
   } else if (parseInt(getQueryParameter("mute")) > 0) {
     muteLessThan = parseInt(getQueryParameter("mute"));
+  }
+
+  if (getQueryParameter("freeshot")) {
+    freeShot = true;
   }
 
   init();

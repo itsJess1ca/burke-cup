@@ -20,7 +20,8 @@ $(function () {
 
     // Active in scene
     let gems = [],
-        messages = [];
+        messages = [],
+        fireQ = [];
 
 
     // Pending
@@ -166,7 +167,7 @@ $(function () {
         cannon.scale.y *= -1;
         cannon.position.y = height - chestPosition[1] - (chestHeight / 2) + 20;
 
-        cannon.rotation = -1.7
+        cannon.rotation = -1.8
 
         stage.addChild(cannon);
     }
@@ -212,6 +213,7 @@ $(function () {
             // Set to true when the gem begins falling under the influence of gravity.
             this.falling = false;
 
+            this.inChest = false;
             // This is roughly how many game frames it takes the gem animation to complete.
             this.startingGemAnimationGameFrames = animationFrames;
 
@@ -266,6 +268,7 @@ $(function () {
                     //this.physical.velocity =  rotation(0.5 * dt), rotation(0.5 * dt)
                     // Die when the gem falls out of bounds.
                     if (this.physical.position[0] < 0 - GEM_RADIUS || this.physical.position[0] > width + GEM_RADIUS || this.physical.position[1] < 0 - GEM_RADIUS) {
+                        console.log('dead gem');
                         this.dead = true;
                     }
 
@@ -273,11 +276,14 @@ $(function () {
                         var gemShape = new p2.Circle({ radius: GEM_RADIUS, material: gemMaterial });
                         this.physical.addShape(gemShape);
                         this.hasRenderBody = true;
+                        setTimeout(function() {
+                          fireQ.pop();
+                        },2000);
                     }
-                    /*if (this.physical.mass >= this.tier && this.physical.mass > 0) {
+                    if (this.physical.mass >= this.tier && this.physical.mass > 0) {
                      this.physical.mass = this.physical.mass - dt * this.tier;
                      this.physical.updateMassProperties();
-                     }*/
+                     }
                 }
                 else {
                     // Update the position, and then turn on physics when we hit the rim of the cup.
@@ -307,10 +313,13 @@ $(function () {
                       //this.physical.velocity = rotation(randomRange(10, 50), randomRange(0, Math.PI / 2) + Math.PI / 2);
                       this.physical.updateMassProperties();
                         this.falling = true;
+                        console.log(this.physical.amount);
                         if (this.physical.amount >= 999) {
+                            console.log('changing mass');
                             this.physical.mass = this.physical.mass * 100;
                             this.physical.updateMassProperties();
                         }
+                        console.log(this.physical.mass);
                     }
                 }
             }
@@ -363,14 +372,39 @@ $(function () {
 
     function addGem(x, y, tier, depth, amount) {
         // Add a box
-        let xVel = 375 || Math.floor((Math.random() * 232) + 230);
+        /*
+        There are a few different ways to shoot this bitch
+        Low Arc shot
+        x: 375
+        y: 200
+        cannon.rotation = -1.7;
+
+        Medium
+        x:250
+        y: 300
+        cannon.rotation = -2.3
+
+        High Arc Shot
+        x: 200
+        y: 400
+
+         Math.floor((Math.random() * 232) + 230)
+
+         */
+
+        fireQ.push(1);
+        let xVel = 250;
+        let yVel = 300
+        cannon.rotation = -2.3;
+
+
         let body = new p2.Body({
-          mass: 1,
+          mass: Math.floor(Math.random() * amount + amount),
           damping: 0.01,
           type: p2.Body.DYNAMIC,
           angularDamping: 0.1,
           position: [x, y - GEM_RADIUS],
-          velocity: [xVel, 200],
+          velocity: [xVel, yVel],
           angularVelocity: -1
         });
 
@@ -403,9 +437,9 @@ $(function () {
 
     function addAlert(user, msg, emotes, bits) {
         cannonVisible = true;
-        if(cannon.position.x <= cannon.width * 2){
-            cannonIsMoving = true;
-        }
+        cannonExiting = false;
+        cannonIsMoving = true;
+
         queuedAlert.push({
             user: user,
             message: msg,
@@ -582,7 +616,7 @@ $(function () {
             if (msg.emote.id === '-1') {
                 // If the emote is a gem, add a gem.
                 let tier = getPointsThreshold(msg.amount);
-                addGem(250, 150, tier, messageID * 10000 + tier + i, msg.amount);
+                addGem(225, 150, tier, messageID * 10000 + tier + i, msg.amount);
                 currentOffset += GEM_RADIUS * 2 + 10;
             } else if (msg.emote.id === '0') {
                 // Do nothing.
@@ -634,7 +668,7 @@ $(function () {
             return !g.dead;
         });
 
-        if(gems.length > 0 && cannonVisible === true && cannonIsMoving === false){
+        if(gems.length > 0){
             for(let i = 0; i < gems.length; i++){
                 gems[i].update(dt);
                 gems[i].sync();
@@ -649,20 +683,21 @@ $(function () {
             return !t.dead;
         });
 
-        if(messages.length < MAXIMUM_TEXT_DISPLAY){
+        if(messages.length < MAXIMUM_TEXT_DISPLAY && cannonVisible === true && cannonIsMoving === false){
             createText();
         }
+
 
         for(let i = 0; i < messages.length; i++){
             messages[i].update(dt);
         }
 
 
-        if(gems.length === 0 && cannonVisible === true){
-            cannonExiting = true;
-        }
-
         if(cannonVisible === true){
+          if(fireQ.length === 0 && cannonIsMoving === false){
+             cannonExiting = true;
+          }
+
             if(cannonExiting === true && cannonIsMoving === false){
                 moveCannon('left');
             }
@@ -670,6 +705,7 @@ $(function () {
             if(cannonIsMoving === true && cannonExiting === false){
                 moveCannon('right');
             }
+
         }
     }
 

@@ -268,7 +268,6 @@ $(function () {
                     //this.physical.velocity =  rotation(0.5 * dt), rotation(0.5 * dt)
                     // Die when the gem falls out of bounds.
                     if (this.physical.position[0] < 0 - GEM_RADIUS || this.physical.position[0] > width + GEM_RADIUS || this.physical.position[1] < 0 - GEM_RADIUS) {
-                        console.log('dead gem');
                         this.dead = true;
                     }
 
@@ -305,19 +304,10 @@ $(function () {
                             sfx.play();
                         }
                     }
-                    //this.falling = true;
                     // Once it reaches the drop point, let physics happen.
                     if (this.physical.position[0] > GEM_DROP_POINT && this.falling === false) {
-                        //this.physical.mass = Math.round(this.amount * Math.sqrt(this.tier));
-
-                      //this.physical.velocity = rotation(randomRange(10, 50), randomRange(0, Math.PI / 2) + Math.PI / 2);
                       this.physical.updateMassProperties();
-                        this.falling = true;
-                        console.log(this.physical.amount);
-                        if (this.physical.amount >= 999) {
-                            this.physical.mass = this.physical.mass * 100;
-                            this.physical.updateMassProperties();
-                        }
+                      this.falling = true;
                     }
                 }
             }
@@ -476,7 +466,6 @@ $(function () {
         for (i = 0; i < messages.length; ++i) {
             exists[messages[i].rank] = 1;
         }
-
         var nextRank = undefined;
         for (i = 0; i < MAXIMUM_TEXT_DISPLAY; ++i) {
             if (exists[i] === undefined) {
@@ -592,7 +581,12 @@ $(function () {
         }
 
         // Prepend the username.
-        messageTable[0].prefix = text.user + ': ' + messageTable[0].prefix;
+        if(!debug){
+          messageTable[0].prefix = text.user + ': ' + messageTable[0].prefix;
+        } else{
+          messageTable[0].prefix = text.user + ' ' + messageTable[0].prefix;
+        }
+
 
         // Begin constructing the display objects.
         let resultingTextObjects = [];

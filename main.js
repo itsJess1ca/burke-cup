@@ -46,14 +46,14 @@ $(function () {
 
 
     // Chest width/height. Sprites will be scaled to fit this
-    let chestWidth = 203;
+    let chestWidth = 225;
     let chestHeight = 211;
 
     let chestPosition =  [width - 150, 0]; // Left side of the screen;
     let chestRadiusAdjust = 10;
     let chestRightAdjust = 5;
-    let chestBottomHeight = 25;
-    let chestSideLength = 5;
+    let chestBottomHeight = 5;
+    let chestSideLength = 9;
     let chestSideThickness = 200;
 
     let cannon,
@@ -114,7 +114,7 @@ $(function () {
 
         // Left
         let chestLeft = new p2.Body({
-            position: [chestPosition[0] - chestWidth / 2,
+            position: [chestPosition[0] - chestWidth / 2.1,
                 chestPosition[1] + chestRadiusAdjust]
         });
         chestLeft.addShape(new p2.Box({
@@ -125,7 +125,7 @@ $(function () {
 
         // Right
         let chestRight = new p2.Body({
-            position: [chestPosition[0] + chestWidth / 2,
+            position: [chestPosition[0] + chestWidth / 2.1,
                 chestPosition[1] + chestRadiusAdjust]
         });
         chestRight.addShape((new p2.Box({

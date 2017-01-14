@@ -1,8 +1,11 @@
-"use strict";
+/**
+ * Created by thoms on 1/14/2017.
+ */
+'use strict';
 //New Stuff
-const _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+const _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 $(function () {
 
@@ -31,7 +34,7 @@ $(function () {
 
 
     let gemAnimationFrames = {};
-    var gemFlashFrames = {};
+    let gemFlashFrames = {};
     let gemMaterial = new p2.Material();
     let chestMaterial = new p2.Material();
 
@@ -49,28 +52,31 @@ $(function () {
     let chestRadiusAdjust = 10;
     let chestRightAdjust = 5;
     let chestBottomHeight = 25;
-    let chestSideLength = 150;
-    let chestSideThickness = 10;
+    let chestSideLength = 5;
+    let chestSideThickness = 200;
 
-    let cannon;
+    let cannon,
+        cannonIsMoving = false,
+        cannonVisible = false,
+        cannonExiting = false;
 
-    let MAXIMUM_TEXT_DISPLAY = 5;
+    let MAXIMUM_TEXT_DISPLAY = 50;
     let TEXT_DISPLAY_START = height - 50;
-    let GEM_DROP_POINT = chestPosition[0] + 35;
+    let GEM_DROP_POINT = width - 400;
     let GEM_RADIUS = 12;
 
     stage = new PIXI.Container();
 
     function webGLDetect(return_context) {
         if (window.WebGLRenderingContext) {
-            var canvas = document.createElement("canvas"),
-                names = ["webgl", "experimental-webgl", "moz-webgl", "webkit-3d"],
+            var canvas = document.createElement('canvas'),
+                names = ['webgl', 'experimental-webgl', 'moz-webgl', 'webkit-3d'],
                 context = false;
 
             for (var i = 0; i < 4; i++) {
                 try {
                     context = canvas.getContext(names[i]);
-                    if (context && typeof context.getParameter === "function") {
+                    if (context && typeof context.getParameter === 'function') {
                         // WebGL is enabled
                         if (return_context) {
                             // return WebGL object if the function's argument is present
@@ -97,17 +103,17 @@ $(function () {
         // Bottom
         let chestBottom = new p2.Body({
             position: [chestPosition[0],
-                chestPosition[1] + chestBottomHeight + chestRadiusAdjust - 25]
+                chestPosition[1]]
         });
         chestBottom.addShape(new p2.Box({
             width: chestWidth,
-            height: chestHeight,
+            height: chestBottomHeight,
             material: chestMaterial
         }));
 
         // Left
         let chestLeft = new p2.Body({
-            position: [chestPosition[0] - chestWidth / 2 + chestRadiusAdjust,
+            position: [chestPosition[0] - chestWidth / 2,
                 chestPosition[1] + chestRadiusAdjust]
         });
         chestLeft.addShape(new p2.Box({
@@ -118,7 +124,7 @@ $(function () {
 
         // Right
         let chestRight = new p2.Body({
-            position: [chestPosition[0] + chestWidth / 2 - chestRadiusAdjust - chestRightAdjust,
+            position: [chestPosition[0] + chestWidth / 2,
                 chestPosition[1] + chestRadiusAdjust]
         });
         chestRight.addShape((new p2.Box({
@@ -135,7 +141,7 @@ $(function () {
     function addChestBackground() {
         let chestBack = new PIXI.Sprite.fromImage('assets/images/trans_background.png');
         chestBack.position.x = chestPosition[0] - chestWidth / 2;
-        chestBack.position.y = height - chestPosition[1] - chestHeight + 40;
+        chestBack.position.y = height - chestPosition[1] - chestHeight + 7;
         chestBack.height = chestHeight; // Need to set;
         chestBack.width = chestWidth; // Need to set
 
@@ -165,12 +171,27 @@ $(function () {
         stage.addChild(cannon);
     }
 
-    function moveCannon() {
-        // Need to add proper movement
-        cannon.position.x = cannon.width * 2 + 50
-        setTimeout(function() {
-            cannon.position.x = 0;
-        },5000);
+    function moveCannon(way) {
+        //console.log(way, cannon.position.x, (cannon.width * 2 + 50));
+        if(way === 'left') {
+            if(cannon.position.x >= (cannon.width * 2) * -1) {
+                cannon.position.x -= 5;
+            }else{
+                cannon.position.x -= 5;
+                cannonExiting = false;
+                cannonVisible = false;
+                cannonIsMoving = false;
+            }
+        }
+
+        if(way === 'right') {
+            if(cannon.position.x >= cannon.width * 2){
+                cannonIsMoving = false;
+            }else{
+                cannon.position.x += 5;
+
+            }
+        }
     }
 
     function randomRange(low, high) {
@@ -203,13 +224,13 @@ $(function () {
         }
 
         _createClass(Gem, [{
-            key: "sync",
+            key: 'sync',
             value: function sync() {
                 setPointFromPosition(this.renderable.position, this.physical.position);
                 this.renderable.rotation = this.physical.angle;
             }
         }, {
-            key: "updateAnimationFrames",
+            key: 'updateAnimationFrames',
             value: function updateAnimationFrames() {
                 if (this.gemAnimationGameFrames > 0) {
                     this.gemAnimationGameFrames--;
@@ -233,36 +254,43 @@ $(function () {
                 }
             }
         }, {
-            key: "update",
+            key: 'update',
             value: function update(dt) {
                 this.updateAnimationFrames();
 
+
+
                 if (this.falling) {
+
+
+                    //this.physical.velocity =  rotation(0.5 * dt), rotation(0.5 * dt)
                     // Die when the gem falls out of bounds.
                     if (this.physical.position[0] < 0 - GEM_RADIUS || this.physical.position[0] > width + GEM_RADIUS || this.physical.position[1] < 0 - GEM_RADIUS) {
                         this.dead = true;
                     }
 
-                    if (this.falling && this.physical.position[1] < TEXT_DISPLAY_START - 40 * MAXIMUM_TEXT_DISPLAY && !this.hasRenderBody) {
+                    if (this.falling && this.physical.position[1] < TEXT_DISPLAY_START - 40 * (MAXIMUM_TEXT_DISPLAY - 45) && !this.hasRenderBody) {
                         var gemShape = new p2.Circle({ radius: GEM_RADIUS, material: gemMaterial });
                         this.physical.addShape(gemShape);
                         this.hasRenderBody = true;
                     }
-                    if (this.physical.mass >= this.tier && this.physical.mass > 0) {
-                        this.physical.mass = this.physical.mass - dt * this.tier;
-                        this.physical.updateMassProperties();
-                    }
-                } else {
+                    /*if (this.physical.mass >= this.tier && this.physical.mass > 0) {
+                     this.physical.mass = this.physical.mass - dt * this.tier;
+                     this.physical.updateMassProperties();
+                     }*/
+                }
+                else {
                     // Update the position, and then turn on physics when we hit the rim of the cup.
-                    this.physical.position[0] -= dt * 100;
+                    //this.physical.position[0] += dt * 150;
+
 
                     // Start playing the animation and sound when the gem is on screen.
-                    if (this.physical.position[0] < width && this.gemAnimationGameFrames === 0 && this.falling === false) {
+                    if (this.physical.position[0] < cannon.position.x && this.gemAnimationGameFrames === 0 && this.falling === false) {
                         this.gemAnimationGameFrames = this.startingGemAnimationGameFrames;
                         this.renderable.gotoAndPlay(0);
 
                         if (!muted && this.amount >= muteLessThan) {
-                            var sfx = $(".js-gem-sound-" + this.tier).clone()[0];
+                            var sfx = $('.js-gem-sound-' + this.tier).clone()[0];
                             if (this.amount < 100) {
                                 sfx.volume = 0.05;
                             } else {
@@ -271,16 +299,13 @@ $(function () {
                             sfx.play();
                         }
                     }
-
+                    //this.falling = true;
                     // Once it reaches the drop point, let physics happen.
-                    if (this.physical.position[0] < GEM_DROP_POINT && this.falling === false) {
+                    if (this.physical.position[0] > GEM_DROP_POINT && this.falling === false) {
                         //this.physical.mass = Math.round(this.amount * Math.sqrt(this.tier));
-                        this.physical.mass = 1;
-                        this.physical.damping = 0.01;
-                        this.physical.angularDamping = 0.1;
-                        this.physical.type = p2.Body.DYNAMIC;
-                        this.physical.velocity = rotation(randomRange(10, 50), randomRange(0, Math.PI / 2) + Math.PI / 2);
-                        this.physical.updateMassProperties();
+
+                      //this.physical.velocity = rotation(randomRange(10, 50), randomRange(0, Math.PI / 2) + Math.PI / 2);
+                      this.physical.updateMassProperties();
                         this.falling = true;
                         if (this.physical.amount >= 999) {
                             this.physical.mass = this.physical.mass * 100;
@@ -290,7 +315,7 @@ $(function () {
                 }
             }
         }, {
-            key: "destroy",
+            key: 'destroy',
             value: function destroy() {
                 world.removeBody(this.physical);
                 container.removeChild(this.renderable);
@@ -310,20 +335,20 @@ $(function () {
         }
 
         _createClass(ScrollingText, [{
-            key: "update",
+            key: 'update',
             value: function update(dt) {
                 for (var i = 0; i < this.renderables.length; ++i) {
-                    this.renderables[i].position.x -= dt * 100;
+                    this.renderables[i].position.y -= dt * 100;
                 }
 
                 // Kill this object when the last member goes offscreen.
                 var last = this.renderables[this.renderables.length - 1];
-                if (last.width + last.position.x < 0) {
+                if (last.width + last.position.y < 0) {
                     this.dead = true;
                 }
             }
         }, {
-            key: "destroy",
+            key: 'destroy',
             value: function destroy() {
                 _.each(this.renderables, function (r) {
                     container.removeChild(r);
@@ -335,12 +360,18 @@ $(function () {
         return ScrollingText;
     }();
 
+
     function addGem(x, y, tier, depth, amount) {
         // Add a box
-        var body = new p2.Body({
-            mass: 0,
-            position: [x, y - GEM_RADIUS],
-            angularVelocity: -1
+        let xVel = 375 || Math.floor((Math.random() * 232) + 230);
+        let body = new p2.Body({
+          mass: 1,
+          damping: 0.01,
+          type: p2.Body.DYNAMIC,
+          angularDamping: 0.1,
+          position: [x, y - GEM_RADIUS],
+          velocity: [xVel, 200],
+          angularVelocity: -1
         });
 
         world.addBody(body);
@@ -371,13 +402,16 @@ $(function () {
 
 
     function addAlert(user, msg, emotes, bits) {
+        cannonVisible = true;
+        if(cannon.position.x <= cannon.width * 2){
+            cannonIsMoving = true;
+        }
         queuedAlert.push({
             user: user,
             message: msg,
             emotes: emotes,
             bits: bits
         });
-        console.log(queuedAlert);
     }
 
     function getPointsThreshold(amount) {
@@ -425,18 +459,18 @@ $(function () {
         var emoteListing = [];
 
         // Split the emotes field on /
-        text.emotes = text.emotes || "";
-        if (text.emotes !== "") {
-            let emotes = text.emotes.split("/");
+        text.emotes = text.emotes || '';
+        if (text.emotes !== '') {
+            let emotes = text.emotes.split('/');
             for (i = 0; i < emotes.length; ++i) {
                 // Invert this index, turning it into starting-char -> emote id, length.
                 let data = emotes[i];
-                let idSplit = data.split(":");
-                let values = idSplit[1].split(",");
+                let idSplit = data.split(':');
+                let values = idSplit[1].split(',');
 
                 // Turn the values into integer pairs of start and ending points.
                 let _indices = _.map(values, function (v) {
-                    let indices = v.split("-");
+                    let indices = v.split('-');
                     return [parseInt(indices[0], 10), parseInt(indices[1], 10)];
                 });
 
@@ -458,7 +492,7 @@ $(function () {
         // Then reverse them, since replacing the last emote does not change indices of prior emotes.
         emoteListing = emoteListing.reverse();
         let replaceRange = function replaceRange(msg, b, e) {
-            return msg.substr(0, b) + "\x01" + msg.substr(e + 1);
+            return msg.substr(0, b) + '\x01' + msg.substr(e + 1);
         };
 
         let message = text.message;
@@ -468,7 +502,7 @@ $(function () {
         }
 
         // Split on 0x01, which gives us a set of messages seperated by emotes.
-        let splitMessage = message.split("\x01");
+        let splitMessage = message.split('\x01');
         let givepointsRegex = /(?:^|\s)cheer(\d+)(?=$|\s)/g;
         let amountRegex = /(?:^|\s)cheer(\d+)(?=$|\s)/;
 
@@ -478,7 +512,7 @@ $(function () {
 
         // At the end there is a sentinel '0' emote, which is no emote.
         forwardEmoteListing.push({
-            id: "0"
+            id: '0'
         });
 
         let total = 0;
@@ -490,7 +524,7 @@ $(function () {
 
             // Then, look for givepoints objects
             let matches = part.match(givepointsRegex);
-            let splits = part.replace(givepointsRegex, "\x01").split("\x01");
+            let splits = part.replace(givepointsRegex, '\x01').split('\x01');
 
             // Splits is now a list of text fragments, between each of which is a givepoints command.
             for (j = 0; j < splits.length - 1; ++j) {
@@ -501,13 +535,13 @@ $(function () {
                     // Skip this one, as it exceeds the number of bits in the message.
                     messageTable.push({
                         prefix: splits[j].trim() + matches[j],
-                        emote: { id: "0" }
+                        emote: { id: '0' }
                     });
                 } else {
                     // Push each fragment, with a gem afterwards.
                     messageTable.push({
                         prefix: splits[j].trim(),
-                        emote: { id: "-1" },
+                        emote: { id: '-1' },
                         amount: amount
                     });
 
@@ -523,11 +557,11 @@ $(function () {
         }
 
         // Prepend the username.
-        messageTable[0].prefix = text.username + ": " + messageTable[0].prefix;
+        messageTable[0].prefix = text.user + ': ' + messageTable[0].prefix;
 
         // Begin constructing the display objects.
         let resultingTextObjects = [];
-        let properties = { font: '24px Arial', fill: 0xFFFFFF, stroke: 0x000000, strokeThickness: 5, align: 'left', lineJoin: "round" };
+        let properties = { font: '24px Arial', fill: 0xFFFFFF, stroke: 0x000000, strokeThickness: 5, align: 'left', lineJoin: 'round' };
         let currentOffset = width + 100;
         let textHeight = TEXT_DISPLAY_START - 40 *nextRank;
 
@@ -538,19 +572,19 @@ $(function () {
             if (msg.prefix.length !== 0) {
                 let textDisplay = new PIXI.Text(msg.prefix, properties);
                 textDisplay.scale = new PIXI.Point(1, -1);
-                textDisplay.position = new PIXI.Point(currentOffset, textHeight);
+                textDisplay.position = new PIXI.Point((width / 2) - (textDisplay.width / 2), height);
 
                 container.addChild(textDisplay);
                 currentOffset += textDisplay.width;
                 resultingTextObjects.push(textDisplay);
             }
 
-            if (msg.emote.id === "-1") {
+            if (msg.emote.id === '-1') {
                 // If the emote is a gem, add a gem.
                 let tier = getPointsThreshold(msg.amount);
-                addGem(currentOffset + 5, textHeight, tier, messageID * 10000 + tier + i, msg.amount);
+                addGem(250, 150, tier, messageID * 10000 + tier + i, msg.amount);
                 currentOffset += GEM_RADIUS * 2 + 10;
-            } else if (msg.emote.id === "0") {
+            } else if (msg.emote.id === '0') {
                 // Do nothing.
             } else {
                 // This is an emote, construct a sprite.
@@ -558,7 +592,7 @@ $(function () {
                 emoteDisplay.scale = new PIXI.Point(1, -1);
 
                 // These pixel adjustments were experimentally derived.
-                emoteDisplay.position = new PIXI.Point(currentOffset + 5, textHeight);
+                emoteDisplay.position = new PIXI.Point(width / 2, height + textHeight);
                 currentOffset += 38;
 
                 container.addChild(emoteDisplay);
@@ -583,6 +617,11 @@ $(function () {
     }
 
     function update(dt) {
+
+        if(cannonVisible === true && cannonIsMoving === true && cannonExiting === true) {
+            cannonExiting = false;
+        }
+
         if(needDepthSort){
             container.children.sort(depthSort);
             needDepthSort = false;
@@ -595,9 +634,12 @@ $(function () {
             return !g.dead;
         });
 
-        for(let i = 0; i < gems.length; i++){
-            gems[i].update(dt);
-            gems[i].sync();
+        if(gems.length > 0 && cannonVisible === true && cannonIsMoving === false){
+            for(let i = 0; i < gems.length; i++){
+                gems[i].update(dt);
+                gems[i].sync();
+            }
+
         }
 
         messages = _.filter(messages, function(t){
@@ -615,9 +657,63 @@ $(function () {
             messages[i].update(dt);
         }
 
+
+        if(gems.length === 0 && cannonVisible === true){
+            cannonExiting = true;
+        }
+
+        if(cannonVisible === true){
+            if(cannonExiting === true && cannonIsMoving === false){
+                moveCannon('left');
+            }
+
+            if(cannonIsMoving === true && cannonExiting === false){
+                moveCannon('right');
+            }
+        }
     }
 
+    function debugRenderWorld(world, renderer) {
+        renderer.clear();
 
+        var colors = [0x000000, 0xFFFF00, 0x1CE6FF, 0xFF34FF, 0xFF4A46, 0x008941, 0x006FA6, 0xA30059, 0xFFDBE5, 0x7A4900, 0x0000A6, 0x63FFAC, 0xB79762, 0x004D43, 0x8FB0FF, 0x997D87, 0x5A0007, 0x809693, 0xFEFFE6, 0x1B4400, 0x4FC601, 0x3B5DFF, 0x4A3B53, 0xFF2F80, 0x61615A, 0xBA0900, 0x6B7900, 0x00C2A0, 0xFFAA92, 0xFF90C9, 0xB903AA, 0xD16100, 0xDDEFFF, 0x000035, 0x7B4F4B, 0xA1C299, 0x300018, 0x0AA6D8, 0x013349, 0x00846F, 0x372101, 0xFFB500, 0xC2FFED, 0xA079BF, 0xCC0744, 0xC0B9B2, 0xC2FF99, 0x001E09, 0x00489C, 0x6F0062, 0x0CBD66, 0xEEC3FF, 0x456D75, 0xB77B68, 0x7A87A1, 0x788D66, 0x885578, 0xFAD09F, 0xFF8A9A, 0xD157A0, 0xBEC459, 0x456648, 0x0086ED, 0x886F4C, 0x34362D, 0xB4A8BD, 0x00A6AA, 0x452C2C, 0x636375, 0xA3C8C9, 0xFF913F, 0x938A81, 0x575329, 0x00FECF, 0xB05B6F, 0x8CD0FF, 0x3B9700, 0x04F757, 0xC8A1A1, 0x1E6E00, 0x7900D7, 0xA77500, 0x6367A9, 0xA05837, 0x6B002C, 0x772600, 0xD790FF, 0x9B9700, 0x549E79, 0xFFF69F, 0x201625, 0x72418F, 0xBC23FF, 0x99ADC0, 0x3A2465, 0x922329, 0x5B4534, 0xFDE8DC, 0x404E55, 0x0089A3, 0xCB7E98, 0xA4E804, 0x324E72, 0x6A3A4C];
+
+        var rotate = function rotate(v, rads) {
+            var c = Math.cos(rads);
+            var s = Math.sin(rads);
+
+            return [c * v[0] - s * v[1], s * v[0] + c * v[1]];
+        };
+
+        for (var bi in world.bodies) {
+            var body = world.bodies[bi];
+
+            renderer.beginFill(colors[bi], 1);
+            for (var si in body.shapes) {
+                var shape = body.shapes[si];
+                switch (shape.type) {
+                    case p2.Shape.CIRCLE:
+                        renderer.drawCircle(shape.position[0] + body.position[0], height - (shape.position[1] + body.position[1]), shape.radius);
+                        break;
+                    case p2.Shape.CONVEX:
+                        var verts = [];
+                        var rotatedPosition = rotate(shape.position, body.angle);
+                        for (var i = 0; i < shape.vertices.length; ++i) {
+                            var rotated = rotate(shape.vertices[i], body.angle);
+
+                            verts.push(rotatedPosition[0] + body.position[0] + rotated[0]);
+                            verts.push(height - (rotatedPosition[1] + body.position[1] + rotated[1]));
+                        }
+                        renderer.drawPolygon(verts);
+                        break;
+                    default:
+                        console.log(body.shapes[si]);
+                        break;
+                }
+            }
+            renderer.endFill();
+        }
+    }
 
     function init() {
 
@@ -628,7 +724,7 @@ $(function () {
         world.addContactMaterial(new p2.ContactMaterial(gemMaterial, gemMaterial, { relaxation: 0.8, friction: 0, restitution: 0.2, stiffness: p2.Equation.DEFAULT_STIFFNESS * 100 }));
         world.addContactMaterial(new p2.ContactMaterial(gemMaterial, chestMaterial, { relaxation: 0.8, friction: 0, restitution: 0.2, stiffness: Number.MAX_VALUE }));
 
-        addBoundingBox();
+
 
 
         // Initialize the stage
@@ -658,19 +754,19 @@ $(function () {
 
         debugDrawGraphics = new PIXI.Graphics();
         stage.addChild(debugDrawGraphics);
-
-        PIXI.loader.add("assets/images/point-sprites/1-quarter.json").add("assets/images/point-sprites/100-quarter.json").add("assets/images/point-sprites/1000-quarter.json").add("assets/images/point-sprites/5000-quarter.json").add("assets/images/point-sprites/10000-quarter.json").load(function () {
+        addBoundingBox();
+        PIXI.loader.add('assets/images/point-sprites/1-quarter.json').add('assets/images/point-sprites/100-quarter.json').add('assets/images/point-sprites/1000-quarter.json').add('assets/images/point-sprites/5000-quarter.json').add('assets/images/point-sprites/10000-quarter.json').load(function () {
             var breakPoints = [1, 100, 1000, 5000, 10000];
             var glimmerStart = [43, 43, 43, 43, 43];
             var frames = [64, 64, 64, 64, 73];
 
             var frameName = function frameName(name, i) {
-                var frameID = "" + i;
+                var frameID = '' + i;
                 if (i < 10) {
-                    frameID = "0" + i;
+                    frameID = '0' + i;
                 }
 
-                return name + "_000" + frameID;
+                return name + '_000' + frameID;
             };
 
             for (var movie = 0; movie < breakPoints.length; ++movie) {
@@ -701,11 +797,6 @@ $(function () {
             unserializeState();
         });
 
-        if(debug){
-            moveCannon();
-            // Send to test alert
-            addAlert('TestUser', `Demo message for champions cheer1`, "", '1');
-        }
 
     }
 
@@ -730,7 +821,7 @@ $(function () {
             updates++;
         }
 
-        if (getQueryParameter("physicsrender")) {
+        if (getQueryParameter('physicsrender')) {
             debugRenderWorld(world, debugDrawGraphics);
         }
 
@@ -758,11 +849,11 @@ $(function () {
             });
         }
 
-        localStorage.setItem("gem_state", JSON.stringify(result));
+        localStorage.setItem('gem_state', JSON.stringify(result));
     }
 
     function unserializeState() {
-        var state = JSON.parse(localStorage.getItem("gem_state"));
+        var state = JSON.parse(localStorage.getItem('gem_state'));
         if (state === null) {
             return;
         }
@@ -806,9 +897,9 @@ $(function () {
 
     // Look for any parameters
     let getQueryParameter = function getQueryParameter(p) {
-        let urlHashes = window.location.href.slice(window.location.href.indexOf("?") + 1).split("&");
+        let urlHashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
         for (var i = 0; i < urlHashes.length; i++) {
-            var hash = urlHashes[i].split("=");
+            var hash = urlHashes[i].split('=');
             if (hash[0] === p) {
                 return hash[1] || true;
             }
@@ -816,17 +907,19 @@ $(function () {
     };
 
     // Enable Debug mode ?debug=true
-    if(getQueryParameter("debug")){
-        console.log("%c" + ` ################ Debug Mode Started ################## `, "color:white;background:#1976d2;font-weight:bold;")
+    if(getQueryParameter('debug')){
+        console.log('%c' + ` ################ Debug Mode Started ################## `, 'color:white;background:#1976d2;font-weight:bold;')
         console.log(`
 1. Keys 1 - 5 will activate the different gem drops
 2. Keys 6 - 0 will activate the different emote drops
 3. Space key will erase all bits active
          `);
-        console.log("%c" + ` ###################################################### `, "color:white;background:#1976d2;font-weight:bold;")
+        console.log('%c' + ` ###################################################### `, 'color:white;background:#1976d2;font-weight:bold;')
         $('body').on('keypress', function(k){
             let charCode = k.which ? k.which : k.keyCode;
-            let val = 5;
+            let val = 0;
+            let msg = 'cheer';
+            let usr = '';
 
             switch (String.fromCharCode(charCode)){
                 case '1':
@@ -850,10 +943,13 @@ $(function () {
                 default:
                     return;
             }
+            cannonVisible = true;
+            cannonIsMoving = true;
+            //addGem(250, 150, val, Math.floor((Math.random() * 9999) + 100000) + '1' + 1, val);
+            addAlert(usr,`${msg}${val}`, '', val);
 
-            moveCannon();
-            // Send to test alert
-            addAlert('TestUser', `Demo message for champions cheer${val}`, "", val);
+
+
 
         });
 

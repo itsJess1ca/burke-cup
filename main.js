@@ -672,7 +672,7 @@ $(function () {
       if (msg.emote.id === '-1') {
         // If the emote is a gem, add a gem.
         let tier = getPointsThreshold(msg.amount);
-        addGem(225, 130, tier, messageID * 10000 + tier + i, msg.amount);
+        addGem(220, 140, tier, messageID * 10000 + tier + i, msg.amount);
         currentOffset += GEM_RADIUS * 2 + 10;
       } else if (msg.emote.id === '0') {
         // Do nothing.

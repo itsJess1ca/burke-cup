@@ -699,6 +699,7 @@ $(function () {
     _.each(gems, function (g) {
       g.dead = true;
     });
+    fireQ = [];
   }
 
   function setPointFromPosition(point, position) {

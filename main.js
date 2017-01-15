@@ -74,7 +74,7 @@ $(function () {
   let chestPosition = [width - 150, 0]; // Left side of the screen;
   let chestRadiusAdjust = 10;
   let chestRightAdjust = 5;
-  let chestBottomHeight = 5;
+  let chestBottomHeight = 15;
   let chestSideLength = 5;
   let chestSideThickness = 165;
 
@@ -126,7 +126,7 @@ $(function () {
     // Bottom
     let chestBottom = new p2.Body({
       position: [chestPosition[0],
-        chestPosition[1]]
+        chestPosition[1] - 7]
     });
     chestBottom.addShape(new p2.Box({
       width: chestWidth,
@@ -460,7 +460,8 @@ $(function () {
     gem.play();
     gem.anchor.x = 0.5;
     gem.anchor.y = 0.5;
-
+    gem.width += 75;
+    gem.height += 75;
     // The gems are slightly larger than the collision body, so overlaps will happen.
     gem.scale = new PIXI.Point(GEM_RADIUS * 4 / gem.width, GEM_RADIUS * 4 / gem.width);
     gem.depth = depth;
@@ -508,7 +509,7 @@ $(function () {
     return threshold;
   }
 
-  function createText() {
+   function createText() {
     let i, j;
 
     // Return if nothing queued

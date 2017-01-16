@@ -87,6 +87,7 @@ $(function () {
   let TEXT_DISPLAY_START = height - 50;
   let GEM_DROP_POINT = width - 400;
   let GEM_RADIUS = 12;
+  let SMALL_CANNON_RADIUM = 6;
 
   stage = new PIXI.Container();
 
@@ -290,7 +291,13 @@ $(function () {
           }
 
           if (this.falling && this.physical.position[1] < TEXT_DISPLAY_START - 40 * (MAXIMUM_TEXT_DISPLAY - 45) && !this.hasRenderBody) {
-            var gemShape = new p2.Circle({radius: GEM_RADIUS, material: gemMaterial});
+            let gemShape;
+            if(this.amount === 1){
+              gemShape = new p2.Circle({radius: SMALL_CANNON_RADIUM, material: gemMaterial});
+            }else{
+              gemShape = new p2.Circle({radius: GEM_RADIUS, material: gemMaterial});
+            }
+
             this.physical.addShape(gemShape);
             this.hasRenderBody = true;
 
@@ -460,8 +467,14 @@ $(function () {
     gem.play();
     gem.anchor.x = 0.5;
     gem.anchor.y = 0.5;
-    gem.width += 75;
-    gem.height += 75;
+    if(amount === 1){
+      gem.width += 125;
+      gem.width += 125;
+    }else{
+      gem.width += 75;
+      gem.height += 75;
+    }
+
     // The gems are slightly larger than the collision body, so overlaps will happen.
     gem.scale = new PIXI.Point(GEM_RADIUS * 4 / gem.width, GEM_RADIUS * 4 / gem.width);
     gem.depth = depth;

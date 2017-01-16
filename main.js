@@ -547,7 +547,17 @@ $(function () {
 
     return threshold;
   }
-
+  
+  function getTipThreshold(amount) {
+    var threshold = 1; // This will set to bronze so that it will return a tier no matter what.  You can remove this when you update the others.  Just wanted to note it for ya.
+    if (amount >= 10000) { // TODO: Change amount to desired tip value.  Should change to cents before calculating this.  Will return gold coin
+      threshold = 3;
+    } else if (amount >= 5000) { // TODO: Change amount to desired tip value.  Should change to cents before calculating this.  Will return silver coin
+      threshold = 2;
+    }
+    return threshold;
+  }
+  
    function createText() {
     let i, j;
 

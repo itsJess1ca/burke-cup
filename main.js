@@ -33,7 +33,7 @@ $(function () {
   const debug = true;
   let freeShot = false;
 
-  let muted = false;
+  let muted = true;
   let muteLessThan = 0;
 
   // PIXI and P2
@@ -170,7 +170,7 @@ $(function () {
   }
 
   function addChestBackground() {
-    chestBack = new PIXI.Sprite.fromImage('assets/images/trans_background.png');
+    chestBack = new PIXI.Sprite.fromImage('assets/images/chest_back.png');
     chestBack.position.x = chestPosition[0] - chestWidth / 2;
     chestBack.position.y = height - chestPosition[1] - chestHeight + 7;
     chestBack.height = chestHeight; // Need to set;
@@ -180,7 +180,7 @@ $(function () {
   }
 
   function addChestFront() {
-    chestFront = new PIXI.Sprite.fromImage('assets/images/trans_foreground.png');
+    chestFront = new PIXI.Sprite.fromImage('assets/images/chest_front.png');
     chestFront.position.x = chestPosition[0] - chestWidth / 2;
     chestFront.position.y = height - chestPosition[1] - chestHeight;
     chestFront.height = chestHeight; // Need to set;
@@ -294,8 +294,6 @@ $(function () {
       key: 'update',
       value: function update(dt) {
         this.updateAnimationFrames();
-
-
         if (this.falling) {
 
           // Die when the gem falls out of bounds.
@@ -322,7 +320,7 @@ $(function () {
 
             if(this.amount > 99) {
               setTimeout(function() {
-                rumbleChest();
+                //rumbleChest();
               },359);
 
 
@@ -481,7 +479,8 @@ $(function () {
       angularDamping: 0.7,
       position: [x, y - GEM_RADIUS],
       velocity: [xVel, yVel],
-      angularVelocity: -1
+      angularVelocity: -1,
+      overlaps: true
     });
 
     world.addBody(body);

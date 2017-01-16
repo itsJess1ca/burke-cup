@@ -504,8 +504,8 @@ $(function () {
       gem.width += 75;
       gem.scale = new PIXI.Point(MEDIUM_CANNON_RADIUS * 4 / gem.width, MEDIUM_CANNON_RADIUS * 4 / gem.width);
     }else{
-        gem.width += 100;
-        gem.height += 100;
+        gem.width += 25;
+        gem.height += 25;
       gem.scale = new PIXI.Point(SMALL_CANNON_RADIUS * 4 / gem.width, SMALL_CANNON_RADIUS * 4 / gem.width);
       }
 
@@ -657,7 +657,7 @@ $(function () {
     // At this point, splitMessage is a list of text fragments. Between each fragment is an emote.
     for (i = 0; i < splitMessage.length; ++i) {
       let part = splitMessage[i];
-
+      part = part.toLowerCase();
       // Then, look for givepoints objects
       let matches = part.match(givepointsRegex);
       let splits = part.replace(givepointsRegex, '\x01').split('\x01');
@@ -675,6 +675,7 @@ $(function () {
           });
         } else {
           // Push each fragment, with a gem afterwards.
+          console.log('type ', type);
           messageTable.push({
             prefix: splits[j].trim(),
             emote: {id: '-1'},
@@ -958,15 +959,15 @@ $(function () {
         {
           name:"cheer",
           breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[48, 48, 48, 48, 48],
+          frames:[77, 77, 77, 91, 91],
           startingFrame:0,
-          glimmerStart:[1, 1, 1, 1, 1],
+          glimmerStart:[47, 46, 46, 47, 75],
           frameName:function frameName(name, i) {
             var frameID = "" + i;
             if (i < 10) {
               frameID = "0" + i;
             }
-            return name+"_000"+frameID;
+            return name+"_600px_000"+frameID;
           }
         },
         {
@@ -1200,32 +1201,43 @@ $(function () {
       let message = '';
       let emote = '';
 
+      function randomEmote(){
+        let arr = ['cheer', 'kappa', 'muxy', 'kreygasm', 'swiftrage', 'streamlabs'];
+        let r = Math.floor(Math.random() * 6 + 1);
+        return arr[r];
+      }
+
       switch (String.fromCharCode(charCode)) {
         case '1':
           val = 1;
-          message = 'Amazing Kappa cheer1 Kappa1'
+          message = `Amazing ${randomEmote()}1`
 
           usr = 'TestCheer1'
           break;
         case '2':
-          val = 20;
-          message = 'Look cheer1 at cheer1 what cheer1 I cheer1 can cheer1 do cheer1 for cheer1 you cheer1 cheer1 cheer1 cheer1 cheer1 cheer1 cheer1 cheer1 cheer1 cheer1 cheer1 cheer1 cheer1 #FillTheCup'
+          val = 18;
+          message = `Look at me filling up the cup ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1`
           usr = 'TestCheer2'
           break;
         case '3':
-          val = 1001;
-          message = 'Amazing cheer100 cheer1'
+          val = 5;
+          message = `#FiveShot ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1`
           usr = 'TestCheer3'
           break;
         case '4':
-          val = 5240;
-          message = 'Amazing cheer100 cheer100 cheer100 cheer100 cheer100 cheer500 cheer1000 cheer1000 cheer1';
+          val = 100;
+          message = `Dat Bomb ${randomEmote()}100`;
           usr = 'TestCheer4'
           break;
         case '5':
-          val = 10000;
-          message = 'Damn son cheer10000'
+          val = 5240;
+          message = `Amazing ${randomEmote()}100 ${randomEmote()}100 ${randomEmote()}100 ${randomEmote()}100 ${randomEmote()}100 ${randomEmote()}500${randomEmote()}1000 ${randomEmote()}1000 cheer1`;
           usr = 'TestCheer5'
+          break;
+        case '6':
+          val = 10000;
+          message = `Damn son ${randomEmote()}10000`
+          usr = 'TestCheer6'
           break;
         case ' ':
           clearAllGems();

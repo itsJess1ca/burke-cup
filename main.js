@@ -234,7 +234,7 @@ $(function () {
   }
 
   let Gem = function () {
-    function Gem(physical, renderable, animationFrames, tier, amount) {
+    function Gem(physical, renderable, animationFrames, tier, amount, type) {
       _classCallCheck(this, Gem);
 
       this.physical = physical;
@@ -269,7 +269,7 @@ $(function () {
             container.removeChild(this.renderable);
 
             // Transform this gem into a flashing gem.
-            var glimmerFrames = gemFlashFrames[this.tier];
+            var glimmerFrames = gemFlashFrames[this.type][this.tier];
             var gem = new PIXI.extras.MovieClip(glimmerFrames);
             gem.animationSpeed = 24 / 60;
             gem.gotoAndPlay(Math.floor(randomRange(0, gem.totalFrames)));
@@ -399,7 +399,7 @@ $(function () {
   }();
 
 
-  function addGem(x, y, tier, depth, amount) {
+  function addGem(x, y, tier, depth, amount, type) {
     // Add a box
     /*
      There are a few different ways to shoot this bitch
@@ -511,7 +511,7 @@ $(function () {
     // Add the box to our container
     container.addChild(gem);
 
-    var res = new Gem(body, gem, gemMovieGameFrames, tier, amount);
+    var res = new Gem(body, gem, gemMovieGameFrames, tier, amount, type);
     gems.push(res);
 
     needsDepthSort = true;
@@ -613,15 +613,15 @@ $(function () {
     };
 
     let message = text.message;
-    for (i = 0; i < emoteListing.length; ++i) {
+    for (var i = 0; i < emoteListing.length; ++i) {
       let range = emoteListing[i];
       message = replaceRange(message, range.indices[0], range.indices[1]);
     }
 
     // Split on 0x01, which gives us a set of messages seperated by emotes.
     let splitMessage = message.split('\x01');
-    let givepointsRegex = /(?:^|\s)cheer(\d+)(?=$|\s)/g;
-    let amountRegex = /(?:^|\s)cheer(\d+)(?=$|\s)/;
+    var givepointsRegex = /(?:^|\s)(cheer|muxy|swiftrage|kreygasm|kappa|streamlabs)(\d+)(?=$|\s)/g;
+    var amountRegex = /(?:^|\s)(cheer|muxy|swiftrage|kreygasm|kappa|streamlabs)(\d+)(?=$|\s)/;
 
     // Begin assembling the {prefix, emote} table.
     let messageTable = [];
@@ -636,7 +636,7 @@ $(function () {
     let expected = text.bits;
 
     // At this point, splitMessage is a list of text fragments. Between each fragment is an emote.
-    for (i = 0; i < splitMessage.length; ++i) {
+    for (var i = 0; i < splitMessage.length; ++i) {
       let part = splitMessage[i];
 
       // Then, look for givepoints objects
@@ -644,10 +644,10 @@ $(function () {
       let splits = part.replace(givepointsRegex, '\x01').split('\x01');
 
       // Splits is now a list of text fragments, between each of which is a givepoints command.
-      for (j = 0; j < splits.length - 1; ++j) {
+      for (var j = 0; j < splits.length - 1; ++j) {
         let matchResults = matches[j].match(amountRegex);
-        let amount = parseInt(matchResults[1], 10);
-
+        let amount = parseInt(matchResults[2]);
+        var type = matchResults[1];
         if (total + amount > expected) {
           // Skip this one, as it exceeds the number of bits in the message.
           messageTable.push({
@@ -659,7 +659,8 @@ $(function () {
           messageTable.push({
             prefix: splits[j].trim(),
             emote: {id: '-1'},
-            amount: amount
+            amount: amount,
+            type: matches[0].replace(/\s/g,"").replace(/\d+/g,"")
           });
 
           total += amount;
@@ -711,7 +712,7 @@ $(function () {
       if (msg.emote.id === '-1') {
         // If the emote is a gem, add a gem.
         let tier = getPointsThreshold(msg.amount);
-        addGem(220, 140, tier, messageID * 10000 + tier + i, msg.amount);
+        addGem(220, 140, tier, messageID * 10000 + tier + i, msg.amount, msg.type);
         currentOffset += GEM_RADIUS * 2 + 10;
       } else if (msg.emote.id === '0') {
         // Do nothing.
@@ -902,51 +903,128 @@ $(function () {
     debugDrawGraphics = new PIXI.Graphics();
     stage.addChild(debugDrawGraphics);
     addBoundingBox();
-    PIXI.loader.add('assets/images/point-sprites/1-quarter.json').add('assets/images/point-sprites/100-quarter.json').add('assets/images/point-sprites/1000-quarter.json').add('assets/images/point-sprites/5000-quarter.json').add('assets/images/point-sprites/10000-quarter.json').load(function () {
-      var breakPoints = [1, 100, 1000, 5000, 10000];
-      var glimmerStart = [43, 43, 43, 43, 43];
-      var frames = [64, 64, 64, 64, 73];
-
-      var frameName = function frameName(name, i) {
-        var frameID = '' + i;
-        if (i < 10) {
-          frameID = '0' + i;
+    PIXI.loader
+      .add('assets/images/point-sprites/cheer/1-quarter.json')
+      .add('assets/images/point-sprites/cheer/100-quarter.json')
+      .add('assets/images/point-sprites/cheer/1000-quarter.json')
+      .add('assets/images/point-sprites/cheer/5000-quarter.json')
+      .add('assets/images/point-sprites/cheer/10000-quarter.json')
+      .add("assets/images/point-sprites/kappa/kappa_1.json")
+      .add("assets/images/point-sprites/kappa/kappa_100.json")
+      .add("assets/images/point-sprites/kappa/kappa_1000.json")
+      .add("assets/images/point-sprites/kappa/kappa_5000.json")
+      .add("assets/images/point-sprites/kappa/kappa_10000.json")
+      .add("assets/images/point-sprites/kreygasm/kreygasm_1.json")
+      .add("assets/images/point-sprites/kreygasm/kreygasm_100.json")
+      .add("assets/images/point-sprites/kreygasm/kreygasm_1000.json")
+      .add("assets/images/point-sprites/kreygasm/kreygasm_5000.json")
+      .add("assets/images/point-sprites/kreygasm/kreygasm_10000.json")
+      .add("assets/images/point-sprites/swiftrage/swiftrage_1.json")
+      .add("assets/images/point-sprites/swiftrage/swiftrage_100.json")
+      .add("assets/images/point-sprites/swiftrage/swiftrage_1000.json")
+      .add("assets/images/point-sprites/swiftrage/swiftrage_5000.json")
+      .add("assets/images/point-sprites/swiftrage/swiftrage_10000.json")
+      .add("assets/images/point-sprites/muxy/muxy_1.json")
+      .add("assets/images/point-sprites/muxy/muxy_100.json")
+      .add("assets/images/point-sprites/muxy/muxy_1000.json")
+      .add("assets/images/point-sprites/muxy/muxy_5000.json")
+      .add("assets/images/point-sprites/muxy/muxy_10000.json")
+      .add("assets/images/point-sprites/streamlabs/streamlabs_1.json")
+      .add("assets/images/point-sprites/streamlabs/streamlabs_100.json")
+      .add("assets/images/point-sprites/streamlabs/streamlabs_1000.json")
+      .add("assets/images/point-sprites/streamlabs/streamlabs_5000.json")
+      .add("assets/images/point-sprites/streamlabs/streamlabs_10000.json")
+    .load(function () {
+      var emotes = [
+        {
+          name:"cheer",
+          breakPoints:[1, 100, 1000, 5000, 10000],
+          frames:[48, 48, 48, 48, 48],
+          startingFrame:0,
+          glimmerStart:[1, 1, 1, 1, 1],
+          frameName:function frameName(name, i) {
+            var frameID = "" + i;
+            if (i < 10) {
+              frameID = "0" + i;
+            }
+            return name+"_000"+frameID;
+          }
+        },
+        {
+          name:"Kappa",
+          breakPoints:[1, 100, 1000, 5000, 10000],
+          frames:[51, 60, 41, 42, 84],
+          startingFrame:1,
+          glimmerStart:[6, 8, 5, 1, 1],
+          frameName:function frameName(name, i) {
+            var frameID = "" + i;
+            if (i < 10) {
+              frameID = "0" + i;
+            }
+            return this.name+"_"+name+"_000"+frameID;
+          }
+        },
+        {
+          name:"Kreygasm",
+          breakPoints:[1, 100, 1000, 5000, 10000],
+          frames:[41, 41, 40, 41, 21],
+          startingFrame:1,
+          glimmerStart:[1, 2, 1, 1, 1],
+          frameName:function frameName(name, i) {
+            var frameID = "" + i;
+            if (i < 10) {
+              frameID = "0" + i;
+            }
+            return this.name+"_"+name+"_000"+frameID;
+          }
+        },
+        {
+          name:"SwiftRage",
+          breakPoints:[1, 100, 1000, 5000, 10000],
+          frames:[36, 36, 36, 71, 80],
+          startingFrame:1,
+          glimmerStart:[1, 1, 1, 1, 1],
+          frameName:function frameName(name, i) {
+            var frameID = "" + i;
+            if (i < 10) {
+              frameID = "0" + i;
+            }
+            return this.name+"_"+name+"_000"+frameID;
+          }
+        },
+        {
+          name:"Muxy",
+          breakPoints:[1, 100, 1000, 5000, 10000],
+          frames:[36, 36, 36, 71, 80],
+          startingFrame:1,
+          glimmerStart:[1, 1, 1, 1, 1],
+          frameName:function frameName(name, i) {
+            var frameID = "" + i;
+            if (i < 10) {
+              frameID = "0" + i;
+            }
+            return this.name+"_"+name+"_000"+frameID;
+          }
+        },
+        {
+          name:"StreamLabs",
+          breakPoints:[1, 100, 1000, 5000, 10000],
+          frames:[36, 36, 36, 71, 80],
+          startingFrame:1,
+          glimmerStart:[1, 1, 1, 1, 1],
+          frameName:function frameName(name, i) {
+            var frameID = "" + i;
+            if (i < 10) {
+              frameID = "0" + i;
+            }
+            return this.name+"_"+name+"_000"+frameID;
+          }
         }
-
-        return name + '_000' + frameID;
-      };
-
-      for (var movie = 0; movie < breakPoints.length; ++movie) {
-        var name = breakPoints[movie];
-        var frameCount = frames[movie];
-        var glimmerStartFrame = glimmerStart[movie];
-
-        var fullFrames = [];
-        for (var i = 0; i < frameCount; ++i) {
-          fullFrames.push(PIXI.Texture.fromFrame(frameName(name, i)));
-        }
-
-        var glimmerFrames = [];
-        for (i = glimmerStartFrame; i < frameCount; ++i) {
-          glimmerFrames.push(PIXI.Texture.fromFrame(frameName(name, i)));
-        }
-
-        // Add in like, 2 seconds of blankness.
-        for (i = 0; i < 150; ++i) {
-          glimmerFrames.push(PIXI.Texture.fromFrame(frameName(name, frameCount - 1)));
-        }
-
-        gemAnimationFrames[name] = fullFrames;
-        gemFlashFrames[name] = glimmerFrames;
-      }
-
+      ]
       animate();
       unserializeState();
     });
-
-
   }
-
 
   // Animation Loop
   let start = 0;
@@ -992,6 +1070,7 @@ $(function () {
         angularVelocity: gem.physical.angularVelocity,
         angle: gem.physical.angle,
         tier: gem.tier,
+        type: gem.type,
         depth: gem.renderable.depth
       });
     }
@@ -1022,7 +1101,7 @@ $(function () {
       body.addShape(gemShape);
       world.addBody(body);
 
-      var gem = new PIXI.extras.MovieClip(gemFlashFrames[data.tier]);
+      var gem = new PIXI.extras.MovieClip(gemFlashFrames[data.type][data.tier]);
       gem.animationSpeed = 24 / 60;
       gem.gotoAndPlay(Math.floor(randomRange(0, gem.totalFrames)));
       gem.scale = new PIXI.Point(GEM_RADIUS * 4 / gem.width, GEM_RADIUS * 4 / gem.width);
@@ -1032,7 +1111,7 @@ $(function () {
 
       container.addChild(gem);
 
-      var res = new Gem(body, gem, 0, data.tier, data.depth, data.amount);
+      var res = new Gem(body, gem, 0, data.tier, data.depth, data.amount, data.type);
       res.falling = data.falling;
 
       gems.push(res);

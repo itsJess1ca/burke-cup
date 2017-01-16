@@ -1,0 +1,180 @@
+{"frames": {
+
+"Kreygasm_10000_00001":
+{
+	"frame": {"x":1,"y":1,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00002":
+{
+	"frame": {"x":1,"y":115,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00003":
+{
+	"frame": {"x":115,"y":1,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00004":
+{
+	"frame": {"x":115,"y":115,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00005":
+{
+	"frame": {"x":229,"y":1,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00006":
+{
+	"frame": {"x":229,"y":115,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00007":
+{
+	"frame": {"x":343,"y":1,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00008":
+{
+	"frame": {"x":343,"y":115,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00009":
+{
+	"frame": {"x":457,"y":1,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00010":
+{
+	"frame": {"x":457,"y":115,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00011":
+{
+	"frame": {"x":571,"y":1,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00012":
+{
+	"frame": {"x":571,"y":115,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00013":
+{
+	"frame": {"x":685,"y":1,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00014":
+{
+	"frame": {"x":685,"y":115,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00015":
+{
+	"frame": {"x":799,"y":1,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00016":
+{
+	"frame": {"x":799,"y":115,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00017":
+{
+	"frame": {"x":913,"y":1,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00018":
+{
+	"frame": {"x":913,"y":115,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00019":
+{
+	"frame": {"x":1027,"y":1,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00020":
+{
+	"frame": {"x":1027,"y":115,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"Kreygasm_10000_00021":
+{
+	"frame": {"x":1141,"y":1,"w":112,"h":112},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
+	"sourceSize": {"w":112,"h":112}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "kreygasm_10000.png",
+	"format": "RGBA8888",
+	"size": {"w":1254,"h":228},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:addcf4aba04b3b73310781ab16863e93:3a01abc5e03263e8ab51bf35ee75cab4:ba3214ce54f4403ca8248d84e7c73eea$"
+}
+}

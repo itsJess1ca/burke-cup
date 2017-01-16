@@ -623,7 +623,7 @@ $(function () {
     };
 
     let message = text.message;
-    for (var i = 0; i < emoteListing.length; ++i) {
+    for (i = 0; i < emoteListing.length; ++i) {
       let range = emoteListing[i];
       message = replaceRange(message, range.indices[0], range.indices[1]);
     }
@@ -646,7 +646,7 @@ $(function () {
     let expected = text.bits;
 
     // At this point, splitMessage is a list of text fragments. Between each fragment is an emote.
-    for (var i = 0; i < splitMessage.length; ++i) {
+    for (i = 0; i < splitMessage.length; ++i) {
       let part = splitMessage[i];
 
       // Then, look for givepoints objects
@@ -654,7 +654,7 @@ $(function () {
       let splits = part.replace(givepointsRegex, '\x01').split('\x01');
 
       // Splits is now a list of text fragments, between each of which is a givepoints command.
-      for (var j = 0; j < splits.length - 1; ++j) {
+      for (j = 0; j < splits.length - 1; ++j) {
         let matchResults = matches[j].match(amountRegex);
         let amount = parseInt(matchResults[2]);
         var type = matchResults[1];
@@ -1164,7 +1164,7 @@ $(function () {
       switch (String.fromCharCode(charCode)) {
         case '1':
           val = 1;
-          message = 'Amazing Kappa cheer1'
+          message = 'Amazing Kappa cheer1 Kappa1'
 
           usr = 'TestCheer1'
           break;

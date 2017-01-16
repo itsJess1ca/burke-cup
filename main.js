@@ -252,6 +252,12 @@ $(function () {
       this.tier = tier;
 
       this.amount = amount;
+      
+      if(!type){
+        this.type = "cheer";
+      }else{
+        this.type = type.toLowerCase();
+      }
     }
 
     _createClass(Gem, [{
@@ -473,8 +479,11 @@ $(function () {
     });
 
     world.addBody(body);
-
-    var animationFrames = gemAnimationFrames[tier];
+    
+    if(!type){
+      type = "cheer"
+    }
+    var animationFrames = gemAnimationFrames[type][tier];
     var gem = new PIXI.extras.MovieClip(animationFrames);
     gem.animationSpeed = 24 / 60;
     gem.play();
@@ -670,7 +679,7 @@ $(function () {
             prefix: splits[j].trim(),
             emote: {id: '-1'},
             amount: amount,
-            type: matches[0].replace(/\s/g,"").replace(/\d+/g,"")
+            type: type
           });
 
           total += amount;
@@ -1005,7 +1014,7 @@ $(function () {
         {
           name:"Muxy",
           breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[36, 36, 36, 71, 80],
+          frames:[48, 48, 72, 72, 96],
           startingFrame:1,
           glimmerStart:[1, 1, 1, 1, 1],
           frameName:function frameName(name, i) {
@@ -1019,15 +1028,17 @@ $(function () {
         {
           name:"StreamLabs",
           breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[36, 36, 36, 71, 80],
+          frames:[144, 160, 160, 200, 160],
           startingFrame:1,
           glimmerStart:[1, 1, 1, 1, 1],
           frameName:function frameName(name, i) {
             var frameID = "" + i;
             if (i < 10) {
+              frameID = "00" + i;
+            }else if (i < 100) {
               frameID = "0" + i;
             }
-            return this.name+"_"+name+"_000"+frameID;
+            return this.name+"_"+name+"_00"+frameID;
           }
         }
       ]

@@ -86,8 +86,15 @@ $(function () {
   let MAXIMUM_TEXT_DISPLAY = 50;
   let TEXT_DISPLAY_START = height - 50;
   let GEM_DROP_POINT = width - 400;
+
+  let chestBottom, chestLeft, chestRight, chestJump, chestJumping;
+
   let GEM_RADIUS = 12;
-  let SMALL_CANNON_RADIUM = 6;
+  let SMALL_CANNON_RADIUS = 6;
+  let MEDIUM_CANNON_RADIUS = 8;
+  let LARGE_CANNON_RADIUS = 10;
+  let XLARGE_CANNON_RADIUS = 12;
+  let LARGEST_CANNON_RADIUS = 14;
 
   stage = new PIXI.Container();
 
@@ -125,7 +132,7 @@ $(function () {
   function addBoundingBox() {
 
     // Bottom
-    let chestBottom = new p2.Body({
+    chestBottom = new p2.Body({
       position: [chestPosition[0],
         chestPosition[1] - 7]
     });
@@ -136,7 +143,7 @@ $(function () {
     }));
 
     // Left
-    let chestLeft = new p2.Body({
+    chestLeft = new p2.Body({
       position: [chestPosition[0] - chestWidth / 2.2,
         chestPosition[1] + chestRadiusAdjust]
     });
@@ -147,7 +154,7 @@ $(function () {
     }));
 
     // Right
-    let chestRight = new p2.Body({
+    chestRight = new p2.Body({
       position: [chestPosition[0] + chestWidth / 2.2,
         chestPosition[1] + chestRadiusAdjust]
     });
@@ -292,10 +299,16 @@ $(function () {
 
           if (this.falling && this.physical.position[1] < TEXT_DISPLAY_START - 40 * (MAXIMUM_TEXT_DISPLAY - 45) && !this.hasRenderBody) {
             let gemShape;
-            if(this.amount === 1){
-              gemShape = new p2.Circle({radius: SMALL_CANNON_RADIUM, material: gemMaterial});
+            if(this.amount > 9999){
+              gemShape = new p2.Circle({radius: LARGEST_CANNON_RADIUS, material: gemMaterial});
+            }else if(this.amount > 4999){
+              gemShape = new p2.Circle({radius: XLARGE_CANNON_RADIUS, material: gemMaterial});
+            }else if(this.amount > 999){
+              gemShape = new p2.Circle({radius: LARGE_CANNON_RADIUS, material: gemMaterial});
+            }else if(this.amount > 99){
+              gemShape = new p2.Circle({radius: MEDIUM_CANNON_RADIUS, material: gemMaterial});
             }else{
-              gemShape = new p2.Circle({radius: GEM_RADIUS, material: gemMaterial});
+              gemShape = new p2.Circle({radius: SMALL_CANNON_RADIUS, material: gemMaterial});
             }
 
             this.physical.addShape(gemShape);
@@ -467,16 +480,29 @@ $(function () {
     gem.play();
     gem.anchor.x = 0.5;
     gem.anchor.y = 0.5;
-    if(amount === 1){
-      gem.width += 125;
-      gem.width += 125;
-    }else{
+    if(amount > 9999){
+      gem.scale = new PIXI.Point(LARGEST_CANNON_RADIUS * 4 / gem.width, LARGEST_CANNON_RADIUS * 4 / gem.width);
+    }else if(amount > 4999) {
+      gem.width += 25;
+      gem.width += 25;
+      gem.scale = new PIXI.Point(XLARGE_CANNON_RADIUS * 4 / gem.width, XLARGE_CANNON_RADIUS * 4 / gem.width);
+    }else if(amount > 999) {
+      gem.width += 50;
+      gem.width += 50;
+      gem.scale = new PIXI.Point(LARGE_CANNON_RADIUS * 4 / gem.width, LARGE_CANNON_RADIUS * 4 / gem.width);
+    }else if(amount > 99) {
       gem.width += 75;
-      gem.height += 75;
-    }
+      gem.width += 75;
+      gem.scale = new PIXI.Point(MEDIUM_CANNON_RADIUS * 4 / gem.width, MEDIUM_CANNON_RADIUS * 4 / gem.width);
+    }else{
+        gem.width += 100;
+        gem.height += 100;
+      gem.scale = new PIXI.Point(SMALL_CANNON_RADIUS * 4 / gem.width, SMALL_CANNON_RADIUS * 4 / gem.width);
+      }
+
 
     // The gems are slightly larger than the collision body, so overlaps will happen.
-    gem.scale = new PIXI.Point(GEM_RADIUS * 4 / gem.width, GEM_RADIUS * 4 / gem.width);
+    //gem.scale = new PIXI.Point(GEM_RADIUS * 4 / gem.width, GEM_RADIUS * 4 / gem.width);
     gem.depth = depth;
 
     // The scaling factor of 60 / 24 * 3 was experimentally derived.
@@ -777,6 +803,13 @@ $(function () {
       }
 
     }
+
+    if(chestJump === true){
+      chestBottom.type = p2.Body.DYNAMIC;
+      chestLeft.type = p2.Body.DYNAMIC;
+      chestRight.type = p2.Body.DYNAMIC;
+    }
+
   }
 
   function debugRenderWorld(world, renderer) {
@@ -1058,7 +1091,7 @@ $(function () {
           break;
         case '4':
           val = 5240;
-          message = 'Amazing cheer100 cheer100 cheer100 cheer100 cheer100 cheer500 cheer1';
+          message = 'Amazing cheer100 cheer100 cheer100 cheer100 cheer100 cheer500 cheer1000 cheer1000 cheer1';
           usr = 'TestCheer4'
           break;
         case '5':

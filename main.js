@@ -490,19 +490,21 @@ $(function () {
     gem.anchor.x = 0.5;
     gem.anchor.y = 0.5;
     if(amount > 9999){
-      gem.scale = new PIXI.Point(LARGEST_CANNON_RADIUS * 4 / gem.width, LARGEST_CANNON_RADIUS * 4 / gem.width);
+      gem.width += 5;
+      gem.width += 5;
+      gem.scale = new PIXI.Point(LARGEST_CANNON_RADIUS * 3 / gem.width, LARGEST_CANNON_RADIUS * 3 / gem.width);
     }else if(amount > 4999) {
-      gem.width += 25;
-      gem.width += 25;
-      gem.scale = new PIXI.Point(XLARGE_CANNON_RADIUS * 4 / gem.width, XLARGE_CANNON_RADIUS * 4 / gem.width);
+      gem.width += 10;
+      gem.width += 10;
+      gem.scale = new PIXI.Point(XLARGE_CANNON_RADIUS * 5 / gem.width, XLARGE_CANNON_RADIUS * 5 / gem.width);
     }else if(amount > 999) {
-      gem.width += 50;
-      gem.width += 50;
+      gem.width += 15;
+      gem.width += 15;
       gem.scale = new PIXI.Point(LARGE_CANNON_RADIUS * 4 / gem.width, LARGE_CANNON_RADIUS * 4 / gem.width);
     }else if(amount > 99) {
-      gem.width += 75;
-      gem.width += 75;
-      gem.scale = new PIXI.Point(MEDIUM_CANNON_RADIUS * 4 / gem.width, MEDIUM_CANNON_RADIUS * 4 / gem.width);
+      gem.width += 20;
+      gem.width += 20;
+      gem.scale = new PIXI.Point(MEDIUM_CANNON_RADIUS * 5 / gem.width, MEDIUM_CANNON_RADIUS * 5 / gem.width);
     }else{
         gem.width += 25;
         gem.height += 25;
@@ -1202,8 +1204,8 @@ $(function () {
       let emote = '';
 
       function randomEmote(){
-        let arr = ['cheer', 'kappa', 'muxy', 'kreygasm', 'swiftrage', 'streamlabs'];
-        let r = Math.floor(Math.random() * 6 + 1);
+        let arr = ['cheer', 'cheer', 'cheer', 'cheer', 'kappa', 'muxy', 'kreygasm', 'swiftrage', 'streamlabs'];
+        let r = Math.floor(Math.random() * 8 + 1);
         return arr[r];
       }
 

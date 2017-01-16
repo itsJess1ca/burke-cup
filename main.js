@@ -1042,6 +1042,34 @@ $(function () {
           }
         }
       ]
+      for(var emote_type = 0; emote_type < emotes.length; emote_type++){
+        for(var movie = 0; movie < emotes[emote_type].breakPoints.length; movie++){
+          var name = emotes[emote_type].breakPoints[movie];
+          var frameCount = emotes[emote_type].frames[movie];
+          var glimmerStartFrame = emotes[emote_type].glimmerStart[movie];
+
+          var fullFrames = [];
+          for(var i = emotes[emote_type].startingFrame; i < frameCount; ++i){
+            fullFrames.push(PIXI.Texture.fromFrame(emotes[emote_type].frameName(name,i)));
+          }
+
+          var glimmerFrames = [];
+          for(i = glimmerStartFrame; i < frameCount; ++i){
+            glimmerFrames.push(PIXI.Texture.fromFrame(emotes[emote_type].frameName(name,i)))
+          }
+
+          for(i = 0; i < 150; ++i){
+            glimmerFrames.push(PIXI.Texture.fromFrame(emotes[emote_type].frameName(name,frameCount - 1)))
+          }
+
+          if(!gemAnimationFrames[emotes[emote_type].name.toLowerCase()]){
+            gemAnimationFrames[emotes[emote_type].name.toLowerCase()] = {}
+            gemFlashFrames[emotes[emote_type].name.toLowerCase()] = {}
+          }
+          gemAnimationFrames[emotes[emote_type].name.toLowerCase()][name] = fullFrames
+          gemFlashFrames[emotes[emote_type].name.toLowerCase()][name] = glimmerFrames
+        }
+      }
       animate();
       unserializeState();
     });

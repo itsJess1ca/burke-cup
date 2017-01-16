@@ -1204,8 +1204,8 @@ $(function () {
       let emote = '';
 
       function randomEmote(){
-        let arr = ['cheer', 'cheer', 'cheer', 'cheer', 'kappa', 'muxy', 'kreygasm', 'swiftrage', 'streamlabs'];
-        let r = Math.floor(Math.random() * 8 + 1);
+        let arr = ['cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'kappa', 'muxy', 'kreygasm', 'swiftrage', 'streamlabs'];
+        let r = Math.floor(Math.random() * arr.length-- + 1);
         return arr[r];
       }
 

@@ -25,8 +25,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="1207" column="44" lean-forward="false" selection-start-line="1207" selection-start-column="44" selection-end-line="1207" selection-end-column="44" />
+            <state relative-caret-position="584">
+              <caret line="1206" column="19" lean-forward="false" selection-start-line="1206" selection-start-column="19" selection-end-line="1206" selection-end-column="19" />
               <folding>
                 <element signature="e#0#41#0" expanded="false" />
                 <element signature="e#2397#3236#0" expanded="false" />
@@ -333,7 +333,7 @@
       <workItem from="1484527673484" duration="538000" />
       <workItem from="1484532610604" duration="2782000" />
       <workItem from="1484541300373" duration="90000" />
-      <workItem from="1484542138384" duration="2439000" />
+      <workItem from="1484542138384" duration="2737000" />
     </task>
     <task id="LOCAL-00001" summary="add beginning of pixel class and utils">
       <created>1480794276050</created>
@@ -395,7 +395,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86711000" />
+    <option name="totallyTimeSpent" value="87009000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
@@ -614,8 +614,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="1207" column="44" lean-forward="false" selection-start-line="1207" selection-start-column="44" selection-end-line="1207" selection-end-column="44" />
+        <state relative-caret-position="584">
+          <caret line="1206" column="19" lean-forward="false" selection-start-line="1206" selection-start-column="19" selection-end-line="1206" selection-end-column="19" />
           <folding>
             <element signature="e#0#41#0" expanded="false" />
             <element signature="e#2397#3236#0" expanded="false" />

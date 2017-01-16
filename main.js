@@ -87,7 +87,7 @@ $(function () {
   let TEXT_DISPLAY_START = height - 50;
   let GEM_DROP_POINT = width - 400;
 
-  let chestBottom, chestLeft, chestRight, chestJump, chestJumping;
+  let chestBottom, chestLeft, chestRight, chestFront, chestBack;
 
   let GEM_RADIUS = 12;
   let SMALL_CANNON_RADIUS = 6;
@@ -170,7 +170,7 @@ $(function () {
   }
 
   function addChestBackground() {
-    let chestBack = new PIXI.Sprite.fromImage('assets/images/trans_background.png');
+    chestBack = new PIXI.Sprite.fromImage('assets/images/trans_background.png');
     chestBack.position.x = chestPosition[0] - chestWidth / 2;
     chestBack.position.y = height - chestPosition[1] - chestHeight + 7;
     chestBack.height = chestHeight; // Need to set;
@@ -180,7 +180,7 @@ $(function () {
   }
 
   function addChestFront() {
-    let chestFront = new PIXI.Sprite.fromImage('assets/images/trans_foreground.png');
+    chestFront = new PIXI.Sprite.fromImage('assets/images/trans_foreground.png');
     chestFront.position.x = chestPosition[0] - chestWidth / 2;
     chestFront.position.y = height - chestPosition[1] - chestHeight;
     chestFront.height = chestHeight; // Need to set;
@@ -320,7 +320,13 @@ $(function () {
             this.physical.addShape(gemShape);
             this.hasRenderBody = true;
 
+            if(this.amount > 99) {
+              setTimeout(function() {
+                rumbleChest();
+              },359);
 
+
+            }
             setTimeout(function () {
               fireQ.pop();
             }, 2000);
@@ -677,7 +683,6 @@ $(function () {
           });
         } else {
           // Push each fragment, with a gem afterwards.
-          console.log('type ', type);
           messageTable.push({
             prefix: splits[j].trim(),
             emote: {id: '-1'},
@@ -764,12 +769,31 @@ $(function () {
     fireQ = [];
   }
 
+  function rumbleChest() {
+    chestBottom.velocity = [0,200];
+    chestFront.position.y += 25;
+    chestBack.position.y += 25;
+    chestBottom.updateMassProperties();
+    setTimeout(function() {
+      chestBottom.velocity = [0, -200];
+      chestFront.position.y -= 25;
+      chestBack.position.y -= 25;
+      chestBottom.updateMassProperties();
+    }, 30);
+  }
+
   function setPointFromPosition(point, position) {
     point.x = position[0];
     point.y = position[1];
   }
 
   function update(dt) {
+
+    if(chestBottom.position[1] <= chestPosition[1] - 7){
+      chestBottom.velocity = [0, 0];
+      chestBottom.position.y += 1;
+      chestBottom.updateMassProperties();
+    }
 
     if (cannonVisible === true && cannonIsMoving === true && cannonExiting === true) {
       cannonExiting = false;
@@ -825,12 +849,6 @@ $(function () {
         moveCannon('right');
       }
 
-    }
-
-    if(chestJump === true){
-      chestBottom.type = p2.Body.DYNAMIC;
-      chestLeft.type = p2.Body.DYNAMIC;
-      chestRight.type = p2.Body.DYNAMIC;
     }
 
   }
@@ -1241,6 +1259,8 @@ $(function () {
           message = `Damn son ${randomEmote()}10000`
           usr = 'TestCheer6'
           break;
+        case '0':
+          return rumbleChest();
         case ' ':
           clearAllGems();
           return;

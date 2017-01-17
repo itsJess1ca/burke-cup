@@ -1,0 +1,45 @@
+[
+  {
+   "name": "Chest Width, Height",
+    "width": "",
+    "height": ""
+  },
+  {
+    "name": "Cannon Width, Height, Position",
+    "width": "",
+    "height": ""
+    "bottom": "",
+    "left": ""
+  }
+  {
+    "name": "Gem Sizes",
+    "description": "1 = small, 100 = medium, 500 = large, 1000 = x-large, 10000 = largest",
+    "sizes": {
+      "small": {
+        "radius": 0,
+        "min": 0,
+        "max": 0
+      },
+      "medium": {
+        "radius": 0,
+        "min": 0,
+        "max": 0
+      },
+      "large": {
+        "radius": 0,
+        "min": 0,
+        "max": 0
+      },
+      "x-large": {
+        "radius": 0,
+        "min": 0,
+        "max": 0
+      },
+      "largest": {
+        "radius": 0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  }
+]

@@ -76,7 +76,7 @@ $(function () {
   let chestRightAdjust = 5;
   let chestBottomHeight = 15;
   let chestSideLength = 5;
-  let chestSideThickness = 165;
+  let chestSideThickness = 200;
 
   let cannon,
       cannonIsMoving = false,
@@ -137,14 +137,16 @@ $(function () {
         chestPosition[1] - 7]
     });
     chestBottom.addShape(new p2.Box({
-      width: chestWidth,
+      width: chestWidth - 21,
       height: chestBottomHeight,
       material: chestMaterial
     }));
 
     // Left
+    let angle = -3.25;
     chestLeft = new p2.Body({
-      position: [chestPosition[0] - chestWidth / 2.2,
+      angle: Math.PI - angle,
+      position: [chestPosition[0] - chestWidth / 2.3,
         chestPosition[1] + chestRadiusAdjust]
     });
     chestLeft.addShape(new p2.Box({
@@ -155,7 +157,8 @@ $(function () {
 
     // Right
     chestRight = new p2.Body({
-      position: [chestPosition[0] + chestWidth / 2.2,
+      angle: angle,
+      position: [chestPosition[0] + chestWidth / 2.3,
         chestPosition[1] + chestRadiusAdjust]
     });
     chestRight.addShape((new p2.Box({
@@ -1223,6 +1226,9 @@ $(function () {
       function randomEmote(){
         let arr = ['cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'kappa', 'muxy', 'kreygasm', 'swiftrage', 'streamlabs'];
         let r = Math.floor(Math.random() * arr.length-- + 1);
+        if (arr[r] === undefined){
+          return 'cheer';
+        }
         return arr[r];
       }
 

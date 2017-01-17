@@ -72,11 +72,10 @@ $(function () {
   let chestHeight = 211;
 
   let chestPosition = [width - 150, 0]; // Left side of the screen;
-  let chestRadiusAdjust = 10;
-  let chestRightAdjust = 5;
+  let chestRadiusAdjust = 24;
   let chestBottomHeight = 15;
   let chestSideLength = 5;
-  let chestSideThickness = 200;
+  let chestSideThickness = 165;
 
   let cannon,
       cannonIsMoving = false,

@@ -585,7 +585,6 @@ $(function () {
   
   function getTipThreshold(amount) {
     // tip threshold in cents
-    amount = parseInt(amount);
     let threshold = 1;
     if (amount >= 10000) {
       threshold = 3;
@@ -792,15 +791,19 @@ $(function () {
         currentOffset += textDisplay.width;
         resultingTextObjects.push(textDisplay);
       }
-      
+
+      console.log(msg, msg.emote.id);
+
       if (msg.emote.id === "-3") {
         // If the emote is a tip.
-        let tier = getTipThreshold(msg.amount);
-        addGem(220, 140, tier, messageID * 10000 + tier + i, msg.amount, msg.type);
+        let a = parseInt(msg.amount);
+        let tier = getTipThreshold(a);
+        addGem(220, 140, tier, messageID * 10000 + tier + i, a, msg.type);
         currentOffset += GEM_RADIUS * 2 + 10;
       }else if (msg.emote.id === "-2") {
         // If the emote is a sub.
-        let tier = getSubsThreshold(msg.amount);
+        let a = parseInt(msg.amount);
+        let tier = getSubsThreshold(a);
         let v = msg.amount*100;
         addGem(220, 140, tier, messageID * 10000 + tier + i, v, msg.type);
         currentOffset += GEM_RADIUS * 2 + 10;
@@ -810,6 +813,7 @@ $(function () {
         addGem(220, 140, tier, messageID * 10000 + tier + i, msg.amount, msg.type);
         currentOffset += GEM_RADIUS * 2 + 10;
       } else if (msg.emote.id === '0') {
+
         // Do nothing.
       } else {
         // This is an emote, construct a sprite.
@@ -1255,7 +1259,7 @@ $(function () {
 
       body.addShape(gemShape);
       world.addBody(body);
-      console.log(data);
+      //  console.log(data);
       var gem = new PIXI.extras.MovieClip(gemFlashFrames[data.type][data.tier]);
       gem.animationSpeed = 24 / 60;
       gem.gotoAndPlay(Math.floor(randomRange(0, gem.totalFrames)));

@@ -490,6 +490,7 @@ $(function () {
     if(!type){
       type = "cheer"
     }
+    console.log(type,tier);
     var animationFrames = gemAnimationFrames[type][tier];
     var gem = new PIXI.extras.MovieClip(animationFrames);
     gem.animationSpeed = 24 / 60;
@@ -552,7 +553,7 @@ $(function () {
 
   function getPointsThreshold(amount) {
     // Points threshold.
-    var threshold = 1;
+    let threshold = 1;
     if (amount >= 10000) {
       threshold = 10000;
     } else if (amount >= 5000) {
@@ -566,11 +567,29 @@ $(function () {
     return threshold;
   }
   
-  function getTipThreshold(amount) {
-    var threshold = 1; // This will set to bronze so that it will return a tier no matter what.  You can remove this when you update the others.  Just wanted to note it for ya.
-    if (amount >= 10000) { // TODO: Change amount to desired tip value.  Should change to cents before calculating this.  Will return gold coin
+  function getSubsThreshold(amount) {
+    // sub threshold.
+    amount = parseInt(amount);
+    let threshold = 1;
+    if (amount >= 24) {
+      threshold = 5;
+    } else if (amount >= 12) {
+      threshold = 4;
+    } else if (amount >= 6) {
       threshold = 3;
-    } else if (amount >= 5000) { // TODO: Change amount to desired tip value.  Should change to cents before calculating this.  Will return silver coin
+    } else if (amount >= 3) {
+      threshold = 2;
+    }
+    return threshold;
+  }
+  
+  function getTipThreshold(amount) {
+    // tip threshold in cents
+    amount = parseInt(amount);
+    let threshold = 1;
+    if (amount >= 10000) {
+      threshold = 3;
+    } else if (amount >= 5000) {
       threshold = 2;
     }
     return threshold;
@@ -645,6 +664,44 @@ $(function () {
       let range = emoteListing[i];
       message = replaceRange(message, range.indices[0], range.indices[1]);
     }
+     
+    let messageTable = [];
+     
+    if(message.indexOf("_sub_cheer_token_") >= 0){
+      let s = /_sub_cheer_token_(\d+)/g;
+      let st = message.match(s);
+      let m = st[0].replace("_sub_cheer_token_","")
+      if(m == "0"){
+        m = "1";
+      }
+      message = message.replace("_sub_cheer_token_","")
+      
+      messageTable.push({
+        prefix: "",
+        emote: { id: "-2" },
+        amount: m,
+        type:"sub_"
+      })
+      message = message.substr(2,message.length);
+    }
+     
+    if(message.indexOf("_tip_cheer_token_") >= 0){
+      let s = /_tip_cheer_token_(\d+)/g;
+      let st = message.match(s);
+      let m = st[0].replace("_tip_cheer_token_","")
+      console.log(s,st,m)
+      if(m == "0"){
+        m = "1";
+      }
+      message = message.replace("_tip_cheer_token_","")
+      messageTable.push({
+        prefix: "",
+        emote: { id: "-3" },
+        amount: m,
+        type:"tip"
+      })
+      message = message.substr(m.length,message.length);
+    }
 
     // Split on 0x01, which gives us a set of messages seperated by emotes.
     let splitMessage = message.split('\x01');
@@ -652,7 +709,6 @@ $(function () {
     var amountRegex = /(?:^|\s)(cheer|muxy|swiftrage|kreygasm|kappa|streamlabs)(\d+)(?=$|\s)/;
 
     // Begin assembling the {prefix, emote} table.
-    let messageTable = [];
     let forwardEmoteListing = emoteListing.reverse();
 
     // At the end there is a sentinel '0' emote, which is no emote.
@@ -736,8 +792,19 @@ $(function () {
         currentOffset += textDisplay.width;
         resultingTextObjects.push(textDisplay);
       }
-
-      if (msg.emote.id === '-1') {
+      
+      if (msg.emote.id === "-3") {
+        // If the emote is a tip.
+        let tier = getTipThreshold(msg.amount);
+        addGem(220, 140, tier, messageID * 10000 + tier + i, msg.amount, msg.type);
+        currentOffset += GEM_RADIUS * 2 + 10;
+      }else if (msg.emote.id === "-2") {
+        // If the emote is a sub.
+        let tier = getSubsThreshold(msg.amount);
+        let v = msg.amount*100;
+        addGem(220, 140, tier, messageID * 10000 + tier + i, v, msg.type);
+        currentOffset += GEM_RADIUS * 2 + 10;
+      }else if (msg.emote.id === '-1') {
         // If the emote is a gem, add a gem.
         let tier = getPointsThreshold(msg.amount);
         addGem(220, 140, tier, messageID * 10000 + tier + i, msg.amount, msg.type);
@@ -950,6 +1017,9 @@ $(function () {
       .add('assets/images/point-sprites/cheer/1000-quarter.json')
       .add('assets/images/point-sprites/cheer/5000-quarter.json')
       .add('assets/images/point-sprites/cheer/10000-quarter.json')
+      .add("assets/images/point-sprites/tip/bronze.json")
+      .add("assets/images/point-sprites/tip/silver.json")
+      .add("assets/images/point-sprites/tip/gold.json")
       .add("assets/images/point-sprites/kappa/kappa_1.json")
       .add("assets/images/point-sprites/kappa/kappa_100.json")
       .add("assets/images/point-sprites/kappa/kappa_1000.json")
@@ -989,6 +1059,20 @@ $(function () {
               frameID = "0" + i;
             }
             return name+"_600px_000"+frameID;
+          }
+        },
+        {
+          name:"tip",
+          breakPoints:[1, 2, 3],
+          frames:[32, 32, 32],
+          startingFrame:1,
+          glimmerStart:[1, 1, 1],
+          frameName:function frameName(name, i) {
+            var frameID = "" + i;
+            if (i < 10) {
+              frameID = "0" + i;
+            }
+            return this.name+"_"+name+"_00"+frameID;
           }
         },
         {
@@ -1171,7 +1255,7 @@ $(function () {
 
       body.addShape(gemShape);
       world.addBody(body);
-
+      console.log(data);
       var gem = new PIXI.extras.MovieClip(gemFlashFrames[data.type][data.tier]);
       gem.animationSpeed = 24 / 60;
       gem.gotoAndPlay(Math.floor(randomRange(0, gem.totalFrames)));
@@ -1263,6 +1347,21 @@ $(function () {
           message = `Damn son ${randomEmote()}10000`
           usr = 'TestCheer6'
           break;
+        case '7':
+          val = 10000;
+          message = `_tip_cheer_token_10000 Oh look, super shiny`
+          usr = 'TestCheer7'
+          break;
+        case '8':
+          val = 5000;
+          message = `_tip_cheer_token_5000 Oh look, very shiny`
+          usr = 'TestCheer8'
+          break;
+        case '9':
+          val = 100;
+          message = `_tip_cheer_token_100 Oh look, shiny`
+          usr = 'TestCheer9'
+          break;
         case '0':
           return rumbleChest();
         case ' ':
@@ -1294,6 +1393,10 @@ $(function () {
   if (getQueryParameter("freeshot")) {
     freeShot = true;
   }
-
+  
+  $(window).unload(function () {
+    serializeState();
+  });
+  
   init();
 }); // End

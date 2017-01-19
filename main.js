@@ -382,18 +382,19 @@ $(function () {
 
       this.rank = rank;
       this.renderables = renderables;
+
     }
 
     _createClass(ScrollingText, [{
       key: 'update',
       value: function update(dt) {
-        for (var i = 0; i < this.renderables.length; ++i) {
-          this.renderables[i].position.y -= dt * 100;
-        }
 
+        for (var i = 0; i < this.renderables.length; ++i) {
+          this.renderables[i].position.y -= dt * 25;
+         }
         // Kill this object when the last member goes offscreen.
         var last = this.renderables[this.renderables.length - 1];
-        if (last.width + last.position.y < 0) {
+        if (last.position.y < (cannon.y - height) + (cannon.height + 100) - 75) {
           this.dead = true;
         }
       }
@@ -758,11 +759,7 @@ $(function () {
     }
 
     // Prepend the username.
-    if(!freeShot){
-      messageTable[0].prefix = text.user + ': ' + messageTable[0].prefix;
-    }else {
-      messageTable[0].prefix = ' ';
-    }
+     messageTable[0].prefix = text.user;
 
 
     // Begin constructing the display objects.
@@ -782,11 +779,11 @@ $(function () {
       let msg = messageTable[i];
 
       // If there is a non-empty prefix, generate a text object.
-      if (msg.prefix.length !== 0) {
+      if (msg.prefix.length !== 0 && msg.emote.id !== "0") {
         let textDisplay = new PIXI.Text(msg.prefix, properties);
         textDisplay.scale = new PIXI.Point(1, -1);
-        textDisplay.position = new PIXI.Point((width / 2) - (textDisplay.width / 2), height);
-
+        let yOffset = messages.length * 45;
+        textDisplay.position = new PIXI.Point(cannon.width / 2, (cannon.y - height) + (cannon.height + 100) + yOffset);
         container.addChild(textDisplay);
         currentOffset += textDisplay.width;
         resultingTextObjects.push(textDisplay);
@@ -823,12 +820,13 @@ $(function () {
         // These pixel adjustments were experimentally derived.
         emoteDisplay.position = new PIXI.Point(width / 2, height + textHeight);
         currentOffset += 38;
+        if(msg.emote.id !== "0"){
+          container.addChild(emoteDisplay);
+          resultingTextObjects.push(emoteDisplay);
+        }
 
-        container.addChild(emoteDisplay);
-        resultingTextObjects.push(emoteDisplay);
       }
     }
-
     messages.push(new ScrollingText(nextRank, resultingTextObjects));
     messageID++;
     needsDepthSort = true;

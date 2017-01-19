@@ -238,7 +238,7 @@ $(function () {
   let Gem = function () {
     function Gem(physical, renderable, animationFrames, tier, amount, type) {
       _classCallCheck(this, Gem);
-
+      this.amt = amount;
       this.physical = physical;
       this.renderable = renderable;
 
@@ -253,9 +253,9 @@ $(function () {
 
       this.tier = tier;
 
-      this.amount = amount;
-      
-      if(!type){
+      //this.amount = amount;
+
+      if(!type || typeof type === 'number'){
         this.type = "cheer";
       }else{
         this.type = type.toLowerCase();
@@ -320,13 +320,6 @@ $(function () {
             this.physical.addShape(gemShape);
             this.hasRenderBody = true;
 
-            if(this.amount > 99) {
-              setTimeout(function() {
-                //rumbleChest();
-              },359);
-
-
-            }
             setTimeout(function () {
               fireQ.pop();
             }, 2000);
@@ -491,7 +484,7 @@ $(function () {
     if(!type){
       type = "cheer"
     }
-    console.log(type,tier, amount);
+    // console.log(type,tier, amount);
     var animationFrames = gemAnimationFrames[type][tier];
     var gem = new PIXI.extras.MovieClip(animationFrames);
     gem.animationSpeed = 24 / 60;
@@ -600,7 +593,7 @@ $(function () {
     return threshold;
   }
   
-   function createText() {
+  function createText() {
     let i, j;
 
     // Return if nothing queued
@@ -787,8 +780,12 @@ $(function () {
       if (msg.prefix.length !== 0 && msg.emote.id !== "0") {
         let textDisplay = new PIXI.Text(msg.prefix, properties);
         textDisplay.scale = new PIXI.Point(1, -1);
-        let yOffset = messages.length * 45;
-        textDisplay.position = new PIXI.Point(cannon.width / 2, (cannon.y - height) + (cannon.height + 100) + yOffset);
+        let yOffset = (cannon.y - height) + (cannon.height + 100);
+        if(messages[messages.length -1] !== undefined){
+          yOffset = messages[messages.length -1].renderables[0].y + 45;
+        }
+
+        textDisplay.position = new PIXI.Point(cannon.width / 2, yOffset);
         container.addChild(textDisplay);
         currentOffset += textDisplay.width;
         resultingTextObjects.push(textDisplay);
@@ -1224,6 +1221,7 @@ $(function () {
     var result = [];
     for (var i = 0; i < gems.length; ++i) {
       var gem = gems[i];
+
       result.push({
         position: gem.physical.position,
         falling: gem.falling,
@@ -1233,7 +1231,8 @@ $(function () {
         angle: gem.physical.angle,
         tier: gem.tier,
         type: gem.type,
-        depth: gem.renderable.depth
+        depth: gem.renderable.depth,
+        amount: gem.amt
       });
     }
 
@@ -1248,7 +1247,7 @@ $(function () {
 
     for (var i = 0; i < state.length; ++i) {
       var data = state[i];
-
+      let amount = data.amt;
       var gemShape = new p2.Circle({radius: GEM_RADIUS, material: gemMaterial});
       var body = new p2.Body({
         mass: data.mass,
@@ -1266,7 +1265,33 @@ $(function () {
       var gem = new PIXI.extras.MovieClip(gemFlashFrames[data.type][data.tier]);
       gem.animationSpeed = 24 / 60;
       gem.gotoAndPlay(Math.floor(randomRange(0, gem.totalFrames)));
-      gem.scale = new PIXI.Point(GEM_RADIUS * 4 / gem.width, GEM_RADIUS * 4 / gem.width);
+      if(amount > 9999){
+        gem.width += 5;
+        gem.width += 5;
+        gem.scale = new PIXI.Point(LARGEST_CANNON_RADIUS * 3 / gem.width, LARGEST_CANNON_RADIUS * 3 / gem.width);
+      }else if(amount > 4999) {
+        gem.width += 10;
+        gem.width += 10;
+        gem.scale = new PIXI.Point(XLARGE_CANNON_RADIUS * 5 / gem.width, XLARGE_CANNON_RADIUS * 5 / gem.width);
+      }else if(amount > 999) {
+        gem.width += 15;
+        gem.width += 15;
+        gem.scale = new PIXI.Point(LARGE_CANNON_RADIUS * 4 / gem.width, LARGE_CANNON_RADIUS * 4 / gem.width);
+      }else if(amount > 99) {
+        gem.width += 20;
+        gem.width += 20;
+        gem.scale = new PIXI.Point(MEDIUM_CANNON_RADIUS * 5 / gem.width, MEDIUM_CANNON_RADIUS * 5 / gem.width);
+      }else{
+        gem.width += 25;
+        gem.height += 25;
+        gem.scale = new PIXI.Point(SMALL_CANNON_RADIUS * 4 / gem.width, SMALL_CANNON_RADIUS * 4 / gem.width);
+      }
+
+
+      if(data.type === 'tip') {
+        gem.width -= 10;
+        gem.height -= 10;
+      }
       gem.anchor.x = 0.5;
       gem.anchor.y = 0.5;
       gem.depth = data.depth;

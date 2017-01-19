@@ -491,7 +491,7 @@ $(function () {
     if(!type){
       type = "cheer"
     }
-    console.log(type,tier);
+    console.log(type,tier, amount);
     var animationFrames = gemAnimationFrames[type][tier];
     var gem = new PIXI.extras.MovieClip(animationFrames);
     gem.animationSpeed = 24 / 60;
@@ -520,6 +520,11 @@ $(function () {
       gem.scale = new PIXI.Point(SMALL_CANNON_RADIUS * 4 / gem.width, SMALL_CANNON_RADIUS * 4 / gem.width);
       }
 
+
+    if(type === 'tip') {
+      gem.width -= 10;
+      gem.height -= 10;
+    }
 
     // The gems are slightly larger than the collision body, so overlaps will happen.
     //gem.scale = new PIXI.Point(GEM_RADIUS * 4 / gem.width, GEM_RADIUS * 4 / gem.width);
@@ -689,7 +694,7 @@ $(function () {
       let s = /_tip_cheer_token_(\d+)/g;
       let st = message.match(s);
       let m = st[0].replace("_tip_cheer_token_","")
-      console.log(s,st,m)
+      // console.log(s,st,m)
       if(m == "0"){
         m = "1";
       }
@@ -789,7 +794,7 @@ $(function () {
         resultingTextObjects.push(textDisplay);
       }
 
-      console.log(msg, msg.emote.id);
+      //console.log(msg, msg.emote.id);
 
       if (msg.emote.id === "-3") {
         // If the emote is a tip.

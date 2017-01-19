@@ -76,38 +76,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="old.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/old.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10144">
-              <caret line="860" column="29" lean-forward="false" selection-start-line="860" selection-start-column="7" selection-end-line="860" selection-end-column="29" />
-              <folding>
-                <element signature="e#846#1632#0" expanded="false" />
-                <element signature="e#1680#2037#0" expanded="false" />
-                <element signature="e#2084#2278#0" expanded="false" />
-                <element signature="e#2316#3303#0" expanded="false" />
-                <element signature="e#3349#4084#0" expanded="false" />
-                <element signature="e#8797#11086#0" expanded="false" />
-                <element signature="e#11139#11442#0" expanded="false" />
-                <element signature="e#11471#11520#0" expanded="false" />
-                <element signature="e#11571#11630#0" expanded="false" />
-                <element signature="e#11671#12509#0" expanded="false" />
-                <element signature="e#12545#12597#0" expanded="false" />
-                <element signature="e#12629#12689#0" expanded="false" />
-                <element signature="e#18238#19148#0" expanded="false" />
-                <element signature="e#25248#25341#0" expanded="false" />
-                <element signature="e#25368#25434#0" expanded="false" />
-                <element signature="e#25464#25613#0" expanded="false" />
-                <element signature="e#32331#32821#0" expanded="false" />
-                <element signature="e#32853#34065#0" expanded="false" />
-                <element signature="e#34123#34658#0" expanded="false" />
-                <element signature="e#34764#36041#0" expanded="false" />
-                <element signature="e#36085#36108#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -392,7 +360,7 @@
       <workItem from="1484552657965" duration="5417000" />
       <workItem from="1484620529522" duration="905000" />
       <workItem from="1484691544118" duration="6710000" />
-      <workItem from="1484791236572" duration="2221000" />
+      <workItem from="1484791236572" duration="2350000" />
     </task>
     <task id="LOCAL-00001" summary="add beginning of pixel class and utils">
       <created>1480794276050</created>
@@ -454,7 +422,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="107120000" />
+    <option name="totallyTimeSpent" value="107249000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />

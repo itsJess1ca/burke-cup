@@ -763,12 +763,12 @@ $(function () {
     // Begin constructing the display objects.
     let resultingTextObjects = [];
     let properties = {
-      font: '24px Arial',
-      fill: 0xFFFFFF,
-      stroke: 0x000000,
-      strokeThickness: 5,
+      font: "32px 'Parisienne', cursive",
+      fill : 'whitesmoke',
+      stroke : '#333333',
+      strokeThickness : 5,
       align: 'left',
-      lineJoin: 'round'
+      lineJoin: 'round',
     };
     let currentOffset = width + 100;
     let textHeight = TEXT_DISPLAY_START - 40 * nextRank;

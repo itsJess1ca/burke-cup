@@ -68,8 +68,8 @@ $(function () {
 
 
   // Chest width/height. Sprites will be scaled to fit this
-  let chestWidth = 225;
-  let chestHeight = 211;
+  let chestWidth = 275;
+  let chestHeight = 251;
 
   let chestPosition = [width - 150, 0]; // Left side of the screen;
   let chestRadiusAdjust = 24;
@@ -193,13 +193,12 @@ $(function () {
 
   function addCannon() {
     cannon = new PIXI.Sprite.fromImage('assets/images/cannon.png');
-    cannon.height = 259;
-    cannon.width = 118;
-    cannon.position.x = 0;
-    cannon.scale.y *= -1;
-    cannon.position.y = height - chestPosition[1] - (chestHeight / 2) + 20;
+    cannon.height = 275;
+    cannon.width = 251;
+    cannon.position.x = 0 - cannon.width;
+    cannon.position.y = height - chestPosition[1] - (chestHeight / 2) - 175;
 
-    cannon.rotation = -2.3
+    cannon.rotation = 0
 
     stage.addChild(cannon);
   }
@@ -207,7 +206,8 @@ $(function () {
   function moveCannon(way) {
     //console.log(way, cannon.position.x, (cannon.width * 2 + 50));
     if (way === 'left') {
-      if (cannon.position.x >= (cannon.width * 2) * -1) {
+      console.log(cannon.position.x, cannon.width)
+      if (cannon.position.x >= (cannon.width) * -1) {
         cannon.position.x -= 5;
       } else {
         cannon.position.x -= 5;
@@ -218,7 +218,7 @@ $(function () {
     }
 
     if (way === 'right') {
-      if (cannon.position.x >= cannon.width * 2) {
+      if (cannon.position.x >= cannon.width / 2) {
         cannonIsMoving = false;
       } else {
         cannon.position.x += 5;
@@ -443,7 +443,7 @@ $(function () {
       yVel = randomRange(280, 325);
     }
 
-    cannon.rotation = -2.3;
+    // cannon.rotation = -2.3;
     let origY = height - chestPosition[1] - (chestHeight / 2) + 20;
     setTimeout(function () {
       if (origY !== cannon.position.y) {

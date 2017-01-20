@@ -1372,8 +1372,8 @@ $(function () {
 
           break;
         case '3':
-          val = 5;
-          message = `#FiveShot ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1`
+          val = 50;
+          message = `#50 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1`
 
           break;
         case '4':

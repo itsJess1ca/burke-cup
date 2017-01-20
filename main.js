@@ -207,7 +207,7 @@ $(function () {
   function moveCannon(way) {
     //console.log(way, cannon.position.x, (cannon.width * 2 + 50));
     if (way === 'left') {
-      console.log(cannon.position.x, cannon.width)
+
       if (cannon.position.x >= (cannon.width) * -1) {
         cannon.position.x -= 5;
       } else {
@@ -768,7 +768,7 @@ $(function () {
     // Begin constructing the display objects.
     let resultingTextObjects = [];
     let properties = {
-      font: "32px 'Parisienne', cursive",
+      font: "26px 'Knewave', cursive",
       fill : 'whitesmoke',
       stroke : '#333333',
       strokeThickness : 5,
@@ -776,7 +776,7 @@ $(function () {
       lineJoin: 'round',
     };
     let currentOffset = width + 100;
-    let textHeight = TEXT_DISPLAY_START - 40 * nextRank;
+    let textHeight = 55;
 
     for (i = 0; i < messageTable.length; ++i) {
       let msg = messageTable[i];
@@ -787,7 +787,7 @@ $(function () {
         textDisplay.scale = new PIXI.Point(1, -1);
         let yOffset = (cannon.y - height) + (cannon.height + 475);
         if(messages[messages.length -1] !== undefined){
-          yOffset = messages[messages.length -1].renderables[0].y + 45;
+          yOffset = messages[messages.length -1].renderables[0].y + 55;
         }
 
         textDisplay.position = new PIXI.Point(cannon.width / 2, yOffset);
@@ -1340,7 +1340,7 @@ $(function () {
     $('body').on('keypress', function (k) {
       let charCode = k.which ? k.which : k.keyCode;
       let val = 0;
-      let usr = '';
+
       let message = '';
       let emote = '';
 
@@ -1353,52 +1353,58 @@ $(function () {
         return arr[r];
       }
 
+      function randomName(){
+        let arr = ['Booty', 'Deppception', 'Blackbeard', 'DivingBoard', 'AppleCider', 'ng222', 'WhyMeBoss', 'Gotothestore']
+        let r = Math.floor(Math.random() * (arr.length - 1) + 1);
+        return arr[r];
+      }
+
+
+      let name = randomName();
       switch (String.fromCharCode(charCode)) {
         case '1':
           val = 1;
           message = `Amazing ${randomEmote()}1`
-
-          usr = 'TestCheer1'
           break;
         case '2':
           val = 18;
           message = `Look at me filling up the cup ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1`
-          usr = 'TestCheer2'
+
           break;
         case '3':
           val = 5;
           message = `#FiveShot ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1`
-          usr = 'TestCheer3'
+
           break;
         case '4':
           val = 100;
           message = `Dat Bomb ${randomEmote()}100`;
-          usr = 'TestCheer4'
+
           break;
         case '5':
-          val = 5240;
-          message = `Amazing ${randomEmote()}100 ${randomEmote()}100 ${randomEmote()}100 ${randomEmote()}100 ${randomEmote()}100 ${randomEmote()}500${randomEmote()}1000 ${randomEmote()}1000 cheer1`;
-          usr = 'TestCheer5'
+          val = 4998;
+          message = `Amazing ${randomEmote()}4998 `;
+
           break;
         case '6':
           val = 10000;
           message = `Damn son ${randomEmote()}10000`
-          usr = 'TestCheer6'
+
           break;
         case '7':
           val = 10000;
           message = `_tip_cheer_token_10000 Oh look, super shiny`
-          usr = 'TestCheer7'
+
           break;
         case '8':
           val = 5000;
           message = `_tip_cheer_token_5000 Oh look, very shiny`
-          usr = 'TestCheer8'
+
           break;
         case '9':
           val = 100;
           message = `_tip_cheer_token_100 Oh look, shiny`
-          usr = 'TestCheer9'
+
           break;
         case '0':
           return rumbleChest();
@@ -1414,7 +1420,7 @@ $(function () {
       cannonIsMoving = true;
 
       // Add message to alert queue (hook here)
-      addAlert(usr, message, emote, val);
+      addAlert(name, message, emote, val);
 
 
     });

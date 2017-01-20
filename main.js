@@ -1364,16 +1364,16 @@ $(function () {
       switch (String.fromCharCode(charCode)) {
         case '1':
           val = 1;
-          message = `Amazing ${randomEmote()}1`
+          message = `Amazing ${randomEmote()}1`;
           break;
         case '2':
           val = 18;
-          message = `Look at me filling up the cup ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1`
+          message = `Look at me filling up the cup ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1`;
 
           break;
         case '3':
           val = 5;
-          message = `#FiveShot ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1`
+          message = `#FiveShot ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1`;
 
           break;
         case '4':
@@ -1388,22 +1388,22 @@ $(function () {
           break;
         case '6':
           val = 10000;
-          message = `Damn son ${randomEmote()}10000`
+          message = `Damn son ${randomEmote()}10000`;
 
           break;
         case '7':
           val = 10000;
-          message = `_tip_cheer_token_10000 Oh look, super shiny`
+          message = `_tip_cheer_token_10000 Oh look, super shiny`;
 
           break;
         case '8':
           val = 5000;
-          message = `_tip_cheer_token_5000 Oh look, very shiny`
+          message = `_tip_cheer_token_5000 Oh look, very shiny`;
 
           break;
         case '9':
           val = 100;
-          message = `_tip_cheer_token_100 Oh look, shiny`
+          message = `_tip_cheer_token_100 Oh look, shiny`;
 
           break;
         case '0':

@@ -33,6 +33,7 @@ $(function () {
   const debug = true;
   let freeShot = false;
 
+  let loadingScene = false;
   let muted = true;
   let muteLessThan = 0;
 
@@ -75,7 +76,7 @@ $(function () {
   let chestRadiusAdjust = 24;
   let chestBottomHeight = 15;
   let chestSideLength = 5;
-  let chestSideThickness = 165;
+  let chestSideThickness = 210;
 
   let cannon,
       cannonIsMoving = false,
@@ -218,7 +219,7 @@ $(function () {
     }
 
     if (way === 'right') {
-      if (cannon.position.x >= cannon.width / 2) {
+      if (cannon.position.x >= 0) {
         cannonIsMoving = false;
       } else {
         cannon.position.x += 5;
@@ -387,7 +388,8 @@ $(function () {
          }
         // Kill this object when the last member goes offscreen.
         var last = this.renderables[this.renderables.length - 1];
-        if (last.position.y < (cannon.y - height) + (cannon.height + 100) - 75) {
+        if (last.position.y < (cannon.y - height) + (cannon.height + 450) - 75) {
+
           this.dead = true;
         }
       }
@@ -458,13 +460,16 @@ $(function () {
       }
       sfx.play();
 
-      cannon.position.y = cannon.position.y + 10;
-      cannon.position.x = cannon.position.x - 5;
-      setTimeout(function () {
-        cannon.position.y = cannon.position.y - 10;
-        cannon.position.x = cannon.position.x + 5;
-      }, 250)
+      if(!loadingScene){
+        cannon.position.y = cannon.position.y + 10;
+        cannon.position.x = cannon.position.x - 5;
+        setTimeout(function () {
+          cannon.position.y = cannon.position.y - 10;
+          cannon.position.x = cannon.position.x + 5;
+        }, 250)
+      }
     }, 50)
+    
     //Push new bullet into cannon
     fireQ.push(1);
 
@@ -780,7 +785,7 @@ $(function () {
       if (msg.prefix.length !== 0 && msg.emote.id !== "0") {
         let textDisplay = new PIXI.Text(msg.prefix, properties);
         textDisplay.scale = new PIXI.Point(1, -1);
-        let yOffset = (cannon.y - height) + (cannon.height + 100);
+        let yOffset = (cannon.y - height) + (cannon.height + 475);
         if(messages[messages.length -1] !== undefined){
           yOffset = messages[messages.length -1].renderables[0].y + 45;
         }
@@ -792,24 +797,25 @@ $(function () {
       }
 
       //console.log(msg, msg.emote.id);
-
+      let gemX = 195;
+      let gemY = 240;
       if (msg.emote.id === "-3") {
         // If the emote is a tip.
         let a = parseInt(msg.amount);
         let tier = getTipThreshold(a);
-        addGem(220, 140, tier, messageID * 10000 + tier + i, a, msg.type);
+        addGem(gemX, gemY, tier, messageID * 10000 + tier + i, a, msg.type);
         currentOffset += GEM_RADIUS * 2 + 10;
       }else if (msg.emote.id === "-2") {
         // If the emote is a sub.
         let a = parseInt(msg.amount);
         let tier = getSubsThreshold(a);
         let v = msg.amount*100;
-        addGem(220, 140, tier, messageID * 10000 + tier + i, v, msg.type);
+        addGem(gemX, gemY, tier, messageID * 10000 + tier + i, v, msg.type);
         currentOffset += GEM_RADIUS * 2 + 10;
       }else if (msg.emote.id === '-1') {
         // If the emote is a gem, add a gem.
         let tier = getPointsThreshold(msg.amount);
-        addGem(220, 140, tier, messageID * 10000 + tier + i, msg.amount, msg.type);
+        addGem(gemX, gemY, tier, messageID * 10000 + tier + i, msg.amount, msg.type);
         currentOffset += GEM_RADIUS * 2 + 10;
       } else if (msg.emote.id === '0') {
 
@@ -1244,7 +1250,7 @@ $(function () {
     if (state === null) {
       return;
     }
-
+    loadingScene = true;
     for (var i = 0; i < state.length; ++i) {
       var data = state[i];
       let amount = data.amt;
@@ -1303,7 +1309,7 @@ $(function () {
 
       gems.push(res);
     }
-
+    loadingScene = false;
     needsDepthSort = true;
     messageID = state.length + 1;
   }

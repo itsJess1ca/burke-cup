@@ -1022,11 +1022,11 @@ $(function () {
     stage.addChild(debugDrawGraphics);
     addBoundingBox();
     PIXI.loader
-      .add('assets/images/point-sprites/cheer/1-quarter.json')
-      .add('assets/images/point-sprites/cheer/100-quarter.json')
-      .add('assets/images/point-sprites/cheer/1000-quarter.json')
-      .add('assets/images/point-sprites/cheer/5000-quarter.json')
-      .add('assets/images/point-sprites/cheer/10000-quarter.json')
+      .add('assets/images/point-sprites/cheer/1.json')
+      .add('assets/images/point-sprites/cheer/100.json')
+      .add('assets/images/point-sprites/cheer/1000.json')
+      .add('assets/images/point-sprites/cheer/5000.json')
+      .add('assets/images/point-sprites/cheer/10000.json')
       .add("assets/images/point-sprites/tip/bronze.json")
       .add("assets/images/point-sprites/tip/silver.json")
       .add("assets/images/point-sprites/tip/gold.json")
@@ -1060,15 +1060,15 @@ $(function () {
         {
           name:"cheer",
           breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[77, 77, 77, 91, 91],
-          startingFrame:0,
-          glimmerStart:[47, 46, 46, 47, 75],
+          frames:[90, 90, 90, 90, 90],
+          startingFrame:1,
+          glimmerStart:[32, 32, 32, 32, 32],
           frameName:function frameName(name, i) {
             var frameID = "" + i;
             if (i < 10) {
               frameID = "0" + i;
             }
-            return name+"_600px_000"+frameID;
+            return name+"_600px_00"+frameID;
           }
         },
         {

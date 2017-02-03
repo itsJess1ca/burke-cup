@@ -1022,11 +1022,11 @@ $(function () {
     stage.addChild(debugDrawGraphics);
     addBoundingBox();
     PIXI.loader
-      .add('assets/images/point-sprites/cheer/1-quarter.json')
-      .add('assets/images/point-sprites/cheer/100-quarter.json')
-      .add('assets/images/point-sprites/cheer/1000-quarter.json')
-      .add('assets/images/point-sprites/cheer/5000-quarter.json')
-      .add('assets/images/point-sprites/cheer/10000-quarter.json')
+      .add('assets/images/point-sprites/cheer/1.json')
+      .add('assets/images/point-sprites/cheer/100.json')
+      .add('assets/images/point-sprites/cheer/1000.json')
+      .add('assets/images/point-sprites/cheer/5000.json')
+      .add('assets/images/point-sprites/cheer/10000.json')
       .add("assets/images/point-sprites/tip/bronze.json")
       .add("assets/images/point-sprites/tip/silver.json")
       .add("assets/images/point-sprites/tip/gold.json")
@@ -1060,15 +1060,15 @@ $(function () {
         {
           name:"cheer",
           breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[77, 77, 77, 91, 91],
-          startingFrame:0,
-          glimmerStart:[47, 46, 46, 47, 75],
+          frames:[90, 90, 90, 90, 90],
+          startingFrame:1,
+          glimmerStart:[32, 32, 32, 32, 32],
           frameName:function frameName(name, i) {
             var frameID = "" + i;
             if (i < 10) {
               frameID = "0" + i;
             }
-            return name+"_600px_000"+frameID;
+            return name+"_600px_00"+frameID;
           }
         },
         {
@@ -1364,11 +1364,11 @@ $(function () {
       switch (String.fromCharCode(charCode)) {
         case '1':
           val = 1;
-          message = `Amazing ${randomEmote()}1`
+          message = `Amazing ${randomEmote()}1`;
           break;
         case '2':
           val = 18;
-          message = `Look at me filling up the cup ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1`
+          message = `Look at me filling up the cup ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1`;
 
           break;
         case '3':
@@ -1388,22 +1388,22 @@ $(function () {
           break;
         case '6':
           val = 10000;
-          message = `Damn son ${randomEmote()}10000`
+          message = `Damn son ${randomEmote()}10000`;
 
           break;
         case '7':
           val = 10000;
-          message = `_tip_cheer_token_10000 Oh look, super shiny`
+          message = `_tip_cheer_token_10000 Oh look, super shiny`;
 
           break;
         case '8':
           val = 5000;
-          message = `_tip_cheer_token_5000 Oh look, very shiny`
+          message = `_tip_cheer_token_5000 Oh look, very shiny`;
 
           break;
         case '9':
           val = 100;
-          message = `_tip_cheer_token_100 Oh look, shiny`
+          message = `_tip_cheer_token_100 Oh look, shiny`;
 
           break;
         case '0':

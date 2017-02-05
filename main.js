@@ -1,8 +1,6 @@
-/**
- * Created by thoms on 1/14/2017.
- */
 'use strict';
 //New Stuff
+let settings = null;
 const _createClass = function () {
   function defineProperties(target, props) {
     for (var i = 0; i < props.length; i++) {
@@ -27,8 +25,29 @@ function _classCallCheck(instance, Constructor) {
   }
 }
 
+function loadJSON(callback) {   
+
+  var xobj = new XMLHttpRequest();
+      xobj.overrideMimeType("application/json");
+  xobj.open('GET', 'settings.json', true); // Replace 'my_data' with the path to your file
+  xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+          // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+          callback(xobj.responseText);
+        }
+  };
+  xobj.send(null);  
+}
+ 
+function setSettings(data){
+  settings = JSON.parse(data);
+}
+
 $(function () {
 
+  let getSettings = loadJSON(function(data){ setSettings(data); init(); });
+
+  
   //Play first alert on load
   const debug = true;
   let freeShot = false;
@@ -68,10 +87,6 @@ $(function () {
   const height = $('body').height();
 
 
-  // Chest width/height. Sprites will be scaled to fit this
-  let chestWidth = 275;
-  let chestHeight = 251;
-
   let chestPosition = [width - 150, 0]; // Left side of the screen;
   let chestRadiusAdjust = 24;
   let chestBottomHeight = 15;
@@ -90,11 +105,11 @@ $(function () {
   let chestBottom, chestLeft, chestRight, chestFront, chestBack;
 
   let GEM_RADIUS = 12;
-  let SMALL_CANNON_RADIUS = 6;
-  let MEDIUM_CANNON_RADIUS = 8;
-  let LARGE_CANNON_RADIUS = 10;
-  let XLARGE_CANNON_RADIUS = 12;
-  let LARGEST_CANNON_RADIUS = 14;
+  let SMALL_CANNON_RADIUS = null;
+  let MEDIUM_CANNON_RADIUS = null
+  let LARGE_CANNON_RADIUS = null;
+  let XLARGE_CANNON_RADIUS = null;
+  let LARGEST_CANNON_RADIUS = null;
 
   stage = new PIXI.Container();
 
@@ -137,7 +152,7 @@ $(function () {
         chestPosition[1] - 7]
     });
     chestBottom.addShape(new p2.Box({
-      width: chestWidth - 21,
+      width: settings.chest.width - 21,
       height: chestBottomHeight,
       material: chestMaterial
     }));
@@ -146,7 +161,7 @@ $(function () {
     let angle = -3.25;
     chestLeft = new p2.Body({
       angle: Math.PI - angle,
-      position: [chestPosition[0] - chestWidth / 2.3,
+      position: [chestPosition[0] - settings.chest.width / 2.3,
         chestPosition[1] + chestRadiusAdjust]
     });
     chestLeft.addShape(new p2.Box({
@@ -158,7 +173,7 @@ $(function () {
     // Right
     chestRight = new p2.Body({
       angle: angle,
-      position: [chestPosition[0] + chestWidth / 2.3,
+      position: [chestPosition[0] + settings.chest.width / 2.3,
         chestPosition[1] + chestRadiusAdjust]
     });
     chestRight.addShape((new p2.Box({
@@ -174,30 +189,30 @@ $(function () {
 
   function addChestBackground() {
     chestBack = new PIXI.Sprite.fromImage('assets/images/chest_back.png');
-    chestBack.position.x = chestPosition[0] - chestWidth / 2;
-    chestBack.position.y = height - chestPosition[1] - chestHeight + 7;
-    chestBack.height = chestHeight; // Need to set;
-    chestBack.width = chestWidth; // Need to set
+    chestBack.position.x = chestPosition[0] - settings.chest.width / 2;
+    chestBack.position.y = height - chestPosition[1] - settings.chest.height + 7;
+    chestBack.height = settings.chest.height; // Need to set;
+    chestBack.width = settings.chest.width; // Need to set
 
     stage.addChild(chestBack);
   }
 
   function addChestFront() {
     chestFront = new PIXI.Sprite.fromImage('assets/images/chest_front.png');
-    chestFront.position.x = chestPosition[0] - chestWidth / 2;
-    chestFront.position.y = height - chestPosition[1] - chestHeight;
-    chestFront.height = chestHeight; // Need to set;
-    chestFront.width = chestWidth; // Need to set
+    chestFront.position.x = chestPosition[0] - settings.chest.width / 2;
+    chestFront.position.y = height - chestPosition[1] - settings.chest.height;
+    chestFront.height = settings.chest.height; // Need to set;
+    chestFront.width = settings.chest.width; // Need to set
 
     stage.addChild(chestFront);
   }
 
   function addCannon() {
     cannon = new PIXI.Sprite.fromImage('assets/images/cannon.png');
-    cannon.height = 275;
-    cannon.width = 251;
+    cannon.height = settings.cannon.height;
+    cannon.width = settings.cannon.width;
     cannon.position.x = 0 - cannon.width;
-    cannon.position.y = height - chestPosition[1] - (chestHeight / 2) - 175;
+    cannon.position.y = height - chestPosition[1] - (settings.chest.height / 2) - 175;
 
     cannon.rotation = 0
 
@@ -382,16 +397,7 @@ $(function () {
     _createClass(ScrollingText, [{
       key: 'update',
       value: function update(dt) {
-
-        for (var i = 0; i < this.renderables.length; ++i) {
-          this.renderables[i].position.y -= dt * 25;
-         }
-        // Kill this object when the last member goes offscreen.
-        var last = this.renderables[this.renderables.length - 1];
-        if (last.position.y < (cannon.y - height) + (cannon.height + 450) - 75) {
-
-          this.dead = true;
-        }
+        this.dead = true;
       }
     }, {
       key: 'destroy',
@@ -408,45 +414,23 @@ $(function () {
 
 
   function addGem(x, y, tier, depth, amount, type) {
-    // Add a box
-    /*
-     There are a few different ways to shoot this bitch
-     Low Arc shot
-     x: 375
-     y: 200
-     cannon.rotation = -1.7;
-
-     Medium
-     x:250
-     y: 300
-     cannon.rotation = -2.3
-
-     High Arc Shot
-     x: 200
-     y: 400
-
-     Math.floor((Math.random() * 232) + 230)
-
-     */
-
     let xVel, yVel;
 
     if (amount > 4999) {
-      xVel = randomRange(250, 260);
-      yVel = randomRange(295, 305);
+      xVel = randomRange(parseInt(settings.gemRanges.amount.excellent.xVel[0]), parseInt(settings.gemRanges.amount.excellent.xVel[1]));
+      yVel = randomRange(parseInt(settings.gemRanges.amount.excellent.yVel[0]), parseInt(settings.gemRanges.amount.excellent.yVel[1]));
     } else if (amount > 999) {
-      xVel = randomRange(245, 265);
-      yVel = randomRange(290, 310);
+      xVel = randomRange(parseInt(settings.gemRanges.amount.great.xVel[0]), parseInt(settings.gemRanges.amount.great.xVel[1]));
+      yVel = randomRange(parseInt(settings.gemRanges.amount.great.yVel[0]), parseInt(settings.gemRanges.amount.great.yVel[1]));
     } else if (amount > 99) {
-      xVel = randomRange(245, 270);
-      yVel = randomRange(285, 315);
+      xVel = randomRange(parseInt(settings.gemRanges.amount.good.xVel[0]), parseInt(settings.gemRanges.amount.good.xVel[1]));
+      yVel = randomRange(parseInt(settings.gemRanges.amount.good.yVel[0]), parseInt(settings.gemRanges.amount.good.yVel[1]));
     } else {
-      xVel = randomRange(240, 280);
-      yVel = randomRange(280, 325);
+      xVel = randomRange(parseInt(settings.gemRanges.amount.ok.xVel[0]), parseInt(settings.gemRanges.amount.ok.xVel[1]));
+      yVel = randomRange(parseInt(settings.gemRanges.amount.ok.yVel[0]), parseInt(settings.gemRanges.amount.ok.yVel[1]));
     }
-
     // cannon.rotation = -2.3;
-    let origY = height - chestPosition[1] - (chestHeight / 2) + 20;
+    let origY = height - chestPosition[1] - (settings.chest.height / 2) + 20;
     setTimeout(function () {
       if (origY !== cannon.position.y) {
         return;
@@ -496,28 +480,12 @@ $(function () {
     gem.play();
     gem.anchor.x = 0.5;
     gem.anchor.y = 0.5;
-    if(amount > 9999){
-      gem.width += 5;
-      gem.width += 5;
-      gem.scale = new PIXI.Point(LARGEST_CANNON_RADIUS * 3 / gem.width, LARGEST_CANNON_RADIUS * 3 / gem.width);
-    }else if(amount > 4999) {
-      gem.width += 10;
-      gem.width += 10;
-      gem.scale = new PIXI.Point(XLARGE_CANNON_RADIUS * 5 / gem.width, XLARGE_CANNON_RADIUS * 5 / gem.width);
-    }else if(amount > 999) {
-      gem.width += 15;
-      gem.width += 15;
-      gem.scale = new PIXI.Point(LARGE_CANNON_RADIUS * 4 / gem.width, LARGE_CANNON_RADIUS * 4 / gem.width);
-    }else if(amount > 99) {
-      gem.width += 20;
-      gem.width += 20;
-      gem.scale = new PIXI.Point(MEDIUM_CANNON_RADIUS * 5 / gem.width, MEDIUM_CANNON_RADIUS * 5 / gem.width);
-    }else{
-        gem.width += 25;
-        gem.height += 25;
-      gem.scale = new PIXI.Point(SMALL_CANNON_RADIUS * 4 / gem.width, SMALL_CANNON_RADIUS * 4 / gem.width);
-      }
 
+    let getGemsize = setGemSize(amount, type);
+
+    gem.width += getGemsize.width;
+    gem.height += getGemsize.width;
+    gem.scale = new PIXI.Point(getGemsize.radius * getGemsize.multiplier / gem.width, getGemsize.radius * getGemsize.multiplier / gem.width);
 
     if(type === 'tip') {
       gem.width -= 10;
@@ -539,6 +507,46 @@ $(function () {
 
     needsDepthSort = true;
     return res;
+  }
+
+
+  function setGemSize(amount, type) {
+
+    let radius, multiplier, width;
+
+    switch(amount) {
+      case (amount > 9999): 
+        width = settings.gems.sizes.largest.width;
+        radius = LARGEST_CANNON_RADIUS;
+        multiplier = settings.gems.sizes.largest.size_multiplier;
+        if(type !== 'cheer') multiplier -= 3;
+        break;
+      case (amount > 4999):
+        width = settings.gems.sizes['x-large'].width;
+        radius = XLARGE_CANNON_RADIUS;
+        multiplier = settings.gems.sizes['x-large'].size_multiplier;
+        if(type !== 'cheer') multiplier -= 3;
+        break;
+      case (amount > 999): 
+        width = settings.gems.sizes.large.width;
+        radius = LARGE_CANNON_RADIUS;
+        multiplier = settings.gems.sizes.large.size_multiplier;
+        if(type !== 'cheer') multiplier -= 3;
+        break;
+      case (amount > 99):
+        width = settings.gems.sizes.medium.width;
+        radius = MEDIUM_CANNON_RADIUS;
+        multiplier = settings.gems.sizes.medium.size_multiplier;
+        if(type !== 'cheer') multiplier -= 3;
+        break;
+      default:
+        width = settings.gems.sizes.small.width;
+        radius = SMALL_CANNON_RADIUS;
+        multiplier = settings.gems.sizes.small.size_multiplier;
+        if(type !== 'cheer') multiplier -= 3;
+    };
+
+    return {radius, multiplier, width};
   }
 
 
@@ -762,7 +770,7 @@ $(function () {
     }
 
     // Prepend the username.
-     messageTable[0].prefix = text.user;
+     messageTable[0].prefix = '';
 
 
     // Begin constructing the display objects.
@@ -791,7 +799,7 @@ $(function () {
         }
 
         textDisplay.position = new PIXI.Point(cannon.width / 2, yOffset);
-        container.addChild(textDisplay);
+        // container.addChild(textDisplay);
         currentOffset += textDisplay.width;
         resultingTextObjects.push(textDisplay);
       }
@@ -973,7 +981,27 @@ $(function () {
     }
   }
 
+  function sendSettings(data){
+    settings = data;
+    console.log(settings);
+  }
+
   function init() {
+    
+    //let loader = PIXI.loader; // pixi exposes a premade instance for you to use.
+    //or
+    /*let loader = new PIXI.loaders.Loader(); // you can also create your own if you want
+    loader.add('settings', 'settings.json');
+    loader.load((loader, resources) => {
+      sendSettings(resources.settings.data);
+    });*/
+
+    SMALL_CANNON_RADIUS = settings.gems.sizes.small.radius;
+    MEDIUM_CANNON_RADIUS = settings.gems.sizes.medium.radius;
+    LARGE_CANNON_RADIUS = settings.gems.sizes.large.radius;
+    XLARGE_CANNON_RADIUS = settings.gems.sizes['x-large'].radius;
+    LARGEST_CANNON_RADIUS = settings.gems.sizes.largest.radius;
+    
 
     world = new p2.World({
       gravity: [0, -98.20]
@@ -1271,27 +1299,12 @@ $(function () {
       var gem = new PIXI.extras.MovieClip(gemFlashFrames[data.type][data.tier]);
       gem.animationSpeed = 24 / 60;
       gem.gotoAndPlay(Math.floor(randomRange(0, gem.totalFrames)));
-      if(amount > 9999){
-        gem.width += 5;
-        gem.width += 5;
-        gem.scale = new PIXI.Point(LARGEST_CANNON_RADIUS * 3 / gem.width, LARGEST_CANNON_RADIUS * 3 / gem.width);
-      }else if(amount > 4999) {
-        gem.width += 10;
-        gem.width += 10;
-        gem.scale = new PIXI.Point(XLARGE_CANNON_RADIUS * 5 / gem.width, XLARGE_CANNON_RADIUS * 5 / gem.width);
-      }else if(amount > 999) {
-        gem.width += 15;
-        gem.width += 15;
-        gem.scale = new PIXI.Point(LARGE_CANNON_RADIUS * 4 / gem.width, LARGE_CANNON_RADIUS * 4 / gem.width);
-      }else if(amount > 99) {
-        gem.width += 20;
-        gem.width += 20;
-        gem.scale = new PIXI.Point(MEDIUM_CANNON_RADIUS * 5 / gem.width, MEDIUM_CANNON_RADIUS * 5 / gem.width);
-      }else{
-        gem.width += 25;
-        gem.height += 25;
-        gem.scale = new PIXI.Point(SMALL_CANNON_RADIUS * 4 / gem.width, SMALL_CANNON_RADIUS * 4 / gem.width);
-      }
+      
+      let getGemsize = setGemSize(amount, type);
+
+      gem.width += getGemsize.width;
+      gem.height += getGemsize.width;
+      gem.scale = new PIXI.Point(getGemsize.radius * getGemsize.multiplier / gem.width, getGemsize.radius * getGemsize.multiplier / gem.width);
 
 
       if(data.type === 'tip') {
@@ -1397,8 +1410,8 @@ $(function () {
 
           break;
         case '8':
-          val = 5000;
-          message = `_tip_cheer_token_5000 Oh look, very shiny`;
+          val = 5001;
+          message = `_tip_cheer_token_5000 cheer1 Oh look, very shiny`;
 
           break;
         case '9':
@@ -1442,5 +1455,5 @@ $(function () {
     serializeState();
   });
   
-  init();
+  //init();
 }); // End

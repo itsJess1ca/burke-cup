@@ -519,31 +519,31 @@ $(function () {
         width = settings.gems.sizes.largest.width;
         radius = LARGEST_CANNON_RADIUS;
         multiplier = settings.gems.sizes.largest.size_multiplier;
-        if(type !== 'cheer') multiplier -= 3;
+        if(type !== 'cheer') multiplier = 3;
         break;
       case (amount > 4999):
         width = settings.gems.sizes['x-large'].width;
         radius = XLARGE_CANNON_RADIUS;
         multiplier = settings.gems.sizes['x-large'].size_multiplier;
-        if(type !== 'cheer') multiplier -= 3;
+        if(type !== 'cheer') multiplier = 3;
         break;
       case (amount > 999): 
         width = settings.gems.sizes.large.width;
         radius = LARGE_CANNON_RADIUS;
         multiplier = settings.gems.sizes.large.size_multiplier;
-        if(type !== 'cheer') multiplier -= 3;
+        if(type !== 'cheer') multiplier = 3;
         break;
       case (amount > 99):
         width = settings.gems.sizes.medium.width;
         radius = MEDIUM_CANNON_RADIUS;
         multiplier = settings.gems.sizes.medium.size_multiplier;
-        if(type !== 'cheer') multiplier -= 3;
+        if(type !== 'cheer') multiplier = 2;
         break;
       default:
         width = settings.gems.sizes.small.width;
         radius = SMALL_CANNON_RADIUS;
         multiplier = settings.gems.sizes.small.size_multiplier;
-        if(type !== 'cheer') multiplier -= 3;
+        if(type !== 'cheer') multiplier = 3;
     };
 
     return {radius, multiplier, width};

@@ -1282,7 +1282,9 @@ $(function () {
     for (var i = 0; i < state.length; ++i) {
       var data = state[i];
       let amount = data.amt;
+      let type = data.type
       var gemShape = new p2.Circle({radius: GEM_RADIUS, material: gemMaterial});
+      console.log(data);
       var body = new p2.Body({
         mass: data.mass,
         position: [data.position[0], data.position[1]],
@@ -1317,7 +1319,7 @@ $(function () {
 
       container.addChild(gem);
 
-      var res = new Gem(body, gem, 0, data.tier, data.depth, data.amount, data.type);
+      var res = new Gem(body, gem, 0, data.tier, data.depth, amount, type);
       res.falling = data.falling;
 
       gems.push(res);

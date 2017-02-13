@@ -44,7 +44,7 @@ function setSettings(data){
 }
 
 $(function () {
-
+  const body = $('body');
   let getSettings = loadJSON(function(data){ setSettings(data); init(); });
 
   
@@ -53,7 +53,7 @@ $(function () {
   let freeShot = false;
 
   let loadingScene = false;
-  let muted = true;
+  let muted = false;
   let muteLessThan = 0;
 
   // PIXI and P2
@@ -83,8 +83,8 @@ $(function () {
 
 
   // Globals
-  const width = $('body').width();
-  const height = $('body').height();
+  const width = body.width();
+  const height = body.height();
 
 
   let chestPosition = [width - 150, 0]; // Left side of the screen;
@@ -107,7 +107,7 @@ $(function () {
   let GEM_RADIUS = 12;
   let scale_dampening = 0.65;
   let SMALL_CANNON_RADIUS = null;
-  let MEDIUM_CANNON_RADIUS = null
+  let MEDIUM_CANNON_RADIUS = null;
   let LARGE_CANNON_RADIUS = null;
   let XLARGE_CANNON_RADIUS = null;
   let LARGEST_CANNON_RADIUS = null;
@@ -421,28 +421,6 @@ $(function () {
     }
     // cannon.rotation = -2.3;
     let origY = height - chestPosition[1] - (settings.chest.height / 2) + 20;
-    setTimeout(function () {
-      if (origY !== cannon.position.y) {
-        return;
-      }
-      //Play sound
-      var sfx = $('.js-cannon').clone()[0];
-      if (this.amount < 100) {
-        sfx.volume = 0.02;
-      } else {
-        sfx.volume = 0.02;
-      }
-      sfx.play();
-
-      if(!loadingScene){
-        cannon.position.y = cannon.position.y + 10;
-        cannon.position.x = cannon.position.x - 5;
-        setTimeout(function () {
-          cannon.position.y = cannon.position.y - 10;
-          cannon.position.x = cannon.position.x + 5;
-        }, 250)
-      }
-    }, 50)
     
     //Push new bullet into cannon
     fireQ.push(1);
@@ -765,6 +743,28 @@ $(function () {
     let currentOffset = width + 100;
     let textHeight = 55;
 
+    // Fire Sound
+    setTimeout(function () {
+      /*if (origY !== cannon.position.y) {
+       return;
+       }*/
+      //Play sound
+      var sfx = $('.js-cannon').clone()[0];
+      console.log(sfx);
+      sfx.volume = settings.sounds.cannon;
+      sfx.play();
+
+      if(!loadingScene){
+        cannon.position.y = cannon.position.y + 10;
+        cannon.position.x = cannon.position.x - 5;
+        setTimeout(function () {
+          cannon.position.y = cannon.position.y - 10;
+          cannon.position.x = cannon.position.x + 5;
+        }, 250)
+      }
+    }, 50);
+
+    // Add Gems
     for (i = 0; i < messageTable.length; i++) {
       let msg = messageTable[i];
 
@@ -1310,7 +1310,7 @@ $(function () {
     messageID = state.length + 1;
   }
   function connect_websocket(){
-    let query = `channel=burkeblack&type=client`;
+    let query = `channel=${settings.channel}&type=client`;
     let socket = io.connect('https://sockets.streamshape.io', {query: query});
     socket.on('alert', (data) => {
       if(data.type == "cheer"){
@@ -1345,7 +1345,7 @@ $(function () {
 6. Space key will erase all bits active
          `);
     console.log('%c' + ` ###################################################### `, 'color:white;background:#1976d2;font-weight:bold;')
-    $('body').on('keypress', function (k) {
+    body.on('keypress', function (k) {
       let charCode = k.which ? k.which : k.keyCode;
       let val = 0;
 

@@ -1,4 +1,5 @@
 {
+  "channel": "burkeblack",
   "chest": {
    "name": "Chest Width, Height",
     "width": "275",
@@ -61,5 +62,8 @@
         "yVel": ["280", "325"]
       }                  
     }
+  },
+  "sounds": {
+    "cannon": 0.5
   }
 }

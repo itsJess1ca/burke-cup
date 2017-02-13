@@ -254,7 +254,7 @@ $(function () {
   let Gem = function () {
     function Gem(physical, renderable, animationFrames, tier, amount, type) {
       _classCallCheck(this, Gem);
-      this.amt = amount;
+      this.amount = amount;
       this.physical = physical;
       this.renderable = renderable;
 
@@ -320,19 +320,8 @@ $(function () {
           }
 
           if (this.falling && this.physical.position[1] < TEXT_DISPLAY_START - 40 * (MAXIMUM_TEXT_DISPLAY - 45) && !this.hasRenderBody) {
-            let gemShape;
-            if(this.amount > 9999){
-              gemShape = new p2.Circle({radius: LARGEST_CANNON_RADIUS, material: gemMaterial});
-            }else if(this.amount > 4999){
-              gemShape = new p2.Circle({radius: XLARGE_CANNON_RADIUS, material: gemMaterial});
-            }else if(this.amount > 999){
-              gemShape = new p2.Circle({radius: LARGE_CANNON_RADIUS, material: gemMaterial});
-            }else if(this.amount > 99){
-              gemShape = new p2.Circle({radius: MEDIUM_CANNON_RADIUS, material: gemMaterial});
-            }else{
-              gemShape = new p2.Circle({radius: SMALL_CANNON_RADIUS, material: gemMaterial});
-            }
-
+            let size = setGemSize(this.amount, this.type);
+            let gemShape = new p2.Circle({radius: size.radius, material: gemMaterial});
             this.physical.addShape(gemShape);
             this.hasRenderBody = true;
 
@@ -482,15 +471,12 @@ $(function () {
     gem.anchor.y = 0.5;
 
     let getGemsize = setGemSize(amount, type);
+    console.log(getGemsize);
 
     gem.width += getGemsize.width;
     gem.height += getGemsize.width;
-    gem.scale = new PIXI.Point(getGemsize.radius * getGemsize.multiplier / gem.width, getGemsize.radius * getGemsize.multiplier / gem.width);
-
-    if(type === 'tip') {
-      gem.width -= 10;
-      gem.height -= 10;
-    }
+    let scale = getGemsize.radius/* * getGemsize.multiplier / gem.width*/;
+    gem.scale = new PIXI.Point(scale, scale);
 
     // The gems are slightly larger than the collision body, so overlaps will happen.
     //gem.scale = new PIXI.Point(GEM_RADIUS * 4 / gem.width, GEM_RADIUS * 4 / gem.width);
@@ -511,41 +497,35 @@ $(function () {
 
 
   function setGemSize(amount, type) {
-
+    console.log(amount);
     let radius, multiplier, width;
 
-    switch(amount) {
-      case (amount > 9999): 
-        width = settings.gems.sizes.largest.width;
-        radius = LARGEST_CANNON_RADIUS;
-        multiplier = settings.gems.sizes.largest.size_multiplier;
-        if(type !== 'cheer') multiplier = 3;
-        break;
-      case (amount > 4999):
-        width = settings.gems.sizes['x-large'].width;
-        radius = XLARGE_CANNON_RADIUS;
-        multiplier = settings.gems.sizes['x-large'].size_multiplier;
-        if(type !== 'cheer') multiplier = 3;
-        break;
-      case (amount > 999): 
-        width = settings.gems.sizes.large.width;
-        radius = LARGE_CANNON_RADIUS;
-        multiplier = settings.gems.sizes.large.size_multiplier;
-        if(type !== 'cheer') multiplier = 3;
-        break;
-      case (amount > 99):
-        width = settings.gems.sizes.medium.width;
-        radius = MEDIUM_CANNON_RADIUS;
-        multiplier = settings.gems.sizes.medium.size_multiplier;
-        if(type !== 'cheer') multiplier = 2;
-        break;
-      default:
-        width = settings.gems.sizes.small.width;
-        radius = SMALL_CANNON_RADIUS;
-        multiplier = settings.gems.sizes.small.size_multiplier;
-        if(type !== 'cheer') multiplier = 3;
-    };
-
+    if(amount > 9999){ 
+      width = settings.gems.sizes.largest.width;
+      radius = LARGEST_CANNON_RADIUS;
+      multiplier = settings.gems.sizes.largest.size_multiplier;
+      if(type !== 'cheer') multiplier = 3;
+    }else if(amount > 4999){
+      width = settings.gems.sizes['x-large'].width;
+      radius = XLARGE_CANNON_RADIUS;
+      multiplier = settings.gems.sizes['x-large'].size_multiplier;
+      if(type !== 'cheer') multiplier = 3;
+    }else if(amount > 999){
+      width = settings.gems.sizes.large.width;
+      radius = LARGE_CANNON_RADIUS;
+      multiplier = settings.gems.sizes.large.size_multiplier;
+      if(type !== 'cheer') multiplier = 3;
+    }else if(amount > 99){
+      width = settings.gems.sizes.medium.width;
+      radius = MEDIUM_CANNON_RADIUS;
+      multiplier = settings.gems.sizes.medium.size_multiplier;
+      if(type !== 'cheer') multiplier = 3;
+    }else{
+      width = settings.gems.sizes.small.width;
+      radius = SMALL_CANNON_RADIUS;
+      multiplier = settings.gems.sizes.small.size_multiplier;
+      if(type !== 'cheer') multiplier = 3;
+    }
     return {radius, multiplier, width};
   }
 
@@ -1255,7 +1235,6 @@ $(function () {
     var result = [];
     for (var i = 0; i < gems.length; ++i) {
       var gem = gems[i];
-
       result.push({
         position: gem.physical.position,
         falling: gem.falling,
@@ -1266,7 +1245,7 @@ $(function () {
         tier: gem.tier,
         type: gem.type,
         depth: gem.renderable.depth,
-        amount: gem.amt
+        amount: gem.amount
       });
     }
 
@@ -1280,47 +1259,40 @@ $(function () {
     }
     loadingScene = true;
     for (var i = 0; i < state.length; ++i) {
-      var data = state[i];
-      let amount = data.amt;
-      let type = data.type
-      var gemShape = new p2.Circle({radius: GEM_RADIUS, material: gemMaterial});
-      console.log(data);
+      var gem = state[i];
+      console.log(gem);
+      let amount = gem.amount;
+      let type = gem.type;
+      let getGemsize = setGemSize(amount, type);
+      var gemShape = new p2.Circle({radius: getGemsize.radius, material: gemMaterial});
       var body = new p2.Body({
-        mass: data.mass,
-        position: [data.position[0], data.position[1]],
-        angularVelocity: data.angularVelocity,
-        velocity: [data.velocity[0], data.velocity[1]],
-        angle: data.angle,
+        mass: gem.mass,
+        position: [gem.position[0], gem.position[1]],
+        angularVelocity: gem.angularVelocity,
+        velocity: [gem.velocity[0], gem.velocity[1]],
+        angle: gem.angle,
         damping: 0.1,
         angularDamping: 0.1
       });
 
       body.addShape(gemShape);
       world.addBody(body);
-      //  console.log(data);
-      var gem = new PIXI.extras.MovieClip(gemFlashFrames[data.type][data.tier]);
+      var gem = new PIXI.extras.MovieClip(gemFlashFrames[gem.type][gem.tier]);
       gem.animationSpeed = 24 / 60;
       gem.gotoAndPlay(Math.floor(randomRange(0, gem.totalFrames)));
-      
-      let getGemsize = setGemSize(amount, type);
 
       gem.width += getGemsize.width;
       gem.height += getGemsize.width;
       gem.scale = new PIXI.Point(getGemsize.radius * getGemsize.multiplier / gem.width, getGemsize.radius * getGemsize.multiplier / gem.width);
 
-
-      if(data.type === 'tip') {
-        gem.width -= 10;
-        gem.height -= 10;
-      }
       gem.anchor.x = 0.5;
       gem.anchor.y = 0.5;
-      gem.depth = data.depth;
+      gem.depth = gem.depth;
 
       container.addChild(gem);
 
-      var res = new Gem(body, gem, 0, data.tier, data.depth, amount, type);
-      res.falling = data.falling;
+      var res = new Gem(body, gem, 0, gem.tier, gem.depth, amount, type);
+      res.falling = gem.falling;
 
       gems.push(res);
     }

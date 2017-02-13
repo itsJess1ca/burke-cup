@@ -14,8 +14,8 @@
     "description": "1 = small, 100 = medium, 500 = large, 1000 = x-large, 10000 = largest",
     "sizes": {
       "small": {
-        "radius": 7,
-        "width": 30,
+        "radius": 10,
+        "width": 10,
         "size_multiplier": 9
       },
       "medium": {
@@ -24,18 +24,18 @@
         "size_multiplier": 5
       },
       "large": {
-        "radius": 10,
+        "radius": 15,
         "width":15,
         "size_multiplier": 4 
       },
       "x-large": {
-        "radius": 8,
+        "radius": 17,
         "width":10,
         "size_multiplier": 5 
       },
       "largest": {
-        "radius": 10,
-        "width": 5,
+        "radius": 25,
+        "width": 100,
         "size_multiplier": 3
       }
     }

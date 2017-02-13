@@ -105,6 +105,7 @@ $(function () {
   let chestBottom, chestLeft, chestRight, chestFront, chestBack;
 
   let GEM_RADIUS = 12;
+  let scale_dampening = 0.65;
   let SMALL_CANNON_RADIUS = null;
   let MEDIUM_CANNON_RADIUS = null
   let LARGE_CANNON_RADIUS = null;
@@ -471,11 +472,10 @@ $(function () {
     gem.anchor.y = 0.5;
 
     let getGemsize = setGemSize(amount, type);
-    console.log(getGemsize);
 
     gem.width += getGemsize.width;
     gem.height += getGemsize.width;
-    let scale = getGemsize.radius/* * getGemsize.multiplier / gem.width*/;
+    let scale = getGemsize.radius * getGemsize.multiplier / (gem.width * scale_dampening);
     gem.scale = new PIXI.Point(scale, scale);
 
     // The gems are slightly larger than the collision body, so overlaps will happen.
@@ -497,7 +497,6 @@ $(function () {
 
 
   function setGemSize(amount, type) {
-    console.log(amount);
     let radius, multiplier, width;
 
     if(amount > 9999){ 
@@ -594,11 +593,11 @@ $(function () {
 
     // Find an open lane.
     var exists = {};
-    for (i = 0; i < messages.length; ++i) {
+    for (i = 0; i < messages.length; i++) {
       exists[messages[i].rank] = 1;
     }
     var nextRank = undefined;
-    for (i = 0; i < MAXIMUM_TEXT_DISPLAY; ++i) {
+    for (i = 0; i < MAXIMUM_TEXT_DISPLAY; i++) {
       if (exists[i] === undefined) {
         nextRank = i;
         break;
@@ -617,7 +616,7 @@ $(function () {
     text.emotes = text.emotes || '';
     if (text.emotes !== '') {
       let emotes = text.emotes.split('/');
-      for (i = 0; i < emotes.length; ++i) {
+      for (i = 0; i < emotes.length; i++) {
         // Invert this index, turning it into starting-char -> emote id, length.
         let data = emotes[i];
         let idSplit = data.split(':');
@@ -651,7 +650,7 @@ $(function () {
     };
 
     let message = text.message;
-    for (i = 0; i < emoteListing.length; ++i) {
+    for (i = 0; i < emoteListing.length; i++) {
       let range = emoteListing[i];
       message = replaceRange(message, range.indices[0], range.indices[1]);
     }
@@ -711,7 +710,7 @@ $(function () {
     let expected = text.bits;
 
     // At this point, splitMessage is a list of text fragments. Between each fragment is an emote.
-    for (i = 0; i < splitMessage.length; ++i) {
+    for (i = 0; i < splitMessage.length; i++) {
       let part = splitMessage[i];
       part = part.toLowerCase();
       // Then, look for givepoints objects
@@ -766,7 +765,7 @@ $(function () {
     let currentOffset = width + 100;
     let textHeight = 55;
 
-    for (i = 0; i < messageTable.length; ++i) {
+    for (i = 0; i < messageTable.length; i++) {
       let msg = messageTable[i];
 
       // If there is a non-empty prefix, generate a text object.
@@ -944,7 +943,7 @@ $(function () {
           case p2.Shape.CONVEX:
             var verts = [];
             var rotatedPosition = rotate(shape.position, body.angle);
-            for (var i = 0; i < shape.vertices.length; ++i) {
+            for (var i = 0; i < shape.vertices.length; i++) {
               var rotated = rotate(shape.vertices[i], body.angle);
 
               verts.push(rotatedPosition[0] + body.position[0] + rotated[0]);
@@ -1173,16 +1172,16 @@ $(function () {
           var glimmerStartFrame = emotes[emote_type].glimmerStart[movie];
 
           var fullFrames = [];
-          for(var i = emotes[emote_type].startingFrame; i < frameCount; ++i){
+          for(var i = emotes[emote_type].startingFrame; i < frameCount; i++){
             fullFrames.push(PIXI.Texture.fromFrame(emotes[emote_type].frameName(name,i)));
           }
 
           var glimmerFrames = [];
-          for(i = glimmerStartFrame; i < frameCount; ++i){
+          for(i = glimmerStartFrame; i < frameCount; i++){
             glimmerFrames.push(PIXI.Texture.fromFrame(emotes[emote_type].frameName(name,i)))
           }
 
-          for(i = 0; i < 150; ++i){
+          for(i = 0; i < 150; i++){
             glimmerFrames.push(PIXI.Texture.fromFrame(emotes[emote_type].frameName(name,frameCount - 1)))
           }
 
@@ -1196,6 +1195,7 @@ $(function () {
       }
       animate();
       unserializeState();
+      connect_websocket();
     });
   }
 
@@ -1233,8 +1233,9 @@ $(function () {
   // Gem State Serialization
   function serializeState() {
     var result = [];
-    for (var i = 0; i < gems.length; ++i) {
+    for (var i = 0; i < gems.length; i++) {
       var gem = gems[i];
+      console.log(gem);
       result.push({
         position: gem.physical.position,
         falling: gem.falling,
@@ -1258,41 +1259,49 @@ $(function () {
       return;
     }
     loadingScene = true;
-    for (var i = 0; i < state.length; ++i) {
-      var gem = state[i];
-      console.log(gem);
-      let amount = gem.amount;
-      let type = gem.type;
+    for (var i = 0; i < state.length; i++) {
+      var old_gem = state[i];
+      console.log(old_gem);
+      let amount = old_gem.amount;
+      let type = old_gem.type;
       let getGemsize = setGemSize(amount, type);
       var gemShape = new p2.Circle({radius: getGemsize.radius, material: gemMaterial});
       var body = new p2.Body({
-        mass: gem.mass,
-        position: [gem.position[0], gem.position[1]],
-        angularVelocity: gem.angularVelocity,
-        velocity: [gem.velocity[0], gem.velocity[1]],
-        angle: gem.angle,
+        mass: old_gem.mass,
+        position: [old_gem.position[0], old_gem.position[1]],
+        angularVelocity: old_gem.angularVelocity,
+        velocity: [old_gem.velocity[0], old_gem.velocity[1]],
+        angle: old_gem.angle,
         damping: 0.1,
         angularDamping: 0.1
       });
 
       body.addShape(gemShape);
       world.addBody(body);
-      var gem = new PIXI.extras.MovieClip(gemFlashFrames[gem.type][gem.tier]);
+      var gem = new PIXI.extras.MovieClip(gemFlashFrames[old_gem.type][old_gem.tier]);
       gem.animationSpeed = 24 / 60;
       gem.gotoAndPlay(Math.floor(randomRange(0, gem.totalFrames)));
 
       gem.width += getGemsize.width;
       gem.height += getGemsize.width;
-      gem.scale = new PIXI.Point(getGemsize.radius * getGemsize.multiplier / gem.width, getGemsize.radius * getGemsize.multiplier / gem.width);
-
+      let scale = getGemsize.radius * getGemsize.multiplier / (gem.width * scale_dampening);
+      gem.scale = new PIXI.Point(scale, scale);
+      
       gem.anchor.x = 0.5;
       gem.anchor.y = 0.5;
-      gem.depth = gem.depth;
-
+      gem.depth = old_gem.depth;
+      gem.amount = old_gem.amount;
+      gem.type = old_gem.type;
+      gem.tier = old_gem.tier;
+      
       container.addChild(gem);
 
-      var res = new Gem(body, gem, 0, gem.tier, gem.depth, amount, type);
-      res.falling = gem.falling;
+      var res = new Gem(body, gem, 0, old_gem.tier, gem.depth, amount, type);
+      res.falling = old_gem.falling;
+      res.amount = old_gem.amount;
+      res.type = old_gem.type;
+      res.tier = old_gem.tier;
+      
 
       gems.push(res);
     }
@@ -1300,7 +1309,18 @@ $(function () {
     needsDepthSort = true;
     messageID = state.length + 1;
   }
-
+  function connect_websocket(){
+    let query = `channel=burkeblack&type=client`;
+    let socket = io.connect('https://sockets.streamshape.io', {query: query});
+    socket.on('alert', (data) => {
+      if(data.type == "cheer"){
+        addAlert(data.username, data.message, null, data.bits);
+      }else if(data.type == "donation" || data.type == "tip"){
+        let p = data.amount*1000;
+        addAlert(data.username, "_tip_cheer_token_"+p, null, p);
+      }
+    });
+  }
   // Look for any parameters
   let getQueryParameter = function getQueryParameter(p) {
     let urlHashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
@@ -1392,6 +1412,9 @@ $(function () {
           val = 100;
           message = `_tip_cheer_token_100 Oh look, shiny`;
 
+          break;
+        case 'y':
+          serializeState();
           break;
         case '0':
           return rumbleChest();

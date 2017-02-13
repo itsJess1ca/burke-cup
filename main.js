@@ -1316,7 +1316,8 @@ $(function () {
       if(data.type == "cheer"){
         addAlert(data.username, data.message, null, data.bits);
       }else if(data.type == "donation" || data.type == "tip"){
-        let p = data.amount*1000;
+        let a = parseFloat(data.amount);
+        let p = a*100;
         addAlert(data.username, "_tip_cheer_token_"+p, null, p);
       }
     });

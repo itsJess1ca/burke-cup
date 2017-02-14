@@ -744,10 +744,6 @@ $(function () {
     let textHeight = 55;
 
     // Fire Sound
-    setTimeout(function () {
-      /*if (origY !== cannon.position.y) {
-       return;
-       }*/
       //Play sound
       var sfx = $('.js-cannon').clone()[0];
       console.log(sfx);
@@ -762,7 +758,6 @@ $(function () {
           cannon.position.x = cannon.position.x + 5;
         }, 250)
       }
-    }, 50);
 
     // Add Gems
     for (i = 0; i < messageTable.length; i++) {
@@ -1372,31 +1367,31 @@ $(function () {
       switch (String.fromCharCode(charCode)) {
         case '1':
           val = 1;
-          message = `Amazing ${randomEmote()}1`;
+          message = `${randomEmote()}1`;
           break;
         case '2':
-          val = 18;
-          message = `Look at me filling up the cup ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1`;
+          val = 100;
+          message = `${randomEmote()}100`;
 
           break;
         case '3':
-          val = 50;
-          message = `#50 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1`;
+          val = 1000;
+          message = `${randomEmote()}1000`;
 
           break;
         case '4':
-          val = 100;
-          message = `Dat Bomb ${randomEmote()}100`;
+          val = 5000;
+          message = `${randomEmote()}5000`;
 
           break;
         case '5':
-          val = 4998;
-          message = `Amazing ${randomEmote()}4998 `;
+          val = 10000;
+          message = `${randomEmote()}10000`;
 
           break;
         case '6':
-          val = 10000;
-          message = `Damn son ${randomEmote()}10000`;
+          val = 4;
+          message = `${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1 ${randomEmote()}1`;
 
           break;
         case '7':

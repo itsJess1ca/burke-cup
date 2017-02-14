@@ -15,28 +15,28 @@
     "description": "1 = small, 100 = medium, 500 = large, 1000 = x-large, 10000 = largest",
     "sizes": {
       "small": {
-        "radius": 10,
-        "width": 10,
-        "size_multiplier": 9
+        "radius": 7,
+        "width": 7,
+        "size_multiplier": 8
       },
       "medium": {
-        "radius": 12,
-        "width": 20,
+        "radius": 10,
+        "width": 10,
         "size_multiplier": 5
       },
       "large": {
-        "radius": 15,
-        "width":15,
-        "size_multiplier": 4 
+        "radius": 10,
+        "width": 10,
+        "size_multiplier": 4
       },
       "x-large": {
-        "radius": 17,
-        "width":10,
-        "size_multiplier": 5 
+        "radius": 7,
+        "width": 7,
+        "size_multiplier": 5
       },
       "largest": {
-        "radius": 25,
-        "width": 100,
+        "radius": 15,
+        "width": 50,
         "size_multiplier": 3
       }
     }

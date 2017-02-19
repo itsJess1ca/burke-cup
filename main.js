@@ -1306,7 +1306,16 @@ $(function () {
   }
   function connect_websocket(){
     let query = `channel=${settings.channel}&type=client`;
-    let socket = io.connect('https://sockets.streamshape.io', {query: query});
+    let socket = io.connect('https://sockets.streamshape.io', {
+      query: query,
+      reconnection: true
+    });
+    socket.on('connect', () => {
+      console.log("Connected to sockets")
+    });
+    socket.on('disconnect', () => {
+      console.log("Disconnected from sockets");
+    });
     socket.on('alert', (data) => {
       if(data.type == "cheer"){
         addAlert(data.username, data.message, null, data.bits);

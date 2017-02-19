@@ -1,4 +1,16 @@
 'use strict';
+
+// Look for any parameters
+let getQueryParameter = function getQueryParameter(p) {
+  let urlHashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+  for (let i = 0; i < urlHashes.length; i++) {
+    const hash = urlHashes[i].split('=');
+    if (hash[0] === p) {
+      return hash[1] || true;
+    }
+  }
+};
+
 //New Stuff
 let settings = null;
 const _createClass = function () {
@@ -1325,16 +1337,6 @@ $(function () {
       }
     });
   }
-  // Look for any parameters
-  let getQueryParameter = function getQueryParameter(p) {
-    let urlHashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for (var i = 0; i < urlHashes.length; i++) {
-      var hash = urlHashes[i].split('=');
-      if (hash[0] === p) {
-        return hash[1] || true;
-      }
-    }
-  };
 
   // Enable Debug mode ?debug=true
   if (debug) {

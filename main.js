@@ -49,7 +49,7 @@ $(function () {
 
   
   //Play first alert on load
-  const debug = true;
+  const debug = getQueryParameter('debug');
   let freeShot = false;
 
   let loadingScene = false;
@@ -133,7 +133,7 @@ $(function () {
             return true;
           }
         } catch (e) {
-          console.log(e);
+          if (debug) console.log(e);
         }
       }
 
@@ -746,7 +746,6 @@ $(function () {
     // Fire Sound
       //Play sound
       var sfx = $('.js-cannon').clone()[0];
-      console.log(sfx);
       sfx.volume = settings.sounds.cannon;
       sfx.play();
 
@@ -947,7 +946,7 @@ $(function () {
             renderer.drawPolygon(verts);
             break;
           default:
-            console.log(body.shapes[si]);
+            if (debug) console.log(body.shapes[si]);
             break;
         }
       }
@@ -957,7 +956,7 @@ $(function () {
 
   function sendSettings(data){
     settings = data;
-    console.log(settings);
+    // console.log(settings);
   }
 
   function init() {
@@ -1230,7 +1229,7 @@ $(function () {
     var result = [];
     for (var i = 0; i < gems.length; i++) {
       var gem = gems[i];
-      console.log(gem);
+      if (debug) console.log(gem);
       result.push({
         position: gem.physical.position,
         falling: gem.falling,
@@ -1256,7 +1255,7 @@ $(function () {
     loadingScene = true;
     for (var i = 0; i < state.length; i++) {
       var old_gem = state[i];
-      console.log(old_gem);
+      if (debug) console.log(old_gem);
       let amount = old_gem.amount;
       let type = old_gem.type;
       let getGemsize = setGemSize(amount, type);
@@ -1311,10 +1310,10 @@ $(function () {
       reconnection: true
     });
     socket.on('connect', () => {
-      console.log("Connected to sockets")
+      if (debug) console.log("Connected to sockets")
     });
     socket.on('disconnect', () => {
-      console.log("Disconnected from sockets");
+      if (debug) console.log("Disconnected from sockets");
     });
     socket.on('alert', (data) => {
       if(data.type == "cheer"){
@@ -1338,7 +1337,7 @@ $(function () {
   };
 
   // Enable Debug mode ?debug=true
-  if (getQueryParameter('debug')) {
+  if (debug) {
     console.log('%c' + ` ################ Debug Mode Started ################## `, 'color:white;background:#1976d2;font-weight:bold;')
     console.log(`
 1. Key 1 - Single cheer1    

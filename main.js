@@ -1319,13 +1319,15 @@ $(function () {
     let query = `channel=${settings.channel}&type=client`;
     let socket = io.connect('https://sockets.streamshape.io', {
       query: query,
-      reconnection: true
+      reconnection: true,
+      timeout: 10000000000
     });
     socket.on('connect', () => {
       if (debug) console.log("Connected to sockets")
     });
     socket.on('disconnect', () => {
       if (debug) console.log("Disconnected from sockets");
+      socket.connect();
     });
     socket.on('alert', (data) => {
       if(data.type == "cheer"){

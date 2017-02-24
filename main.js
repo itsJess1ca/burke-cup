@@ -1316,7 +1316,7 @@ $(function () {
     messageID = state.length + 1;
   }
   function connect_websocket(){
-    let query = `channel=${settings.channel}&type=client`;
+    let query = `channel=${settings.channel}&type=bits_cannon`;
     let socket = io.connect('https://sockets.streamshape.io', {
       query: query,
       reconnection: true,

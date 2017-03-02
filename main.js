@@ -1316,18 +1316,20 @@ $(function () {
     messageID = state.length + 1;
   }
   function connect_websocket(){
-    let query = `channel=${settings.channel}&type=bits_cannon`;
-    let socket = io.connect('https://sockets.streamshape.io', {
-      query: query,
-      reconnection: true,
-      timeout: 10000000000
+    const query = `channel=${settings.channel}&type=bits_cannon`;
+    const socket = io.connect('https://sockets.streamshape.io', {
+      query: query
     });
+    let connected = false;
+
     socket.on('connect', () => {
-      if (debug) console.log("Connected to sockets")
+      if (debug) console.log("Connected to sockets");
+      connected = true;
     });
     socket.on('disconnect', () => {
       if (debug) console.log("Disconnected from sockets");
-      socket.connect();
+      connected = false;
+      attemptReconnect();
     });
     socket.on('alert', (data) => {
       if(data.type == "cheer"){
@@ -1338,6 +1340,14 @@ $(function () {
         addAlert(data.username, "_tip_cheer_token_"+p, null, p);
       }
     });
+    function attemptReconnect() {
+      if (!connected) {
+        socket.io.reconnect();
+        setTimeout(() => {
+          attemptReconnect();
+        }, 5000);
+      }
+    }
   }
 
   // Enable Debug mode ?debug=true

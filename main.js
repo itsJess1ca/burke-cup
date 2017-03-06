@@ -373,6 +373,17 @@ $(function () {
             this.physical.updateMassProperties();
             this.falling = true;
           }
+          // Stop playing animation once in chest
+          console.log(this.physical.position[0], chestLeft.position[0]);
+          if (this.physical.position[0] > chestLeft.position[0] - 230) {
+            console.log('in stopping');
+            this.renderable.gotoAndStop(0);
+            setTimeout(function() {
+              // this.gemAnimationGameFrames = this.startingGemAnimationGameFrames;
+              console.log(this);
+              // 
+            }, 100);
+          }
         }
       }
     }, {
@@ -1267,7 +1278,7 @@ $(function () {
     loadingScene = true;
     for (var i = 0; i < state.length; i++) {
       var old_gem = state[i];
-      if (debug) console.log(old_gem);
+      // if (debug) console.log(old_gem);
       let amount = old_gem.amount;
       let type = old_gem.type;
       let getGemsize = setGemSize(amount, type);
@@ -1286,7 +1297,7 @@ $(function () {
       world.addBody(body);
       var gem = new PIXI.extras.MovieClip(gemFlashFrames[old_gem.type][old_gem.tier]);
       gem.animationSpeed = 24 / 60;
-      gem.gotoAndPlay(Math.floor(randomRange(0, gem.totalFrames)));
+      // gem.gotoAndPlay(Math.floor(randomRange(0, gem.totalFrames)));
 
       gem.width += getGemsize.width;
       gem.height += getGemsize.width;

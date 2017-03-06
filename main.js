@@ -304,7 +304,7 @@ $(function () {
           this.gemAnimationGameFrames--;
           if (this.gemAnimationGameFrames === 0) {
             container.removeChild(this.renderable);
-
+            console.log('in glimmer');
             // Transform this gem into a flashing gem.
             var glimmerFrames = gemFlashFrames[this.type][this.tier];
             var gem = new PIXI.extras.MovieClip(glimmerFrames);
@@ -374,15 +374,10 @@ $(function () {
             this.falling = true;
           }
           // Stop playing animation once in chest
-          console.log(this.physical.position[0], chestLeft.position[0]);
-          if (this.physical.position[0] > chestLeft.position[0] - 230) {
-            console.log('in stopping');
-            this.renderable.gotoAndStop(0);
-            setTimeout(function() {
-              // this.gemAnimationGameFrames = this.startingGemAnimationGameFrames;
-              console.log(this);
-              // 
-            }, 100);
+          if (this.physical.position[0] > chestLeft.position[0] - 230 && !this.hasReachedChest) {
+            console.log('changing to glimmer');
+            this.hasReachedChest = true;
+            this.gemAnimationGameFrames = this.startingGemAnimationGameFrames;
           }
         }
       }

@@ -691,8 +691,8 @@ $(function () {
 
     // Split on 0x01, which gives us a set of messages seperated by emotes.
     let splitMessage = message.split('\x01');
-    var givepointsRegex = /(?:^|\s)(cheer|muxy|swiftrage|kreygasm|kappa|streamlabs)(\d+)(?=$|\s)/g;
-    var amountRegex = /(?:^|\s)(cheer|muxy|swiftrage|kreygasm|kappa|streamlabs)(\d+)(?=$|\s)/;
+    var givepointsRegex = /(?:^|\s)(cheer|muxy|swiftrage|kreygasm|kappa|streamlabs|burkecheer)(\d+)(?=$|\s)/g;
+    var amountRegex = /(?:^|\s)(cheer|muxy|swiftrage|kreygasm|kappa|streamlabs|burkecheer)(\d+)(?=$|\s)/;
 
     // Begin assembling the {prefix, emote} table.
     let forwardEmoteListing = emoteListing.reverse();
@@ -1074,6 +1074,11 @@ $(function () {
       .add("assets/images/point-sprites/streamlabs/streamlabs_1000.json")
       .add("assets/images/point-sprites/streamlabs/streamlabs_5000.json")
       .add("assets/images/point-sprites/streamlabs/streamlabs_10000.json")
+      .add("assets/images/point-sprites/burkecheer/1.json")
+      .add("assets/images/point-sprites/burkecheer/100.json")
+      .add("assets/images/point-sprites/burkecheer/1000.json")
+      .add("assets/images/point-sprites/burkecheer/5000.json")
+      .add("assets/images/point-sprites/burkecheer/10000.json")
     .load(function () {
       var emotes = [
         {
@@ -1088,6 +1093,22 @@ $(function () {
               frameID = "0" + i;
             }
             return name+"_600px_00"+frameID;
+          }
+        },
+        {
+          name:"burkeCheer",
+          breakPoints:[1, 100, 1000, 5000, 10000],
+          frames:[66, 151, 151, 151, 71],
+          startingFrame:1,
+          glimmerStart:[1, 1, 1, 1, 1],
+          frameName:function frameName(name, i) {
+            var frameID = "" + i;
+            if (i < 10) {
+              frameID = "00" + i;
+            }else if (i < 100) {
+              frameID = "0" + i;
+            }
+            return "burkeCheer"+name+"/00"+frameID;
           }
         },
         {
@@ -1424,17 +1445,17 @@ $(function () {
           break;
         case '7':
           val = 10000;
-          message = `_tip_cheer_token_10000 Oh look, super shiny`;
+          message = `burkeCheer10000 Oh look, super shiny`;
 
           break;
         case '8':
           val = 5001;
-          message = `_tip_cheer_token_5000 cheer1 Oh look, very shiny`;
+          message = `burkeCheer5000 burkeCheer1 Oh look, very shiny`;
 
           break;
         case '9':
-          val = 100;
-          message = `_tip_cheer_token_100 Oh look, shiny`;
+          val = 1100;
+          message = `burkeCheer100 burkeCheer1000 Oh look, shiny`;
 
           break;
         case 'y':

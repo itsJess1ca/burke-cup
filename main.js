@@ -1079,6 +1079,41 @@ $(function () {
       .add("assets/images/point-sprites/burkecheer/1000.json")
       .add("assets/images/point-sprites/burkecheer/5000.json")
       .add("assets/images/point-sprites/burkecheer/10000.json")
+      .add("assets/images/point-sprites/4head/1.json")
+      .add("assets/images/point-sprites/4head/100.json")
+      .add("assets/images/point-sprites/4head/1000.json")
+      .add("assets/images/point-sprites/4head/5000.json")
+      .add("assets/images/point-sprites/4head/10000.json")
+      .add("assets/images/point-sprites/failfish/1.json")
+      .add("assets/images/point-sprites/failfish/100.json")
+      .add("assets/images/point-sprites/failfish/1000.json")
+      .add("assets/images/point-sprites/failfish/5000.json")
+      .add("assets/images/point-sprites/failfish/10000.json")
+      .add("assets/images/point-sprites/mrdestructoid/1.json")
+      .add("assets/images/point-sprites/mrdestructoid/100.json")
+      .add("assets/images/point-sprites/mrdestructoid/1000.json")
+      .add("assets/images/point-sprites/mrdestructoid/5000.json")
+      .add("assets/images/point-sprites/mrdestructoid/10000.json")
+      .add("assets/images/point-sprites/notlikethis/1.json")
+      .add("assets/images/point-sprites/notlikethis/100.json")
+      .add("assets/images/point-sprites/notlikethis/1000.json")
+      .add("assets/images/point-sprites/notlikethis/5000.json")
+      .add("assets/images/point-sprites/notlikethis/10000.json")
+      .add("assets/images/point-sprites/pjsalt/1.json")
+      .add("assets/images/point-sprites/pjsalt/100.json")
+      .add("assets/images/point-sprites/pjsalt/1000.json")
+      .add("assets/images/point-sprites/pjsalt/5000.json")
+      .add("assets/images/point-sprites/pjsalt/10000.json")
+      .add("assets/images/point-sprites/trihard/1.json")
+      .add("assets/images/point-sprites/trihard/100.json")
+      .add("assets/images/point-sprites/trihard/1000.json")
+      .add("assets/images/point-sprites/trihard/5000.json")
+      .add("assets/images/point-sprites/trihard/10000.json")
+      .add("assets/images/point-sprites/vohiyo/1.json")
+      .add("assets/images/point-sprites/vohiyo/100.json")
+      .add("assets/images/point-sprites/vohiyo/1000.json")
+      .add("assets/images/point-sprites/vohiyo/5000.json")
+      .add("assets/images/point-sprites/vohiyo/10000.json")
     .load(function () {
       var emotes = [
         {
@@ -1185,6 +1220,118 @@ $(function () {
           name:"StreamLabs",
           breakPoints:[1, 100, 1000, 5000, 10000],
           frames:[144, 160, 160, 200, 160],
+          startingFrame:1,
+          glimmerStart:[1, 1, 1, 1, 1],
+          frameName:function frameName(name, i) {
+            var frameID = "" + i;
+            if (i < 10) {
+              frameID = "00" + i;
+            }else if (i < 100) {
+              frameID = "0" + i;
+            }
+            return this.name+"_"+name+"_00"+frameID;
+          }
+        },
+        {
+          name:"vohiyo",
+          breakPoints:[1, 100, 1000, 5000, 10000],
+          frames:[11, 11, 21, 29, 24],
+          startingFrame:1,
+          glimmerStart:[1, 1, 1, 1, 1],
+          frameName:function frameName(name, i) {
+            var frameID = "" + i;
+            if (i < 10) {
+              frameID = "00" + i;
+            }else if (i < 100) {
+              frameID = "0" + i;
+            }
+            return this.name+"_"+name+"_00"+frameID;
+          }
+        },
+        {
+          name:"trihard",
+          breakPoints:[1, 100, 1000, 5000, 10000],
+          frames:[73, 73, 83, 83, 83],
+          startingFrame:1,
+          glimmerStart:[1, 1, 1, 1, 1],
+          frameName:function frameName(name, i) {
+            var frameID = "" + i;
+            if (i < 10) {
+              frameID = "00" + i;
+            }else if (i < 100) {
+              frameID = "0" + i;
+            }
+            return this.name+"_"+name+"_00"+frameID;
+          }
+        },
+        {
+          name:"pjsalt",
+          breakPoints:[1, 100, 1000, 5000, 10000],
+          frames:[21, 21, 36, 36, 85],
+          startingFrame:1,
+          glimmerStart:[1, 1, 1, 1, 1],
+          frameName:function frameName(name, i) {
+            var frameID = "" + i;
+            if (i < 10) {
+              frameID = "00" + i;
+            }else if (i < 100) {
+              frameID = "0" + i;
+            }
+            return this.name+"_"+name+"_00"+frameID;
+          }
+        },
+        {
+          name:"notlikethis",
+          breakPoints:[1, 100, 1000, 5000, 10000],
+          frames:[55, 56, 56, 52, 56],
+          startingFrame:1,
+          glimmerStart:[1, 1, 1, 1, 1],
+          frameName:function frameName(name, i) {
+            var frameID = "" + i;
+            if (i < 10) {
+              frameID = "00" + i;
+            }else if (i < 100) {
+              frameID = "0" + i;
+            }
+            return this.name+"_"+name+"_00"+frameID;
+          }
+        },
+        {
+          name:"mrdestructoid",
+          breakPoints:[1, 100, 1000, 5000, 10000],
+          frames:[21, 21, 21, 20, 23],
+          startingFrame:1,
+          glimmerStart:[1, 1, 1, 1, 1],
+          frameName:function frameName(name, i) {
+            var frameID = "" + i;
+            if (i < 10) {
+              frameID = "00" + i;
+            }else if (i < 100) {
+              frameID = "0" + i;
+            }
+            return this.name+"_"+name+"_00"+frameID;
+          }
+        },
+        {
+          name:"failfish",
+          breakPoints:[1, 100, 1000, 5000, 10000],
+          frames:[28, 52, 41, 52, 50],
+          startingFrame:1,
+          glimmerStart:[1, 1, 1, 1, 1],
+          frameName:function frameName(name, i) {
+            var frameID = "" + i;
+            if (i < 10) {
+              frameID = "00" + i;
+            }else if (i < 100) {
+              frameID = "0" + i;
+            }
+            return this.name+"_"+name+"_00"+frameID;
+          }
+        },
+        {
+          name:"4head",
+          breakPoints:[1, 100, 1000, 5000, 10000],
+          frames:[26, 12, 40, 40, 39],
           startingFrame:1,
           glimmerStart:[1, 1, 1, 1, 1],
           frameName:function frameName(name, i) {

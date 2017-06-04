@@ -1,0 +1,180 @@
+{"frames": {
+
+"mrdestructoid_100_00001":
+{
+	"frame": {"x":1,"y":259,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00002":
+{
+	"frame": {"x":1,"y":259,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00003":
+{
+	"frame": {"x":1,"y":259,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00004":
+{
+	"frame": {"x":1,"y":340,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00005":
+{
+	"frame": {"x":1,"y":421,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00006":
+{
+	"frame": {"x":1,"y":1,"w":108,"h":84},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":13,"w":108,"h":84},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00007":
+{
+	"frame": {"x":1,"y":1,"w":108,"h":84},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":13,"w":108,"h":84},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00008":
+{
+	"frame": {"x":1,"y":259,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00009":
+{
+	"frame": {"x":1,"y":340,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00010":
+{
+	"frame": {"x":1,"y":421,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00011":
+{
+	"frame": {"x":1,"y":87,"w":108,"h":84},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":13,"w":108,"h":84},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00012":
+{
+	"frame": {"x":1,"y":173,"w":108,"h":84},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":13,"w":108,"h":84},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00013":
+{
+	"frame": {"x":1,"y":502,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00014":
+{
+	"frame": {"x":1,"y":502,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00015":
+{
+	"frame": {"x":1,"y":502,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00016":
+{
+	"frame": {"x":1,"y":502,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00017":
+{
+	"frame": {"x":1,"y":502,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00018":
+{
+	"frame": {"x":1,"y":502,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00019":
+{
+	"frame": {"x":1,"y":502,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00020":
+{
+	"frame": {"x":1,"y":502,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+},
+"mrdestructoid_100_00021":
+{
+	"frame": {"x":1,"y":502,"w":108,"h":79},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":18,"w":108,"h":79},
+	"sourceSize": {"w":112,"h":112}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "100.png",
+	"format": "RGBA8888",
+	"size": {"w":110,"h":582},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:27263680670e4170441583918585c171:861a1b53dc4e6d7e4db1b2d50bb2fb5c:97ba0ae94d0680879140f63c63425478$"
+}
+}

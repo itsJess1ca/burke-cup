@@ -14,5 +14,6 @@
     <orderEntry type="library" name="raygun" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="platform" level="application" />
+    <orderEntry type="library" name="socket.io" level="application" />
   </component>
 </module>

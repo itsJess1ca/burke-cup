@@ -1430,11 +1430,11 @@ $(function () {
       });
     }
 
-    localStorage.setItem('gem_state', JSON.stringify(result));
+    sessionStorage.setItem('gem_state', JSON.stringify(result));
   }
 
   function unserializeState() {
-    var state = JSON.parse(localStorage.getItem('gem_state'));
+    var state = JSON.parse(sessionStorage.getItem('gem_state'));
     if (state === null) {
       return;
     }

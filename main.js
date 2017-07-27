@@ -1435,7 +1435,7 @@ $(function () {
 
   function unserializeState() {
     var state = JSON.parse(localStorage.getItem('gem_state'));
-    if (state === null || (Date.now() - state.timestamp) > 5.76e+7 || !state.timestamp) {
+    if (state === null || (Date.now() - state.timestamp) > 60000 || !state.timestamp) {
       return;
     }
     loadingScene = true;

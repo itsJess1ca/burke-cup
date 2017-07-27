@@ -1430,17 +1430,18 @@ $(function () {
       });
     }
 
-    sessionStorage.setItem('gem_state', JSON.stringify(result));
+    localStorage.setItem('gem_state', JSON.stringify({timestamp: Date.now(), result: result}));
   }
 
   function unserializeState() {
-    var state = JSON.parse(sessionStorage.getItem('gem_state'));
-    if (state === null) {
+    var state = JSON.parse(localStorage.getItem('gem_state'));
+    if (state === null || (Date.now() - state.timestamp) > 5.76e+7 || !state.timestamp) {
       return;
     }
     loadingScene = true;
-    for (var i = 0; i < state.length; i++) {
-      var old_gem = state[i];
+    let arr = Array.isArray(state) ? state : state.result;
+    for (var i = 0; i < arr.length; i++) {
+      var old_gem = arr[i];
       // if (debug) console.log(old_gem);
       let amount = old_gem.amount;
       let type = old_gem.type;
@@ -1487,7 +1488,7 @@ $(function () {
     }
     loadingScene = false;
     needsDepthSort = true;
-    messageID = state.length + 1;
+    messageID = arr.length + 1;
   }
   function connect_websocket(){
     const query = `channel=${settings.channel}&type=bits_cannon`;

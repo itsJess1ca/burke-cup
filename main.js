@@ -1491,11 +1491,12 @@ $(function () {
     messageID = arr.length + 1;
   }
   function connect_websocket(){
-    const query = `channel=${settings.channel}&type=bits_cannon`;
-    const socket = io.connect('https://sockets.streamshape.io', {
-      query: query
+    const apiKey = 'jDHQkR4dMpOw6kL1IvhFEXW6w0K6KeQUf0S02XDwdiQQdzzxqmjpU27Jg58SNVMk';
+    const socket = io.connect('https://ws.layerone.io', {
+      query: `apikey=${apiKey}`
     });
     let connected = false;
+    const layeroneId = 168;
 
     socket.on('connect', () => {
       if (debug) console.log("Connected to sockets");
@@ -1506,15 +1507,15 @@ $(function () {
       connected = false;
       attemptReconnect();
     });
-    socket.on('alert', (data) => {
-      if(data.type == "cheer"){
-        addAlert(data.username, data.message, null, data.bits);
-      }else if(data.type == "donation" || data.type == "tip"){
-        let a = parseFloat(data.amount);
-        let p = a*100;
-        addAlert(data.username, "_tip_cheer_token_"+p, null, p);
-      }
+    socket.on(`${layeroneId}.twitch.cheer`, (data) => {
+      addAlert(data.payload.user.display_name || data.payload.user.username, data.payload.message, null, data.payload.bits);
     });
+    socket.on(`${layeroneId}.tip`, (data) => {
+        let a = parseFloat(data.payload.amount);
+        let p = a*100;
+        addAlert(data.payload.username, "_tip_cheer_token_"+p, null, p);
+    });
+    socket.emit('subscribe', [`${layeroneId}.tip`, `${layeroneId}.twitch.cheer`]);
     function attemptReconnect() {
       if (!connected) {
         socket.io.reconnect();
@@ -1527,7 +1528,7 @@ $(function () {
 
   // Enable Debug mode ?debug=true
   if (debug) {
-    console.log('%c' + ` ################ Debug Mode Started ################## `, 'color:white;background:#1976d2;font-weight:bold;')
+    console.log('%c' + ` ################ Debug Mode Started ################## `, 'color:white;background:#1976d2;font-weight:bold;');
     console.log(`
 1. Key 1 - Single cheer1    
 2. Key 2 - Multiple cheer1

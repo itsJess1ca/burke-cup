@@ -1508,7 +1508,7 @@ $(function () {
       attemptReconnect();
     });
     socket.on(`${layeroneId}.twitch.cheer`, (data) => {
-      addAlert(data.payload.user.display_name || data.payload.user.username, data.payload.message, null, data.payload.bits);
+      addAlert(data.payload.user.display_name || data.payload.user.username, data.payload.message.text, data.payload.message.emotes, data.payload.bits);
     });
     socket.on(`${layeroneId}.tip`, (data) => {
         let a = parseFloat(data.payload.amount);

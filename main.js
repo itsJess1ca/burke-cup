@@ -304,7 +304,7 @@ $(function () {
           this.gemAnimationGameFrames--;
           if (this.gemAnimationGameFrames === 0) {
             container.removeChild(this.renderable);
-            console.log('in glimmer');
+            if (debug) console.log('in glimmer');
             // Transform this gem into a flashing gem.
             var glimmerFrames = gemFlashFrames[this.type][this.tier];
             var gem = new PIXI.extras.MovieClip(glimmerFrames);
@@ -375,7 +375,7 @@ $(function () {
           }
           // Stop playing animation once in chest
           if (this.physical.position[0] > chestLeft.position[0] - 230 && !this.hasReachedChest) {
-            console.log('changing to glimmer');
+            if (debug) console.log('changing to glimmer');
             this.hasReachedChest = true;
             this.gemAnimationGameFrames = this.startingGemAnimationGameFrames;
           }

@@ -455,7 +455,8 @@ $(function () {
     });
 
     world.addBody(body);
-    
+
+    if (debug) console.log(type, gemAnimationFrames);
     if(!type){
       type = "cheer"
     }
@@ -691,8 +692,8 @@ $(function () {
 
     // Split on 0x01, which gives us a set of messages seperated by emotes.
     let splitMessage = message.split('\x01');
-    var givepointsRegex = /(?:^|\s)(cheer|muxy|swiftrage|kreygasm|kappa|streamlabs|burkecheer)(\d+)(?=$|\s)/g;
-    var amountRegex = /(?:^|\s)(cheer|muxy|swiftrage|kreygasm|kappa|streamlabs|burkecheer)(\d+)(?=$|\s)/;
+    var givepointsRegex = /(?:^|\s)(cheer|muxy|swiftrage|kreygasm|kappa|streamlabs|burkecheer|mrdestructoid|4head|failfish|notlikethis|pjsalt|trihard|vohiyo)(\d+)(?=$|\s)/g;
+    var amountRegex = /(?:^|\s)(cheer|muxy|swiftrage|kreygasm|kappa|streamlabs|burkecheer|mrdestructoid|4head|failfish|notlikethis|pjsalt|trihard|vohiyo)(\d+)(?=$|\s)/;
 
     // Begin assembling the {prefix, emote} table.
     let forwardEmoteListing = emoteListing.reverse();
@@ -1508,7 +1509,7 @@ $(function () {
       attemptReconnect();
     });
     socket.on(`${layeroneId}.twitch.cheer`, (data) => {
-      addAlert(data.payload.user.display_name || data.payload.user.username, data.payload.message.text, data.payload.message.emotes, data.payload.bits);
+      addAlert(data.payload.user.display_name || data.payload.user.username, data.payload.message.text, null, data.payload.bits);
     });
     socket.on(`${layeroneId}.tip`, (data) => {
         let a = parseFloat(data.payload.amount);

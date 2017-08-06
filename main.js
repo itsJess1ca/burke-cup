@@ -456,8 +456,8 @@ $(function () {
 
     world.addBody(body);
 
-    if (debug) console.log(type, gemAnimationFrames);
-    if(!type){
+    if (debug) console.log(type, gemAnimationFrames[type]);
+    if(!type || !gemAnimationFrames[type]){
       type = "cheer"
     }
     // console.log(type,tier, amount);
@@ -692,8 +692,8 @@ $(function () {
 
     // Split on 0x01, which gives us a set of messages seperated by emotes.
     let splitMessage = message.split('\x01');
-    var givepointsRegex = /(?:^|\s)(cheer|muxy|swiftrage|kreygasm|kappa|streamlabs|burkecheer|mrdestructoid|4head|failfish|notlikethis|pjsalt|trihard|vohiyo)(\d+)(?=$|\s)/g;
-    var amountRegex = /(?:^|\s)(cheer|muxy|swiftrage|kreygasm|kappa|streamlabs|burkecheer|mrdestructoid|4head|failfish|notlikethis|pjsalt|trihard|vohiyo)(\d+)(?=$|\s)/;
+    var givepointsRegex = /(?:^|\s)(cheer|muxy|swiftrage|kreygasm|kappa|streamlabs|burkecheer|mrdestructoid|4head|failfish|notlikethis|pjsalt|trihard|vohiyo|bday)(\d+)(?=$|\s)/g;
+    var amountRegex = /(?:^|\s)(cheer|muxy|swiftrage|kreygasm|kappa|streamlabs|burkecheer|mrdestructoid|4head|failfish|notlikethis|pjsalt|trihard|vohiyo|bday)(\d+)(?=$|\s)/;
 
     // Begin assembling the {prefix, emote} table.
     let forwardEmoteListing = emoteListing.reverse();

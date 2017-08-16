@@ -1,0 +1,108 @@
+{"frames": {
+
+"bday_5000_00001":
+{
+	"frame": {"x":1,"y":1,"w":98,"h":112},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":0,"w":98,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"bday_5000_00002":
+{
+	"frame": {"x":1,"y":1,"w":98,"h":112},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":0,"w":98,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"bday_5000_00003":
+{
+	"frame": {"x":101,"y":1,"w":98,"h":112},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":0,"w":98,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"bday_5000_00004":
+{
+	"frame": {"x":101,"y":1,"w":98,"h":112},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":0,"w":98,"h":112},
+	"sourceSize": {"w":112,"h":112}
+},
+"bday_5000_00005":
+{
+	"frame": {"x":201,"y":1,"w":101,"h":111},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":1,"w":101,"h":111},
+	"sourceSize": {"w":112,"h":112}
+},
+"bday_5000_00006":
+{
+	"frame": {"x":201,"y":1,"w":101,"h":111},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":1,"w":101,"h":111},
+	"sourceSize": {"w":112,"h":112}
+},
+"bday_5000_00007":
+{
+	"frame": {"x":409,"y":1,"w":103,"h":108},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":4,"w":103,"h":108},
+	"sourceSize": {"w":112,"h":112}
+},
+"bday_5000_00008":
+{
+	"frame": {"x":409,"y":1,"w":103,"h":108},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":4,"w":103,"h":108},
+	"sourceSize": {"w":112,"h":112}
+},
+"bday_5000_00009":
+{
+	"frame": {"x":304,"y":1,"w":103,"h":110},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":2,"w":103,"h":110},
+	"sourceSize": {"w":112,"h":112}
+},
+"bday_5000_00010":
+{
+	"frame": {"x":304,"y":1,"w":103,"h":110},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":2,"w":103,"h":110},
+	"sourceSize": {"w":112,"h":112}
+},
+"bday_5000_00011":
+{
+	"frame": {"x":201,"y":1,"w":101,"h":111},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":1,"w":101,"h":111},
+	"sourceSize": {"w":112,"h":112}
+},
+"bday_5000_00012":
+{
+	"frame": {"x":201,"y":1,"w":101,"h":111},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":1,"w":101,"h":111},
+	"sourceSize": {"w":112,"h":112}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "5000.png",
+	"format": "RGBA8888",
+	"size": {"w":513,"h":114},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:35982eefb37a40258d603e712faa2065:34a2331be0453d3f2bcb79240a710dc1:7960f1fc81c5ba8b039ea14dfe36d3d9$"
+}
+}

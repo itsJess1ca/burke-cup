@@ -1115,6 +1115,11 @@ $(function () {
       .add("assets/images/point-sprites/vohiyo/1000.json")
       .add("assets/images/point-sprites/vohiyo/5000.json")
       .add("assets/images/point-sprites/vohiyo/10000.json")
+      .add("assets/images/point-sprites/bday/1.json")
+      .add("assets/images/point-sprites/bday/100.json")
+      .add("assets/images/point-sprites/bday/1000.json")
+      .add("assets/images/point-sprites/bday/5000.json")
+      .add("assets/images/point-sprites/bday/10000.json")
     .load(function () {
       var emotes = [
         {
@@ -1333,6 +1338,22 @@ $(function () {
           name:"4head",
           breakPoints:[1, 100, 1000, 5000, 10000],
           frames:[26, 12, 40, 40, 39],
+          startingFrame:1,
+          glimmerStart:[1, 1, 1, 1, 1],
+          frameName:function frameName(name, i) {
+            var frameID = "" + i;
+            if (i < 10) {
+              frameID = "00" + i;
+            }else if (i < 100) {
+              frameID = "0" + i;
+            }
+            return this.name+"_"+name+"_00"+frameID;
+          }
+        },
+        {
+          name:"bday",
+          breakPoints:[1, 100, 1000, 5000, 10000],
+          frames:[24, 12, 16, 12, 12],
           startingFrame:1,
           glimmerStart:[1, 1, 1, 1, 1],
           frameName:function frameName(name, i) {

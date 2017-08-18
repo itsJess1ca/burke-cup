@@ -1519,7 +1519,7 @@ $(function () {
     socket.emit('subscribe', [`${layeroneId}.tip`, `${layeroneId}.twitch.cheer`]);
     function attemptReconnect() {
       if (!connected) {
-        socket.io.reconnect();
+        socket.socket.io.reconnect();
         setTimeout(() => {
           attemptReconnect();
         }, 5000);

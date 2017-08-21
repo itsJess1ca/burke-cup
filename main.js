@@ -1519,9 +1519,17 @@ $(function () {
     });
     let connected = false;
     const layeroneId = 168;
+    let pingTimer;
+    function createPingTimer() {
+      clearTimeout(pingTimer);
+      pingTimer = setTimeout(() => {
+        connected = false;
+      }, 60000);
+    }
 
     socket.on('connect', () => {
       if (debug) console.log("Connected to sockets");
+      createPingTimer();
       connected = true;
     });
     socket.on('disconnect', () => {
@@ -1538,9 +1546,10 @@ $(function () {
         addAlert(data.payload.username, "_tip_cheer_token_"+p, null, p);
     });
     socket.emit('subscribe', [`${layeroneId}.tip`, `${layeroneId}.twitch.cheer`]);
+    window.socket = socket;
     function attemptReconnect() {
       if (!connected) {
-        socket.socket.io.reconnect();
+        socket.io.reconnect();
         setTimeout(() => {
           attemptReconnect();
         }, 5000);

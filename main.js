@@ -37,29 +37,32 @@ function _classCallCheck(instance, Constructor) {
   }
 }
 
-function loadJSON(callback) {   
+function loadJSON(callback) {
 
   var xobj = new XMLHttpRequest();
-      xobj.overrideMimeType("application/json");
+  xobj.overrideMimeType("application/json");
   xobj.open('GET', 'settings.json', true); // Replace 'my_data' with the path to your file
   xobj.onreadystatechange = function () {
-        if (xobj.readyState == 4 && xobj.status == "200") {
-          // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-          callback(xobj.responseText);
-        }
+    if (xobj.readyState == 4 && xobj.status == "200") {
+      // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+      callback(xobj.responseText);
+    }
   };
-  xobj.send(null);  
+  xobj.send(null);
 }
- 
-function setSettings(data){
+
+function setSettings(data) {
   settings = JSON.parse(data);
 }
 
 $(function () {
   const body = $('body');
-  let getSettings = loadJSON(function(data){ setSettings(data); init(); });
+  let getSettings = loadJSON(function (data) {
+    setSettings(data);
+    init();
+  });
 
-  
+
   //Play first alert on load
   const debug = getQueryParameter('debug');
   let freeShot = false;
@@ -284,9 +287,9 @@ $(function () {
 
       //this.amount = amount;
 
-      if(!type || typeof type === 'number'){
+      if (!type || typeof type === 'number') {
         this.type = "cheer";
-      }else{
+      } else {
         this.type = type.toLowerCase();
       }
     }
@@ -439,7 +442,7 @@ $(function () {
     }
     // cannon.rotation = -2.3;
     let origY = height - chestPosition[1] - (settings.chest.height / 2) + 20;
-    
+
     //Push new bullet into cannon
     fireQ.push(1);
 
@@ -457,7 +460,7 @@ $(function () {
     world.addBody(body);
 
     if (debug) console.log(type, gemAnimationFrames[type]);
-    if(!type || !gemAnimationFrames[type]){
+    if (!type || !gemAnimationFrames[type]) {
       type = "cheer"
     }
     // console.log(type,tier, amount);
@@ -496,31 +499,31 @@ $(function () {
   function setGemSize(amount, type) {
     let radius, multiplier, width;
 
-    if(amount > 9999){ 
+    if (amount > 9999) {
       width = settings.gems.sizes.largest.width;
       radius = LARGEST_CANNON_RADIUS;
       multiplier = settings.gems.sizes.largest.size_multiplier;
-      if(type !== 'cheer') multiplier = 3;
-    }else if(amount > 4999){
+      if (type !== 'cheer') multiplier = 3;
+    } else if (amount > 4999) {
       width = settings.gems.sizes['x-large'].width;
       radius = XLARGE_CANNON_RADIUS;
       multiplier = settings.gems.sizes['x-large'].size_multiplier;
-      if(type !== 'cheer') multiplier = 3;
-    }else if(amount > 999){
+      if (type !== 'cheer') multiplier = 3;
+    } else if (amount > 999) {
       width = settings.gems.sizes.large.width;
       radius = LARGE_CANNON_RADIUS;
       multiplier = settings.gems.sizes.large.size_multiplier;
-      if(type !== 'cheer') multiplier = 3;
-    }else if(amount > 99){
+      if (type !== 'cheer') multiplier = 3;
+    } else if (amount > 99) {
       width = settings.gems.sizes.medium.width;
       radius = MEDIUM_CANNON_RADIUS;
       multiplier = settings.gems.sizes.medium.size_multiplier;
-      if(type !== 'cheer') multiplier = 3;
-    }else{
+      if (type !== 'cheer') multiplier = 3;
+    } else {
       width = settings.gems.sizes.small.width;
       radius = SMALL_CANNON_RADIUS;
       multiplier = settings.gems.sizes.small.size_multiplier;
-      if(type !== 'cheer') multiplier = 3;
+      if (type !== 'cheer') multiplier = 3;
     }
     return {radius, multiplier, width};
   }
@@ -554,7 +557,7 @@ $(function () {
 
     return threshold;
   }
-  
+
   function getSubsThreshold(amount) {
     // sub threshold.
     amount = parseInt(amount);
@@ -570,7 +573,7 @@ $(function () {
     }
     return threshold;
   }
-  
+
   function getTipThreshold(amount) {
     // tip threshold in cents
     let threshold = 1;
@@ -581,7 +584,7 @@ $(function () {
     }
     return threshold;
   }
-  
+
   function createText() {
     let i, j;
 
@@ -651,43 +654,43 @@ $(function () {
       let range = emoteListing[i];
       message = replaceRange(message, range.indices[0], range.indices[1]);
     }
-     
+
     let messageTable = [];
-     
-    if(message.indexOf("_sub_cheer_token_") >= 0){
+
+    if (message.indexOf("_sub_cheer_token_") >= 0) {
       let s = /_sub_cheer_token_(\d+)/g;
       let st = message.match(s);
-      let m = st[0].replace("_sub_cheer_token_","")
-      if(m == "0"){
+      let m = st[0].replace("_sub_cheer_token_", "")
+      if (m == "0") {
         m = "1";
       }
-      message = message.replace("_sub_cheer_token_","")
-      
+      message = message.replace("_sub_cheer_token_", "")
+
       messageTable.push({
         prefix: "",
-        emote: { id: "-2" },
+        emote: {id: "-2"},
         amount: m,
-        type:"sub_"
+        type: "sub_"
       })
-      message = message.substr(2,message.length);
+      message = message.substr(2, message.length);
     }
-     
-    if(message.indexOf("_tip_cheer_token_") >= 0){
+
+    if (message.indexOf("_tip_cheer_token_") >= 0) {
       let s = /_tip_cheer_token_(\d+)/g;
       let st = message.match(s);
-      let m = st[0].replace("_tip_cheer_token_","")
+      let m = st[0].replace("_tip_cheer_token_", "")
       // console.log(s,st,m)
-      if(m == "0"){
+      if (m == "0") {
         m = "1";
       }
-      message = message.replace("_tip_cheer_token_","")
+      message = message.replace("_tip_cheer_token_", "")
       messageTable.push({
         prefix: "",
-        emote: { id: "-3" },
+        emote: {id: "-3"},
         amount: m,
-        type:"tip"
+        type: "tip"
       })
-      message = message.substr(m.length,message.length);
+      message = message.substr(m.length, message.length);
     }
 
     // Split on 0x01, which gives us a set of messages seperated by emotes.
@@ -746,16 +749,16 @@ $(function () {
     }
 
     // Prepend the username.
-     messageTable[0].prefix = '';
+    messageTable[0].prefix = '';
 
 
     // Begin constructing the display objects.
     let resultingTextObjects = [];
     let properties = {
       font: "26px 'Knewave', cursive",
-      fill : 'whitesmoke',
-      stroke : '#333333',
-      strokeThickness : 5,
+      fill: 'whitesmoke',
+      stroke: '#333333',
+      strokeThickness: 5,
       align: 'left',
       lineJoin: 'round',
     };
@@ -763,19 +766,19 @@ $(function () {
     let textHeight = 55;
 
     // Fire Sound
-      //Play sound
-      var sfx = $('.js-cannon').clone()[0];
-      sfx.volume = settings.sounds.cannon;
-      sfx.play();
+    //Play sound
+    var sfx = $('.js-cannon').clone()[0];
+    sfx.volume = settings.sounds.cannon;
+    sfx.play();
 
-      if(!loadingScene){
-        cannon.position.y = cannon.position.y + 10;
-        cannon.position.x = cannon.position.x - 5;
-        setTimeout(function () {
-          cannon.position.y = cannon.position.y - 10;
-          cannon.position.x = cannon.position.x + 5;
-        }, 250)
-      }
+    if (!loadingScene) {
+      cannon.position.y = cannon.position.y + 10;
+      cannon.position.x = cannon.position.x - 5;
+      setTimeout(function () {
+        cannon.position.y = cannon.position.y - 10;
+        cannon.position.x = cannon.position.x + 5;
+      }, 250)
+    }
 
     // Add Gems
     for (i = 0; i < messageTable.length; i++) {
@@ -786,8 +789,8 @@ $(function () {
         let textDisplay = new PIXI.Text(msg.prefix, properties);
         textDisplay.scale = new PIXI.Point(1, -1);
         let yOffset = (cannon.y - height) + (cannon.height + 475);
-        if(messages[messages.length -1] !== undefined){
-          yOffset = messages[messages.length -1].renderables[0].y + 55;
+        if (messages[messages.length - 1] !== undefined) {
+          yOffset = messages[messages.length - 1].renderables[0].y + 55;
         }
 
         textDisplay.position = new PIXI.Point(cannon.width / 2, yOffset);
@@ -805,14 +808,14 @@ $(function () {
         let tier = getTipThreshold(a);
         addGem(gemX, gemY, tier, messageID * 10000 + tier + i, a, msg.type);
         currentOffset += GEM_RADIUS * 2 + 10;
-      }else if (msg.emote.id === "-2") {
+      } else if (msg.emote.id === "-2") {
         // If the emote is a sub.
         let a = parseInt(msg.amount);
         let tier = getSubsThreshold(a);
-        let v = msg.amount*100;
+        let v = msg.amount * 100;
         addGem(gemX, gemY, tier, messageID * 10000 + tier + i, v, msg.type);
         currentOffset += GEM_RADIUS * 2 + 10;
-      }else if (msg.emote.id === '-1') {
+      } else if (msg.emote.id === '-1') {
         // If the emote is a gem, add a gem.
         let tier = getPointsThreshold(msg.amount);
         addGem(gemX, gemY, tier, messageID * 10000 + tier + i, msg.amount, msg.type);
@@ -828,7 +831,7 @@ $(function () {
         // These pixel adjustments were experimentally derived.
         emoteDisplay.position = new PIXI.Point(width / 2, height + textHeight);
         currentOffset += 38;
-        if(msg.emote.id !== "0"){
+        if (msg.emote.id !== "0") {
           container.addChild(emoteDisplay);
           resultingTextObjects.push(emoteDisplay);
         }
@@ -848,11 +851,11 @@ $(function () {
   }
 
   function rumbleChest() {
-    chestBottom.velocity = [0,200];
+    chestBottom.velocity = [0, 200];
     chestFront.position.y += 25;
     chestBack.position.y += 25;
     chestBottom.updateMassProperties();
-    setTimeout(function() {
+    setTimeout(function () {
       chestBottom.velocity = [0, -200];
       chestFront.position.y -= 25;
       chestBack.position.y -= 25;
@@ -867,7 +870,7 @@ $(function () {
 
   function update(dt) {
 
-    if(chestBottom.position[1] <= chestPosition[1] - 7){
+    if (chestBottom.position[1] <= chestPosition[1] - 7) {
       chestBottom.velocity = [0, 0];
       chestBottom.position.y += 1;
       chestBottom.updateMassProperties();
@@ -973,13 +976,13 @@ $(function () {
     }
   }
 
-  function sendSettings(data){
+  function sendSettings(data) {
     settings = data;
     // console.log(settings);
   }
 
   function init() {
-    
+
     //let loader = PIXI.loader; // pixi exposes a premade instance for you to use.
     //or
     /*let loader = new PIXI.loaders.Loader(); // you can also create your own if you want
@@ -993,7 +996,7 @@ $(function () {
     LARGE_CANNON_RADIUS = settings.gems.sizes.large.radius;
     XLARGE_CANNON_RADIUS = settings.gems.sizes['x-large'].radius;
     LARGEST_CANNON_RADIUS = settings.gems.sizes.largest.radius;
-    
+
 
     world = new p2.World({
       gravity: [0, -98.20]
@@ -1120,285 +1123,285 @@ $(function () {
       .add("assets/images/point-sprites/bday/1000.json")
       .add("assets/images/point-sprites/bday/5000.json")
       .add("assets/images/point-sprites/bday/10000.json")
-    .load(function () {
-      var emotes = [
-        {
-          name:"cheer",
-          breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[90, 90, 90, 90, 90],
-          startingFrame:1,
-          glimmerStart:[32, 32, 32, 32, 32],
-          frameName:function frameName(name, i) {
-            var frameID = "" + i;
-            if (i < 10) {
-              frameID = "0" + i;
+      .load(function () {
+        var emotes = [
+          {
+            name: "cheer",
+            breakPoints: [1, 100, 1000, 5000, 10000],
+            frames: [90, 90, 90, 90, 90],
+            startingFrame: 1,
+            glimmerStart: [32, 32, 32, 32, 32],
+            frameName: function frameName(name, i) {
+              var frameID = "" + i;
+              if (i < 10) {
+                frameID = "0" + i;
+              }
+              return name + "_600px_00" + frameID;
             }
-            return name+"_600px_00"+frameID;
+          },
+          {
+            name: "burkeCheer",
+            breakPoints: [1, 100, 1000, 5000, 10000],
+            frames: [66, 151, 151, 151, 71],
+            startingFrame: 1,
+            glimmerStart: [1, 1, 1, 1, 1],
+            frameName: function frameName(name, i) {
+              var frameID = "" + i;
+              if (i < 10) {
+                frameID = "00" + i;
+              } else if (i < 100) {
+                frameID = "0" + i;
+              }
+              return "burkeCheer" + name + "/00" + frameID;
+            }
+          },
+          {
+            name: "tip",
+            breakPoints: [1, 2, 3],
+            frames: [32, 32, 32],
+            startingFrame: 1,
+            glimmerStart: [1, 1, 1],
+            frameName: function frameName(name, i) {
+              var frameID = "" + i;
+              if (i < 10) {
+                frameID = "0" + i;
+              }
+              return this.name + "_" + name + "_00" + frameID;
+            }
+          },
+          {
+            name: "Kappa",
+            breakPoints: [1, 100, 1000, 5000, 10000],
+            frames: [51, 60, 41, 42, 84],
+            startingFrame: 1,
+            glimmerStart: [6, 8, 5, 1, 1],
+            frameName: function frameName(name, i) {
+              var frameID = "" + i;
+              if (i < 10) {
+                frameID = "0" + i;
+              }
+              return this.name + "_" + name + "_000" + frameID;
+            }
+          },
+          {
+            name: "Kreygasm",
+            breakPoints: [1, 100, 1000, 5000, 10000],
+            frames: [41, 41, 40, 41, 21],
+            startingFrame: 1,
+            glimmerStart: [1, 2, 1, 1, 1],
+            frameName: function frameName(name, i) {
+              var frameID = "" + i;
+              if (i < 10) {
+                frameID = "0" + i;
+              }
+              return this.name + "_" + name + "_000" + frameID;
+            }
+          },
+          {
+            name: "SwiftRage",
+            breakPoints: [1, 100, 1000, 5000, 10000],
+            frames: [36, 36, 36, 71, 80],
+            startingFrame: 1,
+            glimmerStart: [1, 1, 1, 1, 1],
+            frameName: function frameName(name, i) {
+              var frameID = "" + i;
+              if (i < 10) {
+                frameID = "0" + i;
+              }
+              return this.name + "_" + name + "_000" + frameID;
+            }
+          },
+          {
+            name: "Muxy",
+            breakPoints: [1, 100, 1000, 5000, 10000],
+            frames: [48, 48, 72, 72, 96],
+            startingFrame: 1,
+            glimmerStart: [1, 1, 1, 1, 1],
+            frameName: function frameName(name, i) {
+              var frameID = "" + i;
+              if (i < 10) {
+                frameID = "0" + i;
+              }
+              return this.name + "_" + name + "_000" + frameID;
+            }
+          },
+          {
+            name: "StreamLabs",
+            breakPoints: [1, 100, 1000, 5000, 10000],
+            frames: [144, 160, 160, 200, 160],
+            startingFrame: 1,
+            glimmerStart: [1, 1, 1, 1, 1],
+            frameName: function frameName(name, i) {
+              var frameID = "" + i;
+              if (i < 10) {
+                frameID = "00" + i;
+              } else if (i < 100) {
+                frameID = "0" + i;
+              }
+              return this.name + "_" + name + "_00" + frameID;
+            }
+          },
+          {
+            name: "vohiyo",
+            breakPoints: [1, 100, 1000, 5000, 10000],
+            frames: [11, 11, 21, 29, 24],
+            startingFrame: 1,
+            glimmerStart: [1, 1, 1, 1, 1],
+            frameName: function frameName(name, i) {
+              var frameID = "" + i;
+              if (i < 10) {
+                frameID = "00" + i;
+              } else if (i < 100) {
+                frameID = "0" + i;
+              }
+              return this.name + "_" + name + "_00" + frameID;
+            }
+          },
+          {
+            name: "trihard",
+            breakPoints: [1, 100, 1000, 5000, 10000],
+            frames: [73, 73, 83, 83, 83],
+            startingFrame: 1,
+            glimmerStart: [1, 1, 1, 1, 1],
+            frameName: function frameName(name, i) {
+              var frameID = "" + i;
+              if (i < 10) {
+                frameID = "00" + i;
+              } else if (i < 100) {
+                frameID = "0" + i;
+              }
+              return this.name + "_" + name + "_00" + frameID;
+            }
+          },
+          {
+            name: "pjsalt",
+            breakPoints: [1, 100, 1000, 5000, 10000],
+            frames: [21, 21, 36, 36, 85],
+            startingFrame: 1,
+            glimmerStart: [1, 1, 1, 1, 1],
+            frameName: function frameName(name, i) {
+              var frameID = "" + i;
+              if (i < 10) {
+                frameID = "00" + i;
+              } else if (i < 100) {
+                frameID = "0" + i;
+              }
+              return this.name + "_" + name + "_00" + frameID;
+            }
+          },
+          {
+            name: "notlikethis",
+            breakPoints: [1, 100, 1000, 5000, 10000],
+            frames: [55, 56, 56, 52, 56],
+            startingFrame: 1,
+            glimmerStart: [1, 1, 1, 1, 1],
+            frameName: function frameName(name, i) {
+              var frameID = "" + i;
+              if (i < 10) {
+                frameID = "00" + i;
+              } else if (i < 100) {
+                frameID = "0" + i;
+              }
+              return this.name + "_" + name + "_00" + frameID;
+            }
+          },
+          {
+            name: "mrdestructoid",
+            breakPoints: [1, 100, 1000, 5000, 10000],
+            frames: [21, 21, 21, 20, 23],
+            startingFrame: 1,
+            glimmerStart: [1, 1, 1, 1, 1],
+            frameName: function frameName(name, i) {
+              var frameID = "" + i;
+              if (i < 10) {
+                frameID = "00" + i;
+              } else if (i < 100) {
+                frameID = "0" + i;
+              }
+              return this.name + "_" + name + "_00" + frameID;
+            }
+          },
+          {
+            name: "failfish",
+            breakPoints: [1, 100, 1000, 5000, 10000],
+            frames: [28, 52, 41, 52, 50],
+            startingFrame: 1,
+            glimmerStart: [1, 1, 1, 1, 1],
+            frameName: function frameName(name, i) {
+              var frameID = "" + i;
+              if (i < 10) {
+                frameID = "00" + i;
+              } else if (i < 100) {
+                frameID = "0" + i;
+              }
+              return this.name + "_" + name + "_00" + frameID;
+            }
+          },
+          {
+            name: "4head",
+            breakPoints: [1, 100, 1000, 5000, 10000],
+            frames: [26, 12, 40, 40, 39],
+            startingFrame: 1,
+            glimmerStart: [1, 1, 1, 1, 1],
+            frameName: function frameName(name, i) {
+              var frameID = "" + i;
+              if (i < 10) {
+                frameID = "00" + i;
+              } else if (i < 100) {
+                frameID = "0" + i;
+              }
+              return this.name + "_" + name + "_00" + frameID;
+            }
+          },
+          {
+            name: "bday",
+            breakPoints: [1, 100, 1000, 5000, 10000],
+            frames: [24, 12, 16, 12, 12],
+            startingFrame: 1,
+            glimmerStart: [1, 1, 1, 1, 1],
+            frameName: function frameName(name, i) {
+              var frameID = "" + i;
+              if (i < 10) {
+                frameID = "00" + i;
+              } else if (i < 100) {
+                frameID = "0" + i;
+              }
+              return this.name + "_" + name + "_00" + frameID;
+            }
           }
-        },
-        {
-          name:"burkeCheer",
-          breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[66, 151, 151, 151, 71],
-          startingFrame:1,
-          glimmerStart:[1, 1, 1, 1, 1],
-          frameName:function frameName(name, i) {
-            var frameID = "" + i;
-            if (i < 10) {
-              frameID = "00" + i;
-            }else if (i < 100) {
-              frameID = "0" + i;
+        ]
+        for (var emote_type = 0; emote_type < emotes.length; emote_type++) {
+          for (var movie = 0; movie < emotes[emote_type].breakPoints.length; movie++) {
+            var name = emotes[emote_type].breakPoints[movie];
+            var frameCount = emotes[emote_type].frames[movie];
+            var glimmerStartFrame = emotes[emote_type].glimmerStart[movie];
+
+            var fullFrames = [];
+            for (var i = emotes[emote_type].startingFrame; i < frameCount; i++) {
+              fullFrames.push(PIXI.Texture.fromFrame(emotes[emote_type].frameName(name, i)));
             }
-            return "burkeCheer"+name+"/00"+frameID;
-          }
-        },
-        {
-          name:"tip",
-          breakPoints:[1, 2, 3],
-          frames:[32, 32, 32],
-          startingFrame:1,
-          glimmerStart:[1, 1, 1],
-          frameName:function frameName(name, i) {
-            var frameID = "" + i;
-            if (i < 10) {
-              frameID = "0" + i;
+
+            var glimmerFrames = [];
+            for (i = glimmerStartFrame; i < frameCount; i++) {
+              glimmerFrames.push(PIXI.Texture.fromFrame(emotes[emote_type].frameName(name, i)))
             }
-            return this.name+"_"+name+"_00"+frameID;
-          }
-        },
-        {
-          name:"Kappa",
-          breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[51, 60, 41, 42, 84],
-          startingFrame:1,
-          glimmerStart:[6, 8, 5, 1, 1],
-          frameName:function frameName(name, i) {
-            var frameID = "" + i;
-            if (i < 10) {
-              frameID = "0" + i;
+
+            for (i = 0; i < 150; i++) {
+              glimmerFrames.push(PIXI.Texture.fromFrame(emotes[emote_type].frameName(name, frameCount - 1)))
             }
-            return this.name+"_"+name+"_000"+frameID;
-          }
-        },
-        {
-          name:"Kreygasm",
-          breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[41, 41, 40, 41, 21],
-          startingFrame:1,
-          glimmerStart:[1, 2, 1, 1, 1],
-          frameName:function frameName(name, i) {
-            var frameID = "" + i;
-            if (i < 10) {
-              frameID = "0" + i;
+
+            if (!gemAnimationFrames[emotes[emote_type].name.toLowerCase()]) {
+              gemAnimationFrames[emotes[emote_type].name.toLowerCase()] = {}
+              gemFlashFrames[emotes[emote_type].name.toLowerCase()] = {}
             }
-            return this.name+"_"+name+"_000"+frameID;
-          }
-        },
-        {
-          name:"SwiftRage",
-          breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[36, 36, 36, 71, 80],
-          startingFrame:1,
-          glimmerStart:[1, 1, 1, 1, 1],
-          frameName:function frameName(name, i) {
-            var frameID = "" + i;
-            if (i < 10) {
-              frameID = "0" + i;
-            }
-            return this.name+"_"+name+"_000"+frameID;
-          }
-        },
-        {
-          name:"Muxy",
-          breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[48, 48, 72, 72, 96],
-          startingFrame:1,
-          glimmerStart:[1, 1, 1, 1, 1],
-          frameName:function frameName(name, i) {
-            var frameID = "" + i;
-            if (i < 10) {
-              frameID = "0" + i;
-            }
-            return this.name+"_"+name+"_000"+frameID;
-          }
-        },
-        {
-          name:"StreamLabs",
-          breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[144, 160, 160, 200, 160],
-          startingFrame:1,
-          glimmerStart:[1, 1, 1, 1, 1],
-          frameName:function frameName(name, i) {
-            var frameID = "" + i;
-            if (i < 10) {
-              frameID = "00" + i;
-            }else if (i < 100) {
-              frameID = "0" + i;
-            }
-            return this.name+"_"+name+"_00"+frameID;
-          }
-        },
-        {
-          name:"vohiyo",
-          breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[11, 11, 21, 29, 24],
-          startingFrame:1,
-          glimmerStart:[1, 1, 1, 1, 1],
-          frameName:function frameName(name, i) {
-            var frameID = "" + i;
-            if (i < 10) {
-              frameID = "00" + i;
-            }else if (i < 100) {
-              frameID = "0" + i;
-            }
-            return this.name+"_"+name+"_00"+frameID;
-          }
-        },
-        {
-          name:"trihard",
-          breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[73, 73, 83, 83, 83],
-          startingFrame:1,
-          glimmerStart:[1, 1, 1, 1, 1],
-          frameName:function frameName(name, i) {
-            var frameID = "" + i;
-            if (i < 10) {
-              frameID = "00" + i;
-            }else if (i < 100) {
-              frameID = "0" + i;
-            }
-            return this.name+"_"+name+"_00"+frameID;
-          }
-        },
-        {
-          name:"pjsalt",
-          breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[21, 21, 36, 36, 85],
-          startingFrame:1,
-          glimmerStart:[1, 1, 1, 1, 1],
-          frameName:function frameName(name, i) {
-            var frameID = "" + i;
-            if (i < 10) {
-              frameID = "00" + i;
-            }else if (i < 100) {
-              frameID = "0" + i;
-            }
-            return this.name+"_"+name+"_00"+frameID;
-          }
-        },
-        {
-          name:"notlikethis",
-          breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[55, 56, 56, 52, 56],
-          startingFrame:1,
-          glimmerStart:[1, 1, 1, 1, 1],
-          frameName:function frameName(name, i) {
-            var frameID = "" + i;
-            if (i < 10) {
-              frameID = "00" + i;
-            }else if (i < 100) {
-              frameID = "0" + i;
-            }
-            return this.name+"_"+name+"_00"+frameID;
-          }
-        },
-        {
-          name:"mrdestructoid",
-          breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[21, 21, 21, 20, 23],
-          startingFrame:1,
-          glimmerStart:[1, 1, 1, 1, 1],
-          frameName:function frameName(name, i) {
-            var frameID = "" + i;
-            if (i < 10) {
-              frameID = "00" + i;
-            }else if (i < 100) {
-              frameID = "0" + i;
-            }
-            return this.name+"_"+name+"_00"+frameID;
-          }
-        },
-        {
-          name:"failfish",
-          breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[28, 52, 41, 52, 50],
-          startingFrame:1,
-          glimmerStart:[1, 1, 1, 1, 1],
-          frameName:function frameName(name, i) {
-            var frameID = "" + i;
-            if (i < 10) {
-              frameID = "00" + i;
-            }else if (i < 100) {
-              frameID = "0" + i;
-            }
-            return this.name+"_"+name+"_00"+frameID;
-          }
-        },
-        {
-          name:"4head",
-          breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[26, 12, 40, 40, 39],
-          startingFrame:1,
-          glimmerStart:[1, 1, 1, 1, 1],
-          frameName:function frameName(name, i) {
-            var frameID = "" + i;
-            if (i < 10) {
-              frameID = "00" + i;
-            }else if (i < 100) {
-              frameID = "0" + i;
-            }
-            return this.name+"_"+name+"_00"+frameID;
-          }
-        },
-        {
-          name:"bday",
-          breakPoints:[1, 100, 1000, 5000, 10000],
-          frames:[24, 12, 16, 12, 12],
-          startingFrame:1,
-          glimmerStart:[1, 1, 1, 1, 1],
-          frameName:function frameName(name, i) {
-            var frameID = "" + i;
-            if (i < 10) {
-              frameID = "00" + i;
-            }else if (i < 100) {
-              frameID = "0" + i;
-            }
-            return this.name+"_"+name+"_00"+frameID;
+            gemAnimationFrames[emotes[emote_type].name.toLowerCase()][name] = fullFrames
+            gemFlashFrames[emotes[emote_type].name.toLowerCase()][name] = glimmerFrames
           }
         }
-      ]
-      for(var emote_type = 0; emote_type < emotes.length; emote_type++){
-        for(var movie = 0; movie < emotes[emote_type].breakPoints.length; movie++){
-          var name = emotes[emote_type].breakPoints[movie];
-          var frameCount = emotes[emote_type].frames[movie];
-          var glimmerStartFrame = emotes[emote_type].glimmerStart[movie];
-
-          var fullFrames = [];
-          for(var i = emotes[emote_type].startingFrame; i < frameCount; i++){
-            fullFrames.push(PIXI.Texture.fromFrame(emotes[emote_type].frameName(name,i)));
-          }
-
-          var glimmerFrames = [];
-          for(i = glimmerStartFrame; i < frameCount; i++){
-            glimmerFrames.push(PIXI.Texture.fromFrame(emotes[emote_type].frameName(name,i)))
-          }
-
-          for(i = 0; i < 150; i++){
-            glimmerFrames.push(PIXI.Texture.fromFrame(emotes[emote_type].frameName(name,frameCount - 1)))
-          }
-
-          if(!gemAnimationFrames[emotes[emote_type].name.toLowerCase()]){
-            gemAnimationFrames[emotes[emote_type].name.toLowerCase()] = {}
-            gemFlashFrames[emotes[emote_type].name.toLowerCase()] = {}
-          }
-          gemAnimationFrames[emotes[emote_type].name.toLowerCase()][name] = fullFrames
-          gemFlashFrames[emotes[emote_type].name.toLowerCase()][name] = glimmerFrames
-        }
-      }
-      animate();
-      unserializeState();
-      connect_websocket();
-    });
+        animate();
+        unserializeState();
+        connect_websocket();
+      });
   }
 
   // Animation Loop
@@ -1489,14 +1492,14 @@ $(function () {
       gem.height += getGemsize.width;
       let scale = getGemsize.radius * getGemsize.multiplier / (gem.width * scale_dampening);
       gem.scale = new PIXI.Point(scale, scale);
-      
+
       gem.anchor.x = 0.5;
       gem.anchor.y = 0.5;
       gem.depth = old_gem.depth;
       gem.amount = old_gem.amount;
       gem.type = old_gem.type;
       gem.tier = old_gem.tier;
-      
+
       container.addChild(gem);
 
       var res = new Gem(body, gem, 0, old_gem.tier, gem.depth, amount, type);
@@ -1504,7 +1507,7 @@ $(function () {
       res.amount = old_gem.amount;
       res.type = old_gem.type;
       res.tier = old_gem.tier;
-      
+
 
       gems.push(res);
     }
@@ -1512,24 +1515,44 @@ $(function () {
     needsDepthSort = true;
     messageID = arr.length + 1;
   }
-  function connect_websocket(){
+
+  function connect_websocket() {
     const apiKey = 'jDHQkR4dMpOw6kL1IvhFEXW6w0K6KeQUf0S02XDwdiQQdzzxqmjpU27Jg58SNVMk';
     const socket = io.connect('https://ws.layerone.io', {
       query: `apikey=${apiKey}`
     });
     let connected = false;
     const layeroneId = 168;
-    let pingTimer;
-    function createPingTimer() {
-      clearTimeout(pingTimer);
-      pingTimer = setTimeout(() => {
-        connected = false;
-      }, 60000);
-    }
+    let pingLoop;
+    let pingTimeout;
+    console.log(socket);
+
+    pingLoop = setInterval(() => {
+      if (socket !== null && socket.io.readyState !== 'closing' && socket.io.readyState !== 'closed') {
+        if (debug) console.log('ping');
+        socket.emit('echo', {
+          type: 'pong'
+        });
+      }
+      pingTimeout = setTimeout(() => {
+        if (socket !== null) {
+          if (debug) console.error('ping timeout.');
+          socket.close();
+          clearInterval(pingLoop);
+          clearTimeout(pingTimeout);
+
+          connect_websocket();
+        }
+      }, 9999)
+    }, 10000);
+
+    socket.on('pong', () => {
+      if (debug) console.log('pong');
+      clearTimeout(pingTimeout);
+    });
 
     socket.on('connect', () => {
       if (debug) console.log("Connected to sockets");
-      createPingTimer();
       connected = true;
     });
     socket.on('disconnect', () => {
@@ -1538,15 +1561,18 @@ $(function () {
       attemptReconnect();
     });
     socket.on(`${layeroneId}.twitch.cheer`, (data) => {
+      if (debug) console.log(`New Cheer event`, data);
       addAlert(data.payload.user.display_name || data.payload.user.username, data.payload.message.text, null, data.payload.bits);
     });
     socket.on(`${layeroneId}.tip`, (data) => {
-        let a = parseFloat(data.payload.amount);
-        let p = a*100;
-        addAlert(data.payload.username, "_tip_cheer_token_"+p, null, p);
+      if (debug) console.log(`New Tip event`, data);
+      let a = parseFloat(data.payload.amount);
+      let p = a * 100;
+      addAlert(data.payload.username, "_tip_cheer_token_" + p, null, p);
     });
     socket.emit('subscribe', [`${layeroneId}.tip`, `${layeroneId}.twitch.cheer`]);
     window.socket = socket;
+
     function attemptReconnect() {
       if (!connected) {
         socket.io.reconnect();
@@ -1576,16 +1602,16 @@ $(function () {
       let message = '';
       let emote = '';
 
-      function randomEmote(){
+      function randomEmote() {
         let arr = ['cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'cheer', 'kappa', 'muxy', 'kreygasm', 'swiftrage', 'streamlabs'];
         let r = Math.floor(Math.random() * arr.length-- + 1);
-        if (arr[r] === undefined){
+        if (arr[r] === undefined) {
           return 'cheer';
         }
         return arr[r];
       }
 
-      function randomName(){
+      function randomName() {
         let arr = ['Booty', 'Deppception', 'Blackbeard', 'DivingBoard', 'AppleCider', 'ng222', 'WhyMeBoss', 'Gotothestore']
         let r = Math.floor(Math.random() * (arr.length - 1) + 1);
         return arr[r];
@@ -1672,10 +1698,10 @@ $(function () {
   if (getQueryParameter("freeshot")) {
     freeShot = true;
   }
-  
+
   $(window).unload(function () {
     serializeState();
   });
-  
+
   //init();
 }); // End
